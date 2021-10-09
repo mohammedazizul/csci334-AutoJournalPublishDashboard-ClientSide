@@ -6,6 +6,7 @@ const Home = () => {
       <h2>landing page </h2>
       <h3>login</h3>
       <h4>signup</h4>
+      <h1>sam is here</h1>
     </div>
   );
 };
