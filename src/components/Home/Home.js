@@ -7,6 +7,7 @@ const Home = () => {
       <h3>login</h3>
       <h4>signup</h4>
       <h1>Hello World</h1>
+      <h1>sam is here</h1>
     </div>
   );
 };
