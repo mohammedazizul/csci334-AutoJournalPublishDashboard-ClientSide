@@ -6,7 +6,7 @@ Using React.JS
 
 runs on port 3000
 
-after clone
+// after clone
 
 1. npm i
 2. npm start
