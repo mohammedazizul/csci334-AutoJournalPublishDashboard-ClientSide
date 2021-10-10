@@ -1,0 +1,20 @@
+.homeMainDiv {
+    display:flex;
+    margin: 5px;
+    height:380px;
+}
+.innerDiv{
+    text-align: center;
+    background-color: aliceblue;
+    position: relative;
+    left:55%;
+    width: 40%;
+    min-width: 200px;
+    height: 98%;
+}
+#bgsetting {
+    padding: 25px;
+    background: url(https://www.iferp.in/blog/wp-content/uploads/2020/05/Scopus-Indexed-Journal.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
