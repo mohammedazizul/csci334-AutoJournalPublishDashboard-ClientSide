@@ -1,11 +1,13 @@
 import React from "react";
+import "./Home.css";
+import Logo from "../Logo/logo192.png";
 
 const Home = () => {
   return (
-    <div style={{ textAlign: "center" }}>
-      <h2>landing page </h2>
-      <h3>login</h3>
-      <h4>signup</h4>
+    <div className="homeMainDiv" id="bgsetting">
+        <div className="innerDiv">
+          <img src={Logo} alt="logo"/>
+        </div>
     </div>
   );
 };
