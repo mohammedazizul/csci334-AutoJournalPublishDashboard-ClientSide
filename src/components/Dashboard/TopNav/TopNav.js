@@ -15,11 +15,14 @@ import {
   faEdit,
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import logo from "../../Logo/logo192.png";
 
 const TopNav = () => {
   let userName = "Tomas John";
   return (
     <div className="topNavMainDiv">
+      <img src={logo} width="65px" height="60px" alt="" />
+
       <div className="divLeft">
         <div className="iconDiv">
           <FontAwesomeIcon icon={faUserCircle} /> &nbsp; Hi, {userName}
