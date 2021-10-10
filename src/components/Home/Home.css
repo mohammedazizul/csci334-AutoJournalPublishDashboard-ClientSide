@@ -1,20 +1,16 @@
 .homeMainDiv {
     display:flex;
-    margin: 5px;
+    text-align: center;
     height:380px;
 }
-.innerDiv{
-    text-align: center;
-    background-color: aliceblue;
-    position: relative;
-    left:55%;
-    width: 40%;
-    min-width: 200px;
-    height: 98%;
+.homeMainDiv > img {
+    margin-left: auto;
+    margin-right: auto;
+    width:300px;
+    height:300px;
 }
 #bgsetting {
-    padding: 25px;
-    background: url(https://www.iferp.in/blog/wp-content/uploads/2020/05/Scopus-Indexed-Journal.jpg);
+    background: url(https://img.freepik.com/free-photo/hand-painted-watercolor-background-with-sky-clouds-shape_24972-1095.jpg?size=626&ext=jpg);
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
