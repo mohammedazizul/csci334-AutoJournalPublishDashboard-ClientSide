@@ -1,13 +1,20 @@
 .homeMainDiv {
-    display:flex;
     text-align: center;
-    height:380px;
+    padding: 10px;
+    height: 100vh;
 }
-.homeMainDiv > img {
+img {
     margin-left: auto;
     margin-right: auto;
     width:300px;
     height:300px;
+}
+.button {
+    width:120px;
+    height:40px;
+    border-radius: 12px;
+    margin: 15px;
+    font-size: 18px;
 }
 #bgsetting {
     background: url(https://img.freepik.com/free-photo/hand-painted-watercolor-background-with-sky-clouds-shape_24972-1095.jpg?size=626&ext=jpg);
