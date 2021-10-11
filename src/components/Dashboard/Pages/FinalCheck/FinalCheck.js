@@ -4,7 +4,7 @@ import {
   faAlignJustify,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Review = () => {
+const FinalCheck = () => {
   return (
     <div>
       <div>
@@ -16,7 +16,7 @@ const Review = () => {
           margin: "20px",
         }}
       >
-        <h3><FontAwesomeIcon icon={faAlignJustify}/>&nbsp;Select a manuscript to review</h3>
+        <h3><FontAwesomeIcon icon={faAlignJustify}/>&nbsp;Select a manuscript for final check</h3>
       </div>
 
       <div
@@ -46,34 +46,34 @@ const Review = () => {
             <tbody>
               <tr>
                 <td><input type="checkbox"></input></td>
-                <td></td>
-                <td>Preschool Education</td>
+                <td>E387</td>
+                <td>Safety Education</td>
                 <td>Education</td>
-                <td>367</td>
-                <td>21/9/2021</td>
+                <td>289</td>
+                <td>04/07/2017</td>
                 <td>Tomas John</td>
-                <td>New</td>
+                <td>Pending Final Check</td>
                 <td>View</td>
               </tr>
               <tr>
                 <td><input type="checkbox"></input></td>
-                <td></td>
-                <td>Kinematics and Health</td>
-                <td>Health</td>
-                <td>567</td>
-                <td>13/11/2019</td>
-                <td>James Lee</td>
-                <td>New</td>
+                <td>S666</td>
+                <td>Robotics and Surgical Medicine</td>
+                <td>Science</td>
+                <td>786</td>
+                <td>07/09/2020</td>
+                <td>Eric</td>
+                <td>Pending Final Check</td>
                 <td>View</td>
               </tr>
             </tbody>
           </table>
-          <button className="btn" id="trueBtn">Within Scope</button>
-          <button className="btn" id="falseBtn">Out of Scope</button>
+          <input type="submit" value="Satisfy"></input>
+          <input type="submit" value="Reject"></input>
         </form>
       </div>
     </div>
   );
 };
 
-export default Review;
+export default FinalCheck;
