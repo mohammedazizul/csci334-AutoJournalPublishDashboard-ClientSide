@@ -21,7 +21,11 @@ const TopNav = () => {
   let userName = "Tomas John";
   return (
     <div className="topNavMainDiv">
-      <img src={logo} width="65px" height="60px" alt="" />
+      <div className="divLeft">
+        <div className="iconDiv logoDiv">
+          <img src={logo} alt="jess logo" />
+        </div>
+      </div>
 
       <div className="divLeft">
         <div className="iconDiv">
