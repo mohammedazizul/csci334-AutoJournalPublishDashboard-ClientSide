@@ -4,6 +4,7 @@ import Logo from "../Logo/logo512.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faUserCircle, faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import Signin from "./Sign-in/Signin";
+import Signup from "./Sign-up/Signup";
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
           </button>
           </div>
           <Signin />
+          <Signup />
     </div>
   );
 };
