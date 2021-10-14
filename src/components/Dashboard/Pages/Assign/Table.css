@@ -133,3 +133,48 @@ input[type=text], select, textarea {
 .inputBtn input[type=reset] {
     background-color:  #bdbdbd;
 }
+
+.filterDiv {
+    padding-top: 10px;
+    margin: 20px;
+    text-align: center;
+}
+
+.filterDiv table, .filterDiv tr, .filterDiv td {
+    border: 0px;
+}
+
+.filterDiv td {
+    width: 25%;
+}
+
+.filterDiv td:first-child, .filterDiv td:nth-child(2) {
+    text-align: left;
+}
+
+.filterDiv td:nth-child(3), .filterDiv td:nth-child(4) {
+    text-align: right;
+}
+
+.filterDiv select {
+    border-radius: 0px;
+    padding: 10px 15px;
+    font-size: 15px;
+}
+
+.filterDiv option {
+    font-size: 15px;
+}
+
+.authorDashboard {
+    padding-top: 10px;
+    margin: 20px;
+    text-align: center;
+}
+
+.editorDashboard {
+    padding-top: 10px;
+    margin: 20px;
+    text-align: center;
+}
+
