@@ -1,0 +1,19 @@
+#bgsetting {
+    background: url(https://img.freepik.com/free-photo/hand-painted-watercolor-background-with-sky-clouds-shape_24972-1095.jpg?size=626&ext=jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.forgotMainDiv{
+    display:block;
+    height: auto;
+    text-align: center;
+    padding:40px;
+}
+.forgotMainDiv > form > input {
+    width:200px;
+    border-radius: 12px;
+}
+.forgotMainDiv > form > button {
+    border-radius: 12px;
+    width:150px;
+}

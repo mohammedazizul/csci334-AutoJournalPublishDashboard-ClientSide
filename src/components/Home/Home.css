@@ -1,9 +1,10 @@
 .homeMainDiv {
     text-align: center;
     padding: 10px;
-    height: 100vh;
+    height: auto;
+    padding:40px;
 }
-img {
+.homeMainDiv > img {
     margin-left: auto;
     margin-right: auto;
     width:300px;
