@@ -29,7 +29,7 @@ const Signup = () => {
                     <br/><br/>
 
                     <select>
-                        <option value="" disabled selected>Select your role</option>
+                        <option value="DEFAULT" disabled>Select your role</option>
                         <option value="Author">Author</option>
                         <option value="Editor">Editor</option>
                         <option value="Viewer">Viewer</option>
@@ -37,7 +37,7 @@ const Signup = () => {
                     <br/><br/>
 
                     <select>
-                        <option value="" disabled selected>Area of expertise</option>
+                        <option value="DEFAULT" disabled>Area of expertise</option>
                         <option value="Science">Science</option>
                         <option value="Education">Education</option>
                         <option value="Social Study">Social Study</option>
@@ -46,7 +46,7 @@ const Signup = () => {
                         <option value="Others">Others</option>
                     </select><br/>
 
-                    <h11>By signing up, I accept the Terms &#38; Privacy Policies</h11><br/>
+                    <p>By signing up, I accept the Terms &#38; Privacy Policies</p><br/>
 
                     <button className="button" type="submit" style={{backgroundColor:"#bae9f4"}}>
                         <FontAwesomeIcon icon={faUserPlus}/>&nbsp;&nbsp; Sign up

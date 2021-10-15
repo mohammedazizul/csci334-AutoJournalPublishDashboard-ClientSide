@@ -23,7 +23,7 @@ const Signin = () => {
 
             <br/>
             
-            <button type="submit" className="button" style={{backgroundColor:"#f9e6ac"}}><FontAwesomeIcon icon={faUserCircle}/>&nbsp;&nbsp; Sign in</button>
+            <button type="submit" style={{backgroundColor:"#f9e6ac"}}><FontAwesomeIcon icon={faUserCircle}/>&nbsp;&nbsp; Sign in</button>
           </form>
     </div>
   );
