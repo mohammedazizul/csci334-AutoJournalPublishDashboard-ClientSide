@@ -3,6 +3,7 @@ import React from "react";
 import Logo from "../../Logo/logo512.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faEnvelopeOpen, faLock, faUserCircle} from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const Signin = () => {
   return (
@@ -19,7 +20,9 @@ const Signin = () => {
 
             <br/>
 
-            <p>Forgot Password?</p>
+            <Link to="/home/forgot-password1">
+              <p>Forgot Password?</p>
+            </Link>
 
             <br/>
             
