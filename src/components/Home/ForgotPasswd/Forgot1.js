@@ -2,6 +2,7 @@ import "./Forgot.css";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelopeOpen, faPaperPlane, faSyncAlt } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const Forgot1 = () => {
   return (
@@ -16,7 +17,9 @@ const Forgot1 = () => {
         <form>
             <label><FontAwesomeIcon icon={faEnvelopeOpen}/>&nbsp;&nbsp;</label>
             <input type="text"  placeholder="Email"/><br/><br/>
-            <button type="submit" style={{backgroundColor:"#eb94f9"}}><FontAwesomeIcon icon={faPaperPlane}/>&nbsp;&nbsp; Send Instructions</button>
+            <Link to="/home/forgot-password2">
+            <button type="submit" style={{backgroundColor:"#eb94f9"}}><FontAwesomeIcon icon={faPaperPlane}/>&nbsp;&nbsp; Request TAC</button>
+            </Link>
         </form>
     </div>
   );
