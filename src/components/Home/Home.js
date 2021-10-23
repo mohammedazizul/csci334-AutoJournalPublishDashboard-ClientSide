@@ -1,41 +1,44 @@
 import React from "react";
 import "./Home.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Front from "./Front/Front";
-import Signin from "./Sign-in/Signin";
-import Signup from "./Sign-up/Signup";
-import Forgot1 from "./ForgotPasswd/Forgot1";
-import Forgot2 from "./ForgotPasswd/Forgot2";
-import Forgot3 from "./ForgotPasswd/Forgot3";
+import { useHistory } from "react-router";
+import Logo from "../Logo/logo512.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
+  let history = useHistory();
+
+  const goToSignIn = () => {
+    history.push("/sign-in");
+  };
+
+  const goToSignUp = () => {
+    history.push("/sign-up");
+  };
+
   return (
-    <div>
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <Front />
-          </Route>
-          <Route exact path="/home">
-            <Front />
-          </Route>
-          <Route path="/home/sign-in">
-            <Signin />
-          </Route>
-          <Route path="/home/sign-up">
-            <Signup />
-          </Route>
-          <Route path="/home/forgot-password1">
-            <Forgot1 />
-          </Route>
-          <Route path="/home/forgot-password2">
-            <Forgot2 />
-          </Route>
-          <Route path="/home/forgot-password3">
-            <Forgot3 />
-          </Route>
-        </Switch>
-      </Router>
+    <div className="homeMainDiv">
+      <img src={Logo} alt="logo" />
+
+      <div>
+        <button
+          className="button"
+          onClick={goToSignIn}
+          style={{ backgroundColor: "#f9e6ac" }}
+        >
+          <FontAwesomeIcon icon={faUserCircle} />
+          &nbsp;&nbsp; Sign in
+        </button>
+
+        <button
+          className="button"
+          onClick={goToSignUp}
+          style={{ backgroundColor: "#bae9f4" }}
+        >
+          <FontAwesomeIcon icon={faUserPlus} />
+          &nbsp;&nbsp; Sign up
+        </button>
+      </div>
     </div>
   );
 };
