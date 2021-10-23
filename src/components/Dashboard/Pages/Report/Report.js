@@ -14,7 +14,7 @@ const Report = () => {
           textAlign: "center",
         }}
       >
-          <button className="btn" id="trueBtn">Review Management</button>
+          <button className="btn" id="trueBtn">Reviewer Management</button>
           <div style={{paddingTop: "100px"}} />
           <button className="btn" id="falseBtn">Author Management</button>
       </div>
