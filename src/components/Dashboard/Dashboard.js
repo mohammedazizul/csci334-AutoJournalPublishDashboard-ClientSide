@@ -12,6 +12,8 @@ import Modify from "./Pages/Modify/Modify";
 import Payment from "./Pages/Payment/Payment";
 import TopNav from "./TopNav/TopNav";
 import ManuScriptTable from "./Pages/ManuScriptTable/ManuScriptTable";
+import SignOut from "../Home/SignOut/SignOut";
+import NoMatchFound from "../NoMatchFound/NoMatchFound";
 
 const Dashboard = () => {
   return (
@@ -49,7 +51,12 @@ const Dashboard = () => {
           <Route path="/dashboard/payment">
             <Payment />
           </Route>
-          {/* for a new route path name can be found in TopNav.js */}
+          <Route path="/dashboard/signOut">
+            <SignOut />
+          </Route>
+          <Route path="*">
+            <NoMatchFound />
+          </Route>
         </Switch>
       </Router>
     </div>

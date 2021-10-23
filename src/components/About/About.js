@@ -16,6 +16,41 @@ const About = () => {
 
   // GET  // POST   // PUT  // DELETE
 
+  // const userObj = {
+  //   name: "Sun Chao",
+  //   text: "HELLO",
+  //   id: 101,
+  // };
+
+  // POST
+  // const sendData = () => {
+  //   const urlToPost = `http://localhost/api/create/createperson.php`;
+  //   fetch(urlToPost, {
+  //     method: "POST",
+  //     mode: "no-cors",
+  //     headers: {
+  //       // Accept: "application/json",
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(userObj),
+  //   }).then(() => alert());
+  //   // .then((response) => response.json())
+  //   // .then((data) => console.log(data));
+  // };
+  //   sendData();
+
+  // GET
+  // const getData = () => {
+  //   const urlToGet = `http://localhost/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7`;
+
+  //   fetch(urlToGet, {
+  //     method: "GET",
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => console.log(data));
+  // };
+  //   getData();
+
   return (
     <div style={{ textAlign: "center" }}>
       <h1>ABOUT</h1>
