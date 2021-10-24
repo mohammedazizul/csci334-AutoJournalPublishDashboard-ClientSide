@@ -25,7 +25,6 @@ const Update = () => {
           margin: "20px",
           borderRadius: "5px",
           textAlign: "center",
-          height: "250px",
         }}
       >
         <form method="GET">
