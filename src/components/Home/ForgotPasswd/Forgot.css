@@ -9,7 +9,7 @@
     text-align: center;
     padding:40px;
 }
-.forgotMainDiv > form > input {
+.forgotMainDiv > input {
     width:200px;
     border-radius: 12px;
 }
