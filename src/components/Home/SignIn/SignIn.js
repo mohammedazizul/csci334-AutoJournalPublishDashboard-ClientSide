@@ -19,7 +19,12 @@ const SignIn = () => {
 
   let history = useHistory();
   const [userEmail, setUserEmail] = useState(null);
+  const [userPasswd, setUserPasswd] = useState(null);
+
   const [emailError, setEmailError] = useState({
+    display: "none",
+  });
+  const [PasswdError, setPasswdError] = useState({
     display: "none",
   });
 
@@ -34,16 +39,39 @@ const SignIn = () => {
     }
   };
 
+  const handleUserPasswd = (e) => {
+    let pwd = e.target.value;
+    setUserPasswd(pwd);
+
+    if (pwd !== "") {
+      setPasswdError({
+        display: "none",
+      });
+    }
+  };
+
   const handleLogin = (e) => {
+    let re = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
     if (userEmail === null) {
       e.preventDefault();
       setEmailError({
         display: "",
         color: "red",
       });
-      alert("ENTER USER EMAIL FIRST !");
+    }
+    else if(!re.test(userEmail)){
+      e.preventDefault();
+      alert("Email Format: ...@...com !");
+    }
+    else if (userPasswd === null) {
+      e.preventDefault();
+      setPasswdError({
+        display: "",
+        color: "red",
+      });
     } else {
       console.log("user email: ", userEmail);
+      console.log("user password: ", userPasswd);
       //
       history.push("/dashboard/manuscript-table");
     }
@@ -51,13 +79,13 @@ const SignIn = () => {
 
   return (
     <div className="SigninMainDiv" id="bgsetting">
-      <img src={Logo} alt="logo" />
+      <img src={Logo} alt="logo" /><br />
       {/* <form> */}
       <label>
         <FontAwesomeIcon icon={faEnvelopeOpen} />
         &nbsp;&nbsp;
       </label>
-      <input type="text" placeholder="Email" onChange={handleUserEmail} />
+      <input type="text" placeholder="Email" onChange={handleUserEmail} /><br />
       <span style={emailError}>please enter your email</span>
 
       <br />
@@ -67,7 +95,8 @@ const SignIn = () => {
         <FontAwesomeIcon icon={faLock} />
         &nbsp;&nbsp;
       </label>
-      <input type="password" placeholder="Password" />
+      <input type="password" placeholder="Password" onChange={handleUserPasswd}/><br />
+      <span style={PasswdError}>Please enter your password</span>
 
       <br />
 
@@ -80,8 +109,7 @@ const SignIn = () => {
       <button
         type=""
         onClick={handleLogin}
-        style={{ backgroundColor: "#f9e6ac" }}
-      >
+        style={{ backgroundColor: "#f9e6ac" }} >
         <FontAwesomeIcon icon={faUserCircle} />
         &nbsp;&nbsp; Sign in
       </button>

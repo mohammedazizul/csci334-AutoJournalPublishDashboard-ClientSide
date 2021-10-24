@@ -18,14 +18,14 @@
     width:300px;
     height:300px;
 }
-.SignupMainDiv > .rightPart > form > p {
+.SignupMainDiv > .rightPart > p {
     font-size:10px;
     text-align: left;
 }
-.SignupMainDiv > .rightPart > form > select {
+.SignupMainDiv > .rightPart > select {
     width: 230px;
 }
-.SignupMainDiv > .rightPart > form > input {
+.SignupMainDiv > .rightPart > input {
     font-size: 16px;
     border-radius: 12px;
 }
@@ -42,7 +42,7 @@
         text-align: center;
         width:100%;
     }
-    .SignupMainDiv > .rightPart > form > p {
+    .SignupMainDiv > .rightPart > p {
         font-size:10px;
         text-align: center;
     }

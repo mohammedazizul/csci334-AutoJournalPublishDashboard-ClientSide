@@ -1,6 +1,7 @@
 .SigninMainDiv {
-    text-align: center;
+    text-align:center;
     height: 100vh;
+    display:block;
 }
 #bgsetting {
     background: url(https://img.freepik.com/free-photo/hand-painted-watercolor-background-with-sky-clouds-shape_24972-1095.jpg?size=626&ext=jpg);
@@ -13,18 +14,18 @@
     width:300px;
     height:300px;
 }
-.SigninMainDiv > form > button {
+.SigninMainDiv  > button {
     width:120px;
     height:40px;
     border-radius: 12px;
     margin: 15px;
     font-size: 18px;
 }
-.SigninMainDiv > form > input {
+.SigninMainDiv  > input {
     font-size: 16px;
     border-radius: 12px;
 }
-.SigninMainDiv > form > p {
+.SigninMainDiv  > p {
     font-size: 12px;
     text-align: center;
 }
