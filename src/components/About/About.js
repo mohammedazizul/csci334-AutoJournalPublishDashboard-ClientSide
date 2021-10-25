@@ -32,6 +32,7 @@ const About = () => {
   // POST - (WORKING FINE)
 
   const [inputText, setInputText] = useState("");
+  const [responseData, setResponseData] = useState(null);
   let formData = new FormData();
   formData.append("text", inputText); // "text" should be in the back end
 
@@ -52,7 +53,11 @@ const About = () => {
       },
       body: formData,
     })
-      .then((response) => console.log("BE Response: ", response))
+      .then((response) =>
+        // console.log(response.text()) // uncomment it for console log
+        // making forceful response in FE if their is
+        response.text().then(setResponseData("Successfully Inserted !"))
+      )
       .catch((error) => {
         console.log("Error: ", error);
       });
@@ -83,6 +88,9 @@ const About = () => {
         onChange={(e) => setInputText(e.target.value)}
       />
       <button onClick={sendData}>Click To Insert</button>
+      <div style={{ color: "green" }}>
+        {responseData && "Successfully Inserted !"}
+      </div>
     </div>
   );
 };
