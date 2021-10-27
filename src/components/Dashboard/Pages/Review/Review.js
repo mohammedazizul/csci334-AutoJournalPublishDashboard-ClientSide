@@ -71,7 +71,7 @@ const Review = () => {
                     <td>21/9/2021</td>
                     <td>Tomas John</td>
                     <td>New</td>
-                    <td>View</td>
+                    <td><button>View</button></td>
                   </tr>
                   <tr>
                     <td><input type="checkbox"></input></td>
@@ -82,7 +82,7 @@ const Review = () => {
                     <td>13/11/2019</td>
                     <td>James Lee</td>
                     <td>New</td>
-                    <td>View</td>
+                    <td><button>View</button></td>
                   </tr>
                 </tbody>
               </table>

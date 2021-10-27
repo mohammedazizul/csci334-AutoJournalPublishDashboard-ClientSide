@@ -20,6 +20,11 @@ tbody {
     background-color: #ffffff;
 }
 
+table button {
+    padding: 10px 15px;
+    background-color: #ffffff;
+}
+
 .btn {
     border-radius: 15px;
     height: 50px;
@@ -191,18 +196,6 @@ input[type=text], select, textarea {
 
 .filterDiv option {
     font-size: 15px;
-}
-
-.authorDashboard {
-    padding-top: 10px;
-    margin: 20px;
-    text-align: center;
-}
-
-.editorDashboard {
-    padding-top: 10px;
-    margin: 20px;
-    text-align: center;
 }
 
 .paymentTable {
@@ -392,4 +385,61 @@ input[type=text], select, textarea {
     float: right;
     margin-right: 20px;
     margin-bottom: 30px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.editorAuthorDashboard {
+    padding-top: 10px;
+    margin: 0px 20px 20px 20px;
+    text-align: center;
+}
+
+.reviewerTable {
+    padding-top: 10px;
+    margin: 20px;
+    text-align: center;
+}
+
+.reviewerTable tbody tr:nth-child(odd) {
+    background-color: #E5E8E8;
+}
+
+.reviewerTable tbody tr:nth-child(odd) button {
+    background-color: #E5E8E8;
+}
+
+.reviewerTable button {
+    margin: 2px;
+}
+
+.rateManuscriptForm {
+    padding-top: 10px;
+    margin: 20px;
+    text-align: center;
+}
+
+.rateManuscriptForm input[type=text] {
+    height: 3vh;
+    width: 10vw;
+}
+
+.rateManuscriptForm textarea {
+    height: 8vh;
+    width: 20vw;
+}
+
+.rateManuscriptForm table, .rateManuscriptForm td {
+    border: 0px;
+}
+
+.rateManuscriptForm tr {
+    vertical-align: top;
+    text-align: left;
+}
+
+.rateManuscriptForm input[type=submit], .rateManuscriptForm input[type=reset] {
+    background-color: rgba(255, 255, 255, 0.5);
 }

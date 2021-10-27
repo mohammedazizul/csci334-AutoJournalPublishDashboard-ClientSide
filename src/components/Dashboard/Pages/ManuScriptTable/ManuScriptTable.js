@@ -3,16 +3,14 @@ import EditorAuthorTable from "./EditorAuthorTable/EditorAuthorTable";
 import ReviewerTable from "./ReviewerTable/ReviewerTable";
 
 const ManuScriptTable = () => {
-  const [isReviewer, setIsReviewer] = useState(false);
-  console.log("isReviewer: ", isReviewer);
+  const [toggle, setToggle] = useState(false);
 
   return (
     <div>
-      <button onClick={() => setIsReviewer(true)}>Show Reviewer</button>
+      <button onClick={() => setToggle(!toggle)}>Dashboard Toggle</button>
       {/* condition for reviewer */}
-      {isReviewer && <ReviewerTable />}
+      {toggle?<ReviewerTable />:<EditorAuthorTable />}
 
-      <EditorAuthorTable />
     </div>
   );
 };

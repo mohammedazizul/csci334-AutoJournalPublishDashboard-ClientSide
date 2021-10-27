@@ -78,7 +78,7 @@ const Publish = () => {
                     <td>09/08/2015</td>
                     <td>Tomas John</td>
                     <td>Paid</td>
-                    <td>View</td>
+                    <td><button>View</button></td>
                   </tr>
                   <tr>
                     <td><input type="checkbox"></input></td>
@@ -89,7 +89,7 @@ const Publish = () => {
                     <td>29/09/2018</td>
                     <td>Doris Wu</td>
                     <td>Paid</td>
-                    <td>View</td>
+                    <td><button>View</button></td>
                   </tr>
                 </tbody>
               </table>
