@@ -28,7 +28,7 @@ const FinalCheck = () => {
           height: "250px",
         }}
       >
-        <form method="GET">
+        <form method="POST">
           <table>
             <thead>
               <tr>
@@ -53,7 +53,7 @@ const FinalCheck = () => {
                 <td>04/07/2017</td>
                 <td>Tomas John</td>
                 <td>Pending Final Check</td>
-                <td>View</td>
+                <td><button>View</button></td>
               </tr>
               <tr>
                 <td><input type="checkbox"></input></td>
@@ -64,7 +64,7 @@ const FinalCheck = () => {
                 <td>07/09/2020</td>
                 <td>Eric</td>
                 <td>Pending Final Check</td>
-                <td>View</td>
+                <td><button>View</button></td>
               </tr>
             </tbody>
           </table>
