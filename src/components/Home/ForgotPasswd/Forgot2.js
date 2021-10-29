@@ -2,77 +2,89 @@ import "./Forgot.css";
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelopeOpenText } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { faExchangeAlt, faLock, faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 
-const Forgot2 = () => {
+const Forgot3 = () => {
   let history = useHistory();
-  const [TAC, setTAC] = useState(null);
-  const [TACError, setTACError] = useState({
+  const [pwd, setPwd] = useState(null);
+  const [pwdConfirm, setPwdConfirm] = useState(null);
+
+  const [PwdError, setPwdError] = useState({
     display: "none",
   });
-  const handleTAC = (e) => {
-    let TAC = e.target.value;
-    setTAC(TAC);
+  const [PwdsError, setPwdsError] = useState({
+    display: "none",
+  });
 
-    if (TAC !== "") {
-      setTACError({
+  const handlePwd = (e) => {
+    let pwd = e.target.value;
+    setPwd(pwd);
+
+    if (pwd !== "") {
+      setPwdError({
         display: "none",
       });
     }
   };
 
-  const handleSubmit = (e) => {
-    if (TAC === null) {
+  const handlePwdConfirm = (e) => {
+    let pwdConfirm = e.target.value;
+    setPwdConfirm(pwdConfirm);
+
+    if (pwdConfirm === pwd) {
+      setPwdsError({
+        display: "none",
+      });
+    }
+  };
+
+  const handleSubmit= (e) => {
+    if (pwd === null) {
       e.preventDefault();
-      setTACError({
+      setPwdError({
+        display: "",
+        color: "red",
+      });
+    }else if(pwdConfirm !== pwd){
+      e.preventDefault();
+      setPwdsError({
         display: "",
         color: "red",
       });
     }else {
-      console.log("TAC: ", TAC);
+      console.log("user new password: ", pwd);
       //
-      history.push("/forgot-password3");
+      history.push("/sign-in");
     }
   };
 
+
   return (
     <div className="forgotMainDiv" id="bgsetting">
-      <br />
-      <FontAwesomeIcon
-        style={{ fontSize: "100px", color: "purple" }}
-        icon={faEnvelopeOpenText}
-      />
-      <br />
-      <br />
+        <br/>
+        <FontAwesomeIcon style={{fontSize:"100px",color:"purple"}} icon={faExchangeAlt}/><br/><br/>
+        <h1>Create New Password</h1>
+        <p>
+            You new password must be different from the previous used passwords.
+        </p><br/><br/>
+        <label><FontAwesomeIcon icon={faLock}/>&nbsp;&nbsp;</label>
+        <input type="password"  placeholder="Password" onChange={handlePwd}/><br />
+        <span style={PwdError}>Please enter the password</span><br/><br/>
 
-      <h1>Check your mail</h1>
-      <br />
 
-        <label>TAC: </label>
+        <label><FontAwesomeIcon icon={faLock}/>&nbsp;&nbsp;</label>
+        <input type="password"  placeholder="Confirm Password" onChange={handlePwdConfirm}/><br />
+        <span style={PwdsError}>Password does not match</span><br/><br/>
 
-        <input type="text" placeholder="TAC" onChange={handleTAC}/><br />
-        <span style={TACError}>Please enter the 6-digit TAC</span>
-        <br />
-        <br />
 
         <button 
-              type="submit" 
-              style={{ backgroundColor: "#eb94f9" }}
-              onClick={handleSubmit}>
-          Submit
+                type="submit" 
+                style={{backgroundColor:"#eb94f9"}}
+                onClick={handleSubmit}>
+          <FontAwesomeIcon icon={faSyncAlt}/>&nbsp;&nbsp; Reset Password
         </button>
-      <br />
-      <br />
-
-      <p>
-        We have sent a password recovery TAC number to your email. <br />
-        <br />
-        Did not receive the email? Check your spam filter, or&nbsp;
-        <Link to="/forgot-password1">try again</Link>.
-      </p>
     </div>
   );
 };
 
-export default Forgot2;
+export default Forgot3;

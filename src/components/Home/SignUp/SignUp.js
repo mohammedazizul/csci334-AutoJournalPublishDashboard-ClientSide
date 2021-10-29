@@ -8,6 +8,7 @@ import {
   faEnvelopeOpen,
   faLock,
   faUserPlus,
+  faCalendarDay,
 } from "@fortawesome/free-solid-svg-icons";
 
 const SignUp = () => {
@@ -16,6 +17,7 @@ const SignUp = () => {
   const [userEmail, setUserEmail] = useState(null);
   const [pwd, setPwd] = useState(null);
   const [pwdConfirm, setPwdConfirm] = useState(null);
+  const [role, setRole] = useState(null);
 
   const [nameError, setNameError] = useState({
     display: "none",
@@ -27,6 +29,9 @@ const SignUp = () => {
     display: "none",
   });
   const [PwdsError, setPwdsError] = useState({
+    display: "none",
+  });
+  const [AOE, setAOE] = useState({
     display: "none",
   });
 
@@ -74,6 +79,27 @@ const SignUp = () => {
     }
   };
 
+  const handleRole = (e) => {
+    let role = e.target.value;
+    setRole(role);
+
+    if (role === "Reviewer") {
+      setAOE({
+        display: "",
+      });
+    }
+    if (role === "Author") {
+      setAOE({
+        display: "none",
+      });
+    }
+    if (role === "Editor") {
+      setAOE({
+        display: "none",
+      });
+    }
+  };
+
   const handleSubmit = (e) => {
     let re = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
     if (userName === null) {
@@ -103,9 +129,11 @@ const SignUp = () => {
         display: "",
         color: "red",
       });
-    }else {
+    }
+    else {
       console.log("user name: ", userName);
       console.log("user email: ", userEmail);
+      console.log("user role: ", role);
       //
       history.push("/sign-in");
     }
@@ -136,6 +164,14 @@ const SignUp = () => {
           <br />
           <br />
 
+          <label>
+            <FontAwesomeIcon icon={faCalendarDay} />
+            &nbsp;&nbsp;
+          </label>
+          <input type="date" placeholder="date of birth"/>(DOB)<br />
+          <br />
+          <br />
+
           <label><FontAwesomeIcon icon={faLock}/>&nbsp;&nbsp;</label>
           <input type="password"  placeholder="Password" onChange={handlePwd}/><br />
           <span style={PwdError}>Please enter the password</span>
@@ -148,18 +184,18 @@ const SignUp = () => {
           <br />
           <br />
 
-          <select>
+          <select onChange={handleRole}>
             <option value="DEFAULT" disabled>
               Select your role
             </option>
             <option value="Author">Author</option>
             <option value="Editor">Editor</option>
-            <option value="Viewer">Viewer</option>
+            <option value="Reviewer">Reviewer</option>
           </select>
           <br />
           <br />
 
-          <select>
+          <select style={AOE}>
             <option value="DEFAULT" disabled>
               Area of expertise
             </option>
