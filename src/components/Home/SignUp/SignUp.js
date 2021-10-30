@@ -33,6 +33,7 @@ const SignUp = () => {
   formData.append("password", pwd);
   formData.append("dob", dob);
   formData.append("type", role);
+  console.log(role);
 
   const processSignUp = () => {
     // to Display the key/value pairs
@@ -253,7 +254,7 @@ const SignUp = () => {
           <option value="DEFAULT" disabled>
             Select your role
           </option>
-          <option value="1">Author</option>
+          <option selected value="1">Author</option>
           <option value="0">Editor</option>
           <option value="2">Reviewer</option>
         </select>
