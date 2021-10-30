@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelopeOpen,
+  faKey,
   faPaperPlane,
   faSyncAlt,
 } from "@fortawesome/free-solid-svg-icons";
@@ -11,15 +12,31 @@ import {
 const Forgot1 = () => {
   let history = useHistory();
   const [userEmail, setUserEmail] = useState(null);
+  const [TAC, setTAC] = useState(null);
+
   const [emailError, setEmailError] = useState({
     display: "none",
   });
+  const [TACError, setTACError] = useState({
+    display: "none",
+  });
+
   const handleUserEmail = (e) => {
     let email = e.target.value;
     setUserEmail(email);
 
     if (email !== "") {
       setEmailError({
+        display: "none",
+      });
+    }
+  };
+  const handleTAC = (e) => {
+    let TAC = e.target.value;
+    setTAC(TAC);
+
+    if (TAC !== "") {
+      setTACError({
         display: "none",
       });
     }
@@ -36,6 +53,12 @@ const Forgot1 = () => {
     }else if(!re.test(userEmail)){
       e.preventDefault();
       alert("Email Format: ...@...com !");
+    }else if (TAC === null) {
+      e.preventDefault();
+      setTACError({
+        display: "",
+        color: "red",
+      });
     }else {
       console.log("user email: ", userEmail);
       //
@@ -59,20 +82,25 @@ const Forgot1 = () => {
       </p>
       <br />
       <br />
-        <label>
-          <FontAwesomeIcon icon={faEnvelopeOpen} />
-          &nbsp;&nbsp;
-        </label>
+
+        <label><FontAwesomeIcon icon={faEnvelopeOpen} />&nbsp;&nbsp;</label>
         <input type="text" placeholder="Email" onChange={handleUserEmail} /><br />
         <span style={emailError}>please enter your email</span>
         <br />
         <br />
+
+        <label><FontAwesomeIcon icon={faKey} />&nbsp;&nbsp;</label>
+        <input type="text" placeholder="TAC" onChange={handleTAC}/><br />
+        <span style={TACError}>Please enter the 6-digit TAC</span>
+        <br />
+        <br />
+
         <button 
                   type="submit" 
                   style={{ backgroundColor: "#eb94f9" }}
                   onClick={handleSubmit}>
             <FontAwesomeIcon icon={faPaperPlane} />
-            &nbsp;&nbsp; Request TAC
+            &nbsp;&nbsp; Validate
         </button>
     </div>
   );

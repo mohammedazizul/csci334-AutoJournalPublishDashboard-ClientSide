@@ -7,7 +7,6 @@ import SignIn from "./components/Home/SignIn/SignIn";
 import SignUp from "./components/Home/SignUp/SignUp";
 import Forgot1 from "./components/Home/ForgotPasswd/Forgot1";
 import Forgot2 from "./components/Home/ForgotPasswd/Forgot2";
-import Forgot3 from "./components/Home/ForgotPasswd/Forgot3";
 import NoMatchFound from "./components/NoMatchFound/NoMatchFound";
 
 function App() {
@@ -34,9 +33,6 @@ function App() {
         </Route>
         <Route path="/forgot-password2">
           <Forgot2 />
-        </Route>
-        <Route path="/forgot-password3">
-          <Forgot3 />
         </Route>
         <Route path="/dashboard">
           <Dashboard />
