@@ -25,12 +25,14 @@ const SignUp = () => {
   const [responseData, setResponseData] = useState(false);
 
   // creating data to send to BE
+  //
+
   let formData = new FormData();
   formData.append("username", userName);
   formData.append("email", userEmail);
   formData.append("password", pwd);
   formData.append("dob", dob);
-  formData.append("type", 1);
+  formData.append("type", role);
 
   const processSignUp = () => {
     // to Display the key/value pairs
@@ -38,7 +40,7 @@ const SignUp = () => {
       console.log("Form Data: ", pair[0] + ", " + pair[1]);
     }
 
-    const urlToPost = `http://localhost/jess-backend/api/create/person.php`;
+    const urlToPost = `http://localhost/api/create/person.php`;
 
     fetch(urlToPost, {
       method: "POST",
@@ -49,13 +51,17 @@ const SignUp = () => {
       },
       body: formData,
     })
-      .then((response) =>
-        // making forceful response in FE if their is
-        response.text().then(setResponseData(true))
-      )
-      .catch((error) => {
-        console.log("Error: ", error);
-      });
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log("Error: ", error);
+    });
   };
   // POST COMPLETED
 
@@ -247,9 +253,9 @@ const SignUp = () => {
           <option value="DEFAULT" disabled>
             Select your role
           </option>
-          <option value="Author">Author</option>
-          <option value="Editor">Editor</option>
-          <option value="Reviewer">Reviewer</option>
+          <option value="1">Author</option>
+          <option value="0">Editor</option>
+          <option value="2">Reviewer</option>
         </select>
         <br />
         <br />
