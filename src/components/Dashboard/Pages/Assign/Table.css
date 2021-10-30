@@ -110,17 +110,16 @@ input[type=text], select, textarea {
     text-align: right;
 }
 
-.uploadDiv tr:nth-child(3), .uploadDiv tr:nth-child(4) {
+.uploadDiv tr:nth-child(3) {
     vertical-align: top;
+}
+
+.uploadDiv tr:nth-child(4) {
+    margin-top: 100px;
 }
 
 .uploadDiv tr:nth-child(3) textarea {
     height: 7vh;
-    width: 99%;
-}
-
-.uploadDiv tr:nth-child(4) textarea {
-    height: 10vh;
     width: 99%;
 }
 
@@ -158,11 +157,6 @@ input[type=text], select, textarea {
 
 .modifyFormDiv tr:nth-child(4) textarea {
     height: 7vh;
-    width: 99%;
-}
-
-.modifyFormDiv tr:nth-child(5) textarea {
-    height: 10vh;
     width: 99%;
 }
 

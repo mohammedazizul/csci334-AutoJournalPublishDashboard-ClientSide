@@ -113,23 +113,23 @@ const Modify = () => {
               <table>
                 <tr>
                   <td>No.</td>
-                  <td><input type="text"></input></td>
+                  <td><input type="text" value="S2324" readOnly></input></td>
                 </tr>
                 <tr>
                   <td>Title</td>
-                  <td><input type="text"></input></td>
+                  <td><input type="text" value="Machine Learning for Medicine" readOnly></input></td>
                 </tr>
                 <tr>
                   <td>Topic</td>
-                  <td><input type="text"></input></td>
+                  <td><input type="text" value="Science" readOnly></input></td>
                 </tr>
                 <tr>
                   <td>Remarks</td>
-                  <td><textarea></textarea></td>
+                  <td><textarea placeholder="Nothing Special"></textarea></td>
                 </tr>
                 <tr>
                   <td>Attachments *</td>
-                  <td><textarea></textarea></td>
+                  <td><input type="file"></input></td>
                 </tr>
               </table>
               <div className="inputBtn">

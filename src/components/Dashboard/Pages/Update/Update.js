@@ -236,15 +236,15 @@ const Update = () => {
             <table>
               <tr>
                 <td>No.</td>
-                <td colSpan="3"><input type="text" placeholder="H212"></input></td>
+                <td colSpan="3"><input type="text" value="H212" readonly></input></td>
               </tr>
               <tr>
                 <td>Pages</td>
-                <td colSpan="3"><input type="text" placeholder="223"></input></td>
+                <td colSpan="3"><input type="text" value="223" readonly></input></td>
               </tr>
               <tr>
                 <td>Author Name</td>
-                <td colSpan="3"><input type="text" placeholder="Tomas John"></input></td>
+                <td colSpan="3"><input type="text" value="Tomas John" readonly></input></td>
               </tr>
               <tr>
                 <td>Comments</td>

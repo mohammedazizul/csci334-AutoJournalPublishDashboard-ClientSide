@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import "./Table.css";
 import {
@@ -29,6 +29,31 @@ const Assign = () => {
   const goToManuscriptTable = () => {
     history.push("/dashboard/manuscript-table");
   };
+
+  // STANDARD GET REQUEST
+  const userDataUrl =
+    "http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&type=2";
+  const [reviewerNameData, setReviewerNameData] = useState([]);
+
+  // GET - (WORKING FINE)
+  useEffect(() => {
+    fetch(userDataUrl, {
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        console.log(data);
+        setReviewerNameData(data);
+      })
+      .catch((error) => {
+        console.error("JSON user data fetching error : ", error);
+      });
+  }, []);
 
   return (
     <div>
@@ -151,28 +176,28 @@ const Assign = () => {
                     <td>
                       <label>Reviewer 1 *</label>
                       <select>
-                        <option value="">Select Topic</option>
-                        <option value="1">Tomas John</option>
-                        <option value="2">Qing Yun</option>
-                        <option value="3">James Lee</option>
+                        <option value="">Select Reviewer</option>
+                        {reviewerNameData.map((item) => (
+                          <option value={item.personID}>{item.username}</option>
+                        ))}
                       </select>
                     </td>
                     <td>
                       <label>Reviewer 2 *</label>
                       <select>
-                        <option value="">Select Topic</option>
-                        <option value="1">Tomas John</option>
-                        <option value="2">Qing Yun</option>
-                        <option value="3">James Lee</option>
+                        <option value="">Select Reviewer</option>
+                        {reviewerNameData.map((item) => (
+                          <option value={item.personID}>{item.username}</option>
+                        ))}
                       </select>
                     </td>
                     <td>
                       <label>Reviewer 3 *</label>
                       <select>
-                        <option value="">Select Topic</option>
-                        <option value="1">Tomas John</option>
-                        <option value="2">Qing Yun</option>
-                        <option value="3">James Lee</option>
+                        <option value="">Select Reviewer</option>
+                        {reviewerNameData.map((item) => (
+                          <option value={item.personID}>{item.username}</option>
+                        ))}
                       </select>
                     </td>
                   </tr>

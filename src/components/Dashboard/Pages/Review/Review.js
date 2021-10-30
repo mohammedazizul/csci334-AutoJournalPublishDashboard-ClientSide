@@ -1,9 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
-import {
-  faAlignJustify,
-  faPenNib,
-} from "@fortawesome/free-solid-svg-icons";
+import React, { useEffect, useState } from "react";
+import { faAlignJustify, faPenNib } from "@fortawesome/free-solid-svg-icons";
 
 const Review = () => {
   const [isMainReview, setMainReview] = useState(true);
@@ -21,6 +18,31 @@ const Review = () => {
 
     setRecordInformation(false);
   }
+
+  // STANDARD GET REQUEST getdocument.php can not access
+  const userDataUrl =
+    "http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7";
+  const [documentData, setDocumentData] = useState([]);
+
+  // GET - (NOT WORKING FINE)
+  useEffect(() => {
+    fetch(userDataUrl, {
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        console.log(data);
+        setDocumentData(data);
+      })
+      .catch((error) => {
+        console.error("JSON user data fetching error : ", error);
+      });
+  }, []);
 
   return (
     <div>
@@ -111,12 +133,7 @@ const Review = () => {
             <form method="POST">
               <table>
                 <tr>
-                  <td>No. *</td>
-                  <td><input type="text"></input></td>
-                </tr>
-                <tr></tr>
-                <tr>
-                  <td>Comments</td>
+                  <td>Comments *</td>
                   <td><textarea></textarea></td>
                 </tr>
               </table>

@@ -47,7 +47,7 @@ const Upload = () => {
             </tr>
             <tr>
               <td>Attachments *</td>
-              <td colSpan="2"><textarea></textarea></td>
+              <td colSpan="2"><input type="file"></input></td>
             </tr>
           </table>
           <div className="inputBtn">
