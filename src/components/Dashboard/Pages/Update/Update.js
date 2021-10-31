@@ -54,7 +54,7 @@ const Update = () => {
           }}
         >
           <form method="GET">
-            <table>
+            <table className="dataTable">
               <thead>
                 <tr>
                   <th><input type="checkbox"></input></th>
@@ -234,29 +234,31 @@ const Update = () => {
         <div className="updateInfoDiv">
           <form method="POST">
             <table>
-              <tr>
-                <td>No.</td>
-                <td colSpan="3"><input type="text" value="H212" readonly></input></td>
-              </tr>
-              <tr>
-                <td>Pages</td>
-                <td colSpan="3"><input type="text" value="223" readonly></input></td>
-              </tr>
-              <tr>
-                <td>Author Name</td>
-                <td colSpan="3"><input type="text" value="Tomas John" readonly></input></td>
-              </tr>
-              <tr>
-                <td>Comments</td>
-                <td colSpan="3"><textarea placeholder="Nothing Special"></textarea></td>
-              </tr>
-              <tr></tr>
-              <tr style={{textAlign: "center"}}>
-                <td>Point 1: 7.5</td>
-                <td>Point 2: 6.8</td>
-                <td>Point 3: 7.5</td>
-                <td>*</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td>No.</td>
+                  <td colSpan="3"><input type="text" value="H212" readOnly></input></td>
+                </tr>
+                <tr>
+                  <td>Pages</td>
+                  <td colSpan="3"><input type="text" value="223" readOnly></input></td>
+                </tr>
+                <tr>
+                  <td>Author Name</td>
+                  <td colSpan="3"><input type="text" value="Tomas John" readOnly></input></td>
+                </tr>
+                <tr>
+                  <td>Comments</td>
+                  <td colSpan="3"><textarea placeholder="Nothing Special"></textarea></td>
+                </tr>
+                <tr></tr>
+                <tr style={{textAlign: "center"}}>
+                  <td>Point 1: 7.5</td>
+                  <td>Point 2: 6.8</td>
+                  <td>Point 3: 7.5</td>
+                  <td>*</td>
+                </tr>
+              </tbody>
             </table>
             <div className="inputBtn">
               <input type="submit" value="Confirm"></input>

@@ -38,7 +38,7 @@ const ReviewerTable = () => {
 
         <div className="reviewerTable">
           <form method="GET">
-            <table>
+            <table className="dataTable">
               <thead>
                 <tr>
                   <th>No.</th>
@@ -117,7 +117,7 @@ const ReviewerTable = () => {
 
         <div className="reviewerTable">
           <form method="GET">
-            <table style={{width: "80%", marginLeft: "auto", marginRight: "auto"}}>
+            <table style={{width: "80%", marginLeft: "auto", marginRight: "auto"}} className="dataTable">
               <thead>
                 <tr>
                   <th>No.</th>

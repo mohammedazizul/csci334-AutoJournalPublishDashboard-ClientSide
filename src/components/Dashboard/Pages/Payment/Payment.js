@@ -59,7 +59,7 @@ const Payment = () => {
             }}
           >
             <form method="GET">
-              <table>
+              <table className="dataTable">
                 <thead>
                   <tr>
                     <th><input type="checkbox"></input></th>
@@ -131,14 +131,16 @@ const Payment = () => {
           >
             <form method="POST">
               <table className="paymentTable">
-                <tr>
-                  <th><button><FontAwesomeIcon icon={faCreditCard}/>&nbsp;Credit / Debit Card</button></th>
-                  <th><button><FontAwesomeIcon icon={faUniversity}/>&nbsp;Online Banking</button></th>
-                </tr>
-                <tr>
-                  <th><button><FontAwesomeIcon icon={faCcPaypal}/>&nbsp;Paypal</button></th>
-                  <th><button><FontAwesomeIcon icon={faApple}/>&nbsp;Apple Pay</button></th>
-                </tr>
+                <tbody>
+                  <tr>
+                    <th><button><FontAwesomeIcon icon={faCreditCard}/>&nbsp;Credit / Debit Card</button></th>
+                    <th><button><FontAwesomeIcon icon={faUniversity}/>&nbsp;Online Banking</button></th>
+                  </tr>
+                  <tr>
+                    <th><button><FontAwesomeIcon icon={faCcPaypal}/>&nbsp;Paypal</button></th>
+                    <th><button><FontAwesomeIcon icon={faApple}/>&nbsp;Apple Pay</button></th>
+                  </tr>
+                </tbody>
               </table>
               <input type="submit" value="Place Payment"></input>
               <input type="reset" value="Cancel" onClick={isMainPaymentDashboard}></input>

@@ -11,12 +11,12 @@ tr {
     height: 50px;
 }
 
-thead {
+.dataTable thead {
     background-color: #795548;
     color: #ffffff;
 }
 
-tbody {
+.dataTable tbody {
     background-color: #ffffff;
 }
 

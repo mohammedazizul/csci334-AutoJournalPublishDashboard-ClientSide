@@ -80,7 +80,7 @@ const Assign = () => {
             }}
           >
             <form method="GET">
-              <table>
+              <table className="dataTable">
                 <thead>
                   <tr>
                     <th><input type="checkbox"></input></th>
@@ -146,7 +146,7 @@ const Assign = () => {
             }}
           >
             <form method="POST">
-              <table>
+              <table className="dataTable">
                 <thead>
                   <tr>
                     <th>No.</th>
@@ -172,35 +172,37 @@ const Assign = () => {
               </table>
               <div className="reviewersSelectedDiv">
                 <table>
-                  <tr>
-                    <td>
-                      <label>Reviewer 1 *</label>
-                      <select>
-                        <option value="">Select Reviewer</option>
-                        {reviewerNameData.map((item) => (
-                          <option value={item.personID}>{item.username}</option>
-                        ))}
-                      </select>
-                    </td>
-                    <td>
-                      <label>Reviewer 2 *</label>
-                      <select>
-                        <option value="">Select Reviewer</option>
-                        {reviewerNameData.map((item) => (
-                          <option value={item.personID}>{item.username}</option>
-                        ))}
-                      </select>
-                    </td>
-                    <td>
-                      <label>Reviewer 3 *</label>
-                      <select>
-                        <option value="">Select Reviewer</option>
-                        {reviewerNameData.map((item) => (
-                          <option value={item.personID}>{item.username}</option>
-                        ))}
-                      </select>
-                    </td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <label>Reviewer 1 *</label>
+                        <select>
+                          <option value="">Select Reviewer</option>
+                          {reviewerNameData.map((item) => (
+                            <option key={item.personID}>{item.username}</option>
+                          ))}
+                        </select>
+                      </td>
+                      <td>
+                        <label>Reviewer 2 *</label>
+                        <select>
+                          <option value="">Select Reviewer</option>
+                          {reviewerNameData.map((item) => (
+                            <option key={item.personID}>{item.username}</option>
+                          ))}
+                        </select>
+                      </td>
+                      <td>
+                        <label>Reviewer 3 *</label>
+                        <select>
+                          <option value="">Select Reviewer</option>
+                          {reviewerNameData.map((item) => (
+                            <option key={item.personID}>{item.username}</option>
+                          ))}
+                        </select>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
               <div>

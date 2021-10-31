@@ -54,7 +54,7 @@ const Publish = () => {
             }}
           >
             <form method="GET">
-              <table>
+              <table className="dataTable">
                 <thead>
                   <tr>
                     <th><input type="checkbox"></input></th>
@@ -117,14 +117,16 @@ const Publish = () => {
           <div className="recordJournalInfoDiv">
             <form method="POST">
               <table>
-                <tr>
-                  <td>Print date</td>
-                  <td><input type="date"></input></td>
-                </tr>
-                <tr>
-                  <td>Journal Issue</td>
-                  <td><textarea></textarea></td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td>Print date</td>
+                    <td><input type="date"></input></td>
+                  </tr>
+                  <tr>
+                    <td>Journal Issue</td>
+                    <td><textarea></textarea></td>
+                  </tr>
+                </tbody>
               </table>
               <div className="inputBtn">
                 <input type="submit" value="Confirm"></input>

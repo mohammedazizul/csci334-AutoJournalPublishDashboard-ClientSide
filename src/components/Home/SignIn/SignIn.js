@@ -54,7 +54,7 @@ const SignIn = () => {
     })
     .then((data) => {
       console.log(data);
-      history.push("/dashboard/manuscript-table");
+      history.push({pathname:'/dashboard/manuscript-table', state: data});
     })
     .catch((error) => {
       console.log("Error: ", error);

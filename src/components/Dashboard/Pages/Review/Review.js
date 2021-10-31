@@ -69,7 +69,7 @@ const Review = () => {
             }}
           >
             <form method="GET">
-              <table>
+              <table className="dataTable">
                 <thead>
                   <tr>
                     <th><input type="checkbox"></input></th>
@@ -132,10 +132,12 @@ const Review = () => {
           <div className="recordInfoFormDiv">
             <form method="POST">
               <table>
-                <tr>
-                  <td>Comments *</td>
-                  <td><textarea></textarea></td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td>Comments *</td>
+                    <td><textarea></textarea></td>
+                  </tr>
+                </tbody>
               </table>
               <div className="inputBtn">
                 <input type="submit" value="Upload"></input>

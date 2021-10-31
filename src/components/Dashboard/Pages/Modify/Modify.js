@@ -54,7 +54,7 @@ const Modify = () => {
             }}
           >
             <form method="GET">
-              <table>
+              <table className="dataTable">
                 <thead>
                   <tr>
                     <th><input type="checkbox"></input></th>
@@ -111,26 +111,28 @@ const Modify = () => {
           <div className="modifyFormDiv">
             <form method="POST">
               <table>
-                <tr>
-                  <td>No.</td>
-                  <td><input type="text" value="S2324" readOnly></input></td>
-                </tr>
-                <tr>
-                  <td>Title</td>
-                  <td><input type="text" value="Machine Learning for Medicine" readOnly></input></td>
-                </tr>
-                <tr>
-                  <td>Topic</td>
-                  <td><input type="text" value="Science" readOnly></input></td>
-                </tr>
-                <tr>
-                  <td>Remarks</td>
-                  <td><textarea placeholder="Nothing Special"></textarea></td>
-                </tr>
-                <tr>
-                  <td>Attachments *</td>
-                  <td><input type="file"></input></td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td>No.</td>
+                    <td><input type="text" value="S2324" readOnly></input></td>
+                  </tr>
+                  <tr>
+                    <td>Title</td>
+                    <td><input type="text" value="Machine Learning for Medicine" readOnly></input></td>
+                  </tr>
+                  <tr>
+                    <td>Topic</td>
+                    <td><input type="text" value="Science" readOnly></input></td>
+                  </tr>
+                  <tr>
+                    <td>Remarks</td>
+                    <td><textarea placeholder="Nothing Special"></textarea></td>
+                  </tr>
+                  <tr>
+                    <td>Attachments *</td>
+                    <td><input type="file"></input></td>
+                  </tr>
+                </tbody>
               </table>
               <div className="inputBtn">
                 <input type="submit" value="Update Manuscript"></input>

@@ -29,7 +29,7 @@ const FinalCheck = () => {
         }}
       >
         <form method="POST">
-          <table>
+          <table className="dataTable">
             <thead>
               <tr>
                 <th><input type="checkbox"></input></th>
