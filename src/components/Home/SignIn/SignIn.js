@@ -16,10 +16,51 @@ const SignIn = () => {
   //   email: "",
   //   password: "",
   // };
-
   let history = useHistory();
+
   const [userEmail, setUserEmail] = useState(null);
   const [userPasswd, setUserPasswd] = useState(null);
+
+  // STANDARD POST REQUEST - POST - (WORKING FINE)
+  const [responseData, setResponseData] = useState(false);
+
+
+
+  // creating data to send to BE
+  //
+
+  let formData = new FormData();
+  formData.append("email", userEmail);
+  formData.append("password", userPasswd);
+  
+
+  const processSignin = () => {
+    // to Display the key/value pairs
+    for (var pair of formData.entries()) {
+      console.log("Form Data: ", pair[0] + ", " + pair[1]);
+    }
+
+    const urlToPost = `http://localhost/processes/login.php`;
+
+    fetch(urlToPost, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json"
+      },
+      body: formData,
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      history.push("/dashboard/manuscript-table");
+    })
+    .catch((error) => {
+      console.log("Error: ", error);
+    });
+  };
+
 
   const [emailError, setEmailError] = useState({
     display: "none",
@@ -72,8 +113,7 @@ const SignIn = () => {
     } else {
       console.log("user email: ", userEmail);
       console.log("user password: ", userPasswd);
-      //
-      history.push("/dashboard/manuscript-table");
+      processSignin();
     }
   };
 

@@ -20,9 +20,12 @@ const SignUp = () => {
   const [pwdConfirm, setPwdConfirm] = useState(null);
   const [dob, setDob] = useState(null);
   const [role, setRole] = useState(null);
+  const [area, setArea] = useState(null);
 
   // STANDARD POST REQUEST - POST - (WORKING FINE)
   const [responseData, setResponseData] = useState(false);
+
+
 
   // creating data to send to BE
   //
@@ -33,6 +36,7 @@ const SignUp = () => {
   formData.append("password", pwd);
   formData.append("dob", dob);
   formData.append("type", role);
+  
 
   const processSignUp = () => {
     // to Display the key/value pairs
@@ -40,7 +44,7 @@ const SignUp = () => {
       console.log("Form Data: ", pair[0] + ", " + pair[1]);
     }
 
-    const urlToPost = `http://localhost/api/create/person.php`;
+    const urlToPost = `http://localhost/jess-backend/processes/signUp.php`;
 
     fetch(urlToPost, {
       method: "POST",
@@ -125,21 +129,26 @@ const SignUp = () => {
     let role = e.target.value;
     setRole(role);
 
-    if (role === "Reviewer") {
+    if (role === "2") {
       setAOE({
         display: "",
       });
     }
-    if (role === "Author") {
+    if (role === "0") {
       setAOE({
         display: "none",
       });
     }
-    if (role === "Editor") {
+    if (role === "1") {
       setAOE({
         display: "none",
       });
     }
+  };
+
+  const handleAOE = (e) => {
+    let area = e.target.value;
+    setArea(area);
   };
 
   const handleSubmit = (e) => {
@@ -171,14 +180,27 @@ const SignUp = () => {
         display: "",
         color: "red",
       });
-    } else {
+    }else if(role === null){
+      alert("Please specify your role!");
+    }else if(area === null & role === "2"){
+      alert("Please specify your area of expertise!");
+    }else {
       console.log("user name: ", userName);
       console.log("user email: ", userEmail);
       console.log("user role: ", role);
-      console.log("user dob: ", role);
+      console.log("user dob: ",dob);
       console.log("user pass: ", pwd);
-      //
-      // history.push("/sign-in");
+      console.log("user role: ", role);
+      console.log("user area: ", area);
+
+      if(role==="2")
+    {
+      console.log(area);
+      setRole(role + "-" + area);
+    }
+      processSignUp();
+      alert("You have signed in successfully!");
+      history.push("/sign-in");
     }
   };
 
@@ -255,7 +277,7 @@ const SignUp = () => {
         </select>
         <br />
         <br />
-        <select style={AOE}>
+        <select style={AOE} onChange={handleAOE}>
           <option value="DEFAULT" disabled>
             Area of expertise
           </option>
@@ -273,7 +295,7 @@ const SignUp = () => {
           className="button"
           type="submit"
           style={{ backgroundColor: "#bae9f4" }}
-          onClick={processSignUp}
+          onClick={handleSubmit}
         >
           <FontAwesomeIcon icon={faUserPlus} />
           &nbsp;&nbsp; Sign up
