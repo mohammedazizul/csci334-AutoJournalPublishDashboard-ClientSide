@@ -29,12 +29,12 @@ const Upload = () => {
             <tr>
               <td>Topic *</td>
               <td>
-              <select>
-                <option value="">Select Topic</option>
-                <option value="science">Science</option>
-                <option value="education">Education</option>
-                <option value="history">History</option>
-                <option value="social study">Social Study</option>
+                <select>
+                  <option value="">Select Topic</option>
+                  <option value="science">Science</option>
+                  <option value="education">Education</option>
+                  <option value="history">History</option>
+                  <option value="social study">Social Study</option>
                 </select>
               </td>
               <td>
