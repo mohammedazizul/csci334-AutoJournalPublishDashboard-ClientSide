@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import {
   faAlignJustify,
@@ -10,6 +10,7 @@ import {
   faCcPaypal,
   faApple,
 } from '@fortawesome/free-brands-svg-icons';
+import PendingPayment from "./TableData/PendingPayment";
 
 const Payment = () => {
   let history = useHistory();
@@ -33,6 +34,31 @@ const Payment = () => {
   const goToManuscriptTable = () => {
     history.push("/dashboard/manuscript-table");
   };
+
+  // STANDARD GET REQUEST
+  const pendingPaymentDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7`;
+  const [pendingPayment, setPendingPayment] = useState([]);
+
+  // GET - (WORKING FINE)
+  useEffect(() => {
+    fetch(pendingPaymentDataUrl, {
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        console.log(data);
+        setPendingPayment(data);
+      })
+      .catch((error) => {
+        console.error("JSON user data fetching error : ", error);
+      });
+  }, []);
+
   return (
     <div>
       {isMainPayment?
@@ -72,28 +98,9 @@ const Payment = () => {
                     <th>Amount</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td><input type="checkbox"></input></td>
-                    <td>S1323</td>
-                    <td>AI Technique with Industry 4.0</td>
-                    <td>Science</td>
-                    <td>276</td>
-                    <td>07/11/2019</td>
-                    <td>Pending Payment</td>
-                    <td>RM320</td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></input></td>
-                    <td>H212</td>
-                    <td>The Study of Qing Emperors</td>
-                    <td>History</td>
-                    <td>223</td>
-                    <td>24/12/2020</td>
-                    <td>Pending Payment</td>
-                    <td>RM180</td>
-                  </tr>
-                </tbody>
+                {pendingPayment.map((item) => (
+                  <PendingPayment key={item.documentID} data={item} />
+                ))}
               </table>
               <br />
               <span>Total: RM</span>

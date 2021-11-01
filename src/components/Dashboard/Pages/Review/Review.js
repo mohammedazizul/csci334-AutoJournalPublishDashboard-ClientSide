@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
 import { faAlignJustify, faPenNib } from "@fortawesome/free-solid-svg-icons";
 import { UserContext } from "../../../../App";
+import NewDocumentData from "./TableData/NewDocumentData";
 
 const Review = () => {
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
@@ -23,14 +24,13 @@ const Review = () => {
     setRecordInformation(false);
   };
 
-  // STANDARD GET REQUEST getdocument.php can not access
-  const userDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7&authorID=${loggedInUser.personID}
-    `;
-  const [documentData, setDocumentData] = useState([]);
+  // STANDARD GET REQUEST
+  const newDocumentDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7`;
+  const [newDocumentData, setNewDocumentData] = useState([]);
 
-  // GET - (NOT WORKING FINE)
+  // GET - (WORKING FINE)
   useEffect(() => {
-    fetch(userDataUrl, {
+    fetch(newDocumentDataUrl, {
       method: "GET",
     })
       .then((response) => {
@@ -41,7 +41,7 @@ const Review = () => {
       })
       .then((data) => {
         console.log(data);
-        setDocumentData(data);
+        setNewDocumentData(data);
       })
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
@@ -79,9 +79,7 @@ const Review = () => {
               <table className="dataTable">
                 <thead>
                   <tr>
-                    <th>
-                      <input type="checkbox"></input>
-                    </th>
+                    <th></th>
                     <th>No.</th>
                     <th>Title</th>
                     <th>Topic</th>
@@ -92,38 +90,9 @@ const Review = () => {
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <input type="checkbox"></input>
-                    </td>
-                    <td></td>
-                    <td>Preschool Education</td>
-                    <td>Education</td>
-                    <td>367</td>
-                    <td>21/9/2021</td>
-                    <td>Tomas John</td>
-                    <td>New</td>
-                    <td>
-                      <button>View</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="checkbox"></input>
-                    </td>
-                    <td></td>
-                    <td>Kinematics and Health</td>
-                    <td>Health</td>
-                    <td>567</td>
-                    <td>13/11/2019</td>
-                    <td>James Lee</td>
-                    <td>New</td>
-                    <td>
-                      <button>View</button>
-                    </td>
-                  </tr>
-                </tbody>
+                {newDocumentData.map((item) => (
+                  <NewDocumentData key={item.documentID} data={item} />
+                ))}
               </table>
               <button
                 className="btn"

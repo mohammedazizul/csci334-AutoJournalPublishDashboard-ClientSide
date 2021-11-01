@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import {
   faAlignJustify,
   faPenNib,
 } from "@fortawesome/free-solid-svg-icons";
+import Paid from "./TableData/Paid";
 
 const Publish = () => {
   let history = useHistory();
@@ -28,6 +29,30 @@ const Publish = () => {
   const goToManuscriptTable = () => {
     history.push("/dashboard/manuscript-table");
   };
+
+  // STANDARD GET REQUEST
+  const paidDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7`;
+  const [paid, setPaid] = useState([]);
+
+  // GET - (WORKING FINE)
+  useEffect(() => {
+    fetch(paidDataUrl, {
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        console.log(data);
+        setPaid(data);
+      })
+      .catch((error) => {
+        console.error("JSON user data fetching error : ", error);
+      });
+  }, []);
 
   return (
     <div>
@@ -57,7 +82,7 @@ const Publish = () => {
               <table className="dataTable">
                 <thead>
                   <tr>
-                    <th><input type="checkbox"></input></th>
+                    <th></th>
                     <th>No.</th>
                     <th>Title</th>
                     <th>Topic</th>
@@ -68,30 +93,9 @@ const Publish = () => {
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td><input type="checkbox"></input></td>
-                    <td>S376</td>
-                    <td>Machine Learning for Gimification</td>
-                    <td>Science</td>
-                    <td>345</td>
-                    <td>09/08/2015</td>
-                    <td>Tomas John</td>
-                    <td>Paid</td>
-                    <td><button>View</button></td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></input></td>
-                    <td>SS34</td>
-                    <td>Culture and Encomics</td>
-                    <td>Social Study</td>
-                    <td>444</td>
-                    <td>29/09/2018</td>
-                    <td>Doris Wu</td>
-                    <td>Paid</td>
-                    <td><button>View</button></td>
-                  </tr>
-                </tbody>
+                {paid.map((item) => (
+                  <Paid key={item.documentID} data={item} />
+                ))}
               </table>
               <button className="btn" id="trueBtn" onClick={isRecordJournalInfoDashboard}>Publish</button>
               <button className="btn" id="falseBtn" onClick={goToManuscriptTable}>Cancel</button>

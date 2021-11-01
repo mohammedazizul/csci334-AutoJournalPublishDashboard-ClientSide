@@ -1,7 +1,59 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../../../../App";
+import AuthorData from "../TableData/AuthorData";
+import EditorData from "../TableData/EditorData";
 
 const EditorAuthorTable = () => {
-  // EditorAuthor Dashboard
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  console.log("userData: ", loggedInUser);
+
+  // STANDARD GET REQUEST
+  const authorDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7&authorID=${loggedInUser.personID}`;
+  const [authorData, setAuthorData] = useState([]);
+
+  // GET - (WORKING FINE)
+  useEffect(() => {
+    fetch(authorDataUrl, {
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        console.log(data);
+        setAuthorData(data);
+      })
+      .catch((error) => {
+        console.error("JSON user data fetching error : ", error);
+      });
+  }, []);
+
+  // STANDARD GET REQUEST
+  const editorDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7`;
+  const [editorData, setEditorData] = useState([]);
+
+  // GET - (WORKING FINE)
+  useEffect(() => {
+    fetch(editorDataUrl, {
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        console.log(data);
+        setEditorData(data);
+      })
+      .catch((error) => {
+        console.error("JSON user data fetching error : ", error);
+      });
+  }, []);
 
   return (
     <div>
@@ -81,182 +133,18 @@ const EditorAuthorTable = () => {
                   <th>Pages</th>
                   <th>Submit Date</th>
                   <th>Author Name</th>
+                  {/* If the user's role is Author will not display this col, it will show only the user's role is reviewer*/}
                   <th>Status</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>S111</td>
-                  <td>AI Development History</td>
-                  <td>Science</td>
-                  <td>111</td>
-                  <td>11/11/2011</td>
-                  <td>Tomas John</td>
-                  <td>Published</td>
-                </tr>
-                <tr>
-                  <td>E878</td>
-                  <td>Patriotic Education</td>
-                  <td>Education</td>
-                  <td>346</td>
-                  <td>21/12/2011</td>
-                  <td>Jane</td>
-                  <td>Published</td>
-                </tr>
-                <tr>
-                  <td>S343</td>
-                  <td>Computer Science Development</td>
-                  <td>Science</td>
-                  <td>212</td>
-                  <td>12/12/2012</td>
-                  <td>Tomas John</td>
-                  <td>Cancelled</td>
-                </tr>
-                <tr>
-                  <td>S1323</td>
-                  <td>AI Technique with Industry 4.0</td>
-                  <td>Science</td>
-                  <td>276</td>
-                  <td>07/11/2019</td>
-                  <td>Tomas John</td>
-                  <td>Pending Payment</td>
-                </tr>
-                <tr>
-                  <td>H212</td>
-                  <td>The Study of Qing Emperors</td>
-                  <td>History</td>
-                  <td>223</td>
-                  <td>24/12/2020</td>
-                  <td>Tomas John</td>
-                  <td>Pending Payment</td>
-                </tr>
-                <tr>
-                  <td>E387</td>
-                  <td>Safety Education</td>
-                  <td>Education</td>
-                  <td>289</td>
-                  <td>04/07/2017</td>
-                  <td>Tomas John</td>
-                  <td>Pending Final Check</td>
-                </tr>
-                <tr>
-                  <td>S666</td>
-                  <td>Robotics and Surgical Medicine</td>
-                  <td>Science</td>
-                  <td>786</td>
-                  <td>07/09/2020</td>
-                  <td>Eric</td>
-                  <td>Pending Final Check</td>
-                </tr>
-                <tr>
-                  <td>S2324</td>
-                  <td>Machine Learning for Medicine</td>
-                  <td>Science</td>
-                  <td>632</td>
-                  <td>19/07/2021</td>
-                  <td>Tomas John</td>
-                  <td>Pending Modify</td>
-                </tr>
-                <tr>
-                  <td>S2345</td>
-                  <td>Medicine with Industry 4.0</td>
-                  <td>Science</td>
-                  <td>432</td>
-                  <td>11/08/2021</td>
-                  <td>Tomas John</td>
-                  <td>Pending Modify</td>
-                </tr>
-                <tr>
-                  <td>S376</td>
-                  <td>Machine Learning for Gimification</td>
-                  <td>Science</td>
-                  <td>345</td>
-                  <td>09/08/2015</td>
-                  <td>Tomas John</td>
-                  <td>Paid</td>
-                </tr>
-                <tr>
-                  <td>SS34</td>
-                  <td>Culture and Encomics</td>
-                  <td>Social Study</td>
-                  <td>444</td>
-                  <td>29/09/2018</td>
-                  <td>Doris Wu</td>
-                  <td>Paid</td>
-                </tr>
-                <tr>
-                  <td>SS13</td>
-                  <td>Social Study under Multimedia</td>
-                  <td>Social Study</td>
-                  <td>345</td>
-                  <td>24/06/2021</td>
-                  <td>Tomas John</td>
-                  <td>Under Review</td>
-                </tr>
-                <tr>
-                  <td>E232</td>
-                  <td>Self Defense</td>
-                  <td>Education</td>
-                  <td>124</td>
-                  <td>07/11/2018</td>
-                  <td>Vincent</td>
-                  <td>Under Review</td>
-                </tr>
-                <tr>
-                  <td>M232</td>
-                  <td>Medical Robotics</td>
-                  <td>Medicine</td>
-                  <td>432</td>
-                  <td>17/09/2021</td>
-                  <td>Tomas John</td>
-                  <td>Pending Review</td>
-                </tr>
-                <tr>
-                  <td>S767</td>
-                  <td>AI for Medical Surgery</td>
-                  <td>Science</td>
-                  <td>854</td>
-                  <td>20/12/2020</td>
-                  <td>Qing Yun</td>
-                  <td>Pending Review</td>
-                </tr>
-                <tr>
-                  <td>G333</td>
-                  <td>Gimification Industry</td>
-                  <td>Gimification</td>
-                  <td>176</td>
-                  <td>23/03/2021</td>
-                  <td>Tomas John</td>
-                  <td>Rejected</td>
-                </tr>
-                <tr>
-                  <td>A354</td>
-                  <td>Art and Culture</td>
-                  <td>Art</td>
-                  <td>323</td>
-                  <td>21/12/2012</td>
-                  <td>James Lee</td>
-                  <td>Rejected</td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>Preschool Education</td>
-                  <td>Education</td>
-                  <td>367</td>
-                  <td>21/09/2021</td>
-                  <td>Tomas John</td>
-                  <td>New</td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>Kinematics and Health</td>
-                  <td>Health</td>
-                  <td>567</td>
-                  <td>13/11/2019</td>
-                  <td>James Lee</td>
-                  <td>New</td>
-                </tr>
-              </tbody>
+              {/* If the user's role is Author will display this data table. */}
+              {authorData.map((item) => (
+                <AuthorData key={item.documentID} data={item} />
+              ))}
+              {/* If the user's role is Editor will display this data table. */}
+              {/* {editorData.map((item) => (
+                <EditorData key={item.documentID} data={item} />
+              ))} */}
             </table>
           </form>
         </div>
