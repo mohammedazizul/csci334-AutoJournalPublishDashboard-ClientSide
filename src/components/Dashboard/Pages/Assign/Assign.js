@@ -15,6 +15,9 @@ const Assign = () => {
 
   const [isAssignReviewers, setAssignReviewers] = useState(false);
 
+  const [documentID, setDocumentID] = useState(null);
+  console.log(documentID)
+
   const isAssignReviewersDashboard = () => {
     setMainAssign(false);
 
@@ -118,7 +121,18 @@ const Assign = () => {
                   </tr>
                 </thead>
                 {pendingReview.map((item) => (
-                  <PendingReview key={item.documentID} data={item} />
+                  <tbody key={item.documentID} data={item}>
+                    <tr>
+                      <td><input type="checkbox" value={item.documentID} onChange={(e)=>setDocumentID(e.target.value)}></input></td>
+                      <td>{item.documentID}</td>
+                      <td>{item.title}</td>
+                      <td>{item.topic}</td>
+                      <td>{item.pages}</td>
+                      <td>{item.dateOfSubmission}</td>
+                      <td>{item.authorID}</td>
+                      <td>{item.status}</td>
+                    </tr>
+                  </tbody>
                 ))}
               </table>
               <button className="btn" id="trueBtn" onClick={isAssignReviewersDashboard}>Assign</button>
