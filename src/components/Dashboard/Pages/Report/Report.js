@@ -136,7 +136,7 @@ const Report = () => {
           </div>
 
           <form method="GET">
-            <table>
+            <table className="dataTable">
               <thead>
                 <tr>
                   <th>Reviewer Name</th>
@@ -165,7 +165,7 @@ const Report = () => {
           </div>
 
           <form method="GET">
-            <table>
+            <table className="dataTable">
               <thead>
                 <tr>
                   <th>Reviewer Name</th>
@@ -232,7 +232,7 @@ const Report = () => {
           </div>
 
           <form method="GET" style={{ margin: "20px" }}>
-            <table>
+            <table className="dataTable">
               <thead>
                 <tr>
                   <th>Author Name</th>
