@@ -11,6 +11,7 @@ const Upload = () => {
   const goToManuscriptTable = () => {
     history.push("/dashboard/manuscript-table");
   };
+  
   return (
     <div>
       <div>
