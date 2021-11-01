@@ -11,28 +11,16 @@ import {
 import { Link } from "react-router-dom";
 
 const SignIn = () => {
-  // form data
-  // const userData = {
-  //   email: "",
-  //   password: "",
-  // };
   let history = useHistory();
 
   const [userEmail, setUserEmail] = useState(null);
   const [userPasswd, setUserPasswd] = useState(null);
 
   // STANDARD POST REQUEST - POST - (WORKING FINE)
-  const [responseData, setResponseData] = useState(false);
-
-
-
   // creating data to send to BE
-  //
-
   let formData = new FormData();
   formData.append("email", userEmail);
   formData.append("password", userPasswd);
-  
 
   const processSignin = () => {
     // to Display the key/value pairs
@@ -40,27 +28,26 @@ const SignIn = () => {
       console.log("Form Data: ", pair[0] + ", " + pair[1]);
     }
 
-    const urlToPost = `http://localhost/processes/login.php`;
+    const urlToPost = `http://localhost/jess-backend/processes/login.php`;
 
     fetch(urlToPost, {
       method: "POST",
       headers: {
-        "Accept": "application/json"
+        Accept: "application/json",
       },
       body: formData,
     })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data);
-      history.push({pathname:'/dashboard/manuscript-table', state: data});
-    })
-    .catch((error) => {
-      console.log("Error: ", error);
-    });
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("login :", data);
+        history.push({ pathname: "/dashboard/manuscript-table", state: data });
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
   };
-
 
   const [emailError, setEmailError] = useState({
     display: "none",
@@ -99,12 +86,10 @@ const SignIn = () => {
         display: "",
         color: "red",
       });
-    }
-    else if(!re.test(userEmail)){
+    } else if (!re.test(userEmail)) {
       e.preventDefault();
       alert("Email Format: ...@...com !");
-    }
-    else if (userPasswd === null) {
+    } else if (userPasswd === null) {
       e.preventDefault();
       setPasswdError({
         display: "",
@@ -119,13 +104,14 @@ const SignIn = () => {
 
   return (
     <div className="SigninMainDiv" id="bgsetting">
-      <img src={Logo} alt="logo" /><br />
-      {/* <form> */}
+      <img src={Logo} alt="logo" />
+      <br />
       <label>
         <FontAwesomeIcon icon={faEnvelopeOpen} />
         &nbsp;&nbsp;
       </label>
-      <input type="text" placeholder="Email" onChange={handleUserEmail} /><br />
+      <input type="text" placeholder="Email" onChange={handleUserEmail} />
+      <br />
       <span style={emailError}>please enter your email</span>
 
       <br />
@@ -135,7 +121,12 @@ const SignIn = () => {
         <FontAwesomeIcon icon={faLock} />
         &nbsp;&nbsp;
       </label>
-      <input type="password" placeholder="Password" onChange={handleUserPasswd}/><br />
+      <input
+        type="password"
+        placeholder="Password"
+        onChange={handleUserPasswd}
+      />
+      <br />
       <span style={PasswdError}>Please enter your password</span>
 
       <br />
@@ -149,11 +140,11 @@ const SignIn = () => {
       <button
         type=""
         onClick={handleLogin}
-        style={{ backgroundColor: "#f9e6ac" }} >
+        style={{ backgroundColor: "#f9e6ac" }}
+      >
         <FontAwesomeIcon icon={faUserCircle} />
         &nbsp;&nbsp; Sign in
       </button>
-      {/* </form> */}
     </div>
   );
 };

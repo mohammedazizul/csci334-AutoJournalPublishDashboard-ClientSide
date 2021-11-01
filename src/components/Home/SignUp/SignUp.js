@@ -2,7 +2,6 @@ import "./SignUp.css";
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import Logo from "../../Logo/logo512.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
   faEnvelopeOpen,
@@ -10,6 +9,7 @@ import {
   faUserPlus,
   faCalendarDay,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const SignUp = () => {
   let history = useHistory();
@@ -22,22 +22,15 @@ const SignUp = () => {
   const [role, setRole] = useState(null);
   const [area, setArea] = useState(null);
 
-  // STANDARD POST REQUEST - POST - (WORKING FINE)
-  const [responseData, setResponseData] = useState(false);
-
-
-
   // creating data to send to BE
-  //
-
   let formData = new FormData();
   formData.append("username", userName);
   formData.append("email", userEmail);
   formData.append("password", pwd);
   formData.append("dob", dob);
   formData.append("type", role);
-  
 
+  // STANDARD POST REQUEST - POST - (WORKING FINE)
   const processSignUp = () => {
     // to Display the key/value pairs
     for (var pair of formData.entries()) {
@@ -49,19 +42,20 @@ const SignUp = () => {
     fetch(urlToPost, {
       method: "POST",
       headers: {
-        "Accept": "application/json"
+        Accept: "application/json",
       },
       body: formData,
     })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((error) => {
-      console.log("Error: ", error);
-    });
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        alert(data.success);
+        console.log("Server Response: ", data);
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
   };
   // POST COMPLETED
 
@@ -180,27 +174,25 @@ const SignUp = () => {
         display: "",
         color: "red",
       });
-    }else if(role === null){
+    } else if (role === null) {
       alert("Please specify your role!");
-    }else if(area === null & role === "2"){
+    } else if ((area === null) & (role === "2")) {
       alert("Please specify your area of expertise!");
-    }else {
-      console.log("user name: ", userName);
-      console.log("user email: ", userEmail);
-      console.log("user role: ", role);
-      console.log("user dob: ",dob);
-      console.log("user pass: ", pwd);
-      console.log("user role: ", role);
-      console.log("user area: ", area);
-
-      if(role==="2")
-    {
-      console.log(area);
-      setRole(role + "-" + area);
-    }
+    } else {
+      // console.log("user name: ", userName);
+      // console.log("user email: ", userEmail);
+      // console.log("user role: ", role);
+      // console.log("user dob: ",dob);
+      // console.log("user pass: ", pwd);
+      // console.log("user role: ", role);
+      // console.log("user area: ", area);
+      if (role === "2") {
+        console.log(area);
+        setRole(role + "-" + area);
+      }
       processSignUp();
-      alert("You have signed in successfully!");
-      history.push("/sign-in");
+      // alert("You have signed in successfully!");
+      history.push("/");
     }
   };
 
@@ -300,10 +292,6 @@ const SignUp = () => {
           <FontAwesomeIcon icon={faUserPlus} />
           &nbsp;&nbsp; Sign up
         </button>
-        {/* response */}
-        <div style={{ color: "green", fontSize: "18px", fontWeight: "bold" }}>
-          {responseData && "Successfully Signed Up !"}
-        </div>
       </div>
     </div>
   );
