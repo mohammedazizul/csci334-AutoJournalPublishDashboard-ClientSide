@@ -1,10 +1,35 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   faAlignJustify,
 } from "@fortawesome/free-solid-svg-icons";
+import PendingFinalCheck from "./TableData/PendingFinalCheck";
 
 const FinalCheck = () => {
+  // STANDARD GET REQUEST
+  const pendingFinalCheckDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7`;
+  const [pendingFinalCheck, setPendingFinalCheck] = useState([]);
+
+  // GET - (WORKING FINE)
+  useEffect(() => {
+    fetch(pendingFinalCheckDataUrl, {
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        console.log(data);
+        setPendingFinalCheck(data);
+      })
+      .catch((error) => {
+        console.error("JSON user data fetching error : ", error);
+      });
+  }, []);
+
   return (
     <div>
       <div>
@@ -43,30 +68,9 @@ const FinalCheck = () => {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td><input type="checkbox"></input></td>
-                <td>E387</td>
-                <td>Safety Education</td>
-                <td>Education</td>
-                <td>289</td>
-                <td>04/07/2017</td>
-                <td>Tomas John</td>
-                <td>Pending Final Check</td>
-                <td><button>View</button></td>
-              </tr>
-              <tr>
-                <td><input type="checkbox"></input></td>
-                <td>S666</td>
-                <td>Robotics and Surgical Medicine</td>
-                <td>Science</td>
-                <td>786</td>
-                <td>07/09/2020</td>
-                <td>Eric</td>
-                <td>Pending Final Check</td>
-                <td><button>View</button></td>
-              </tr>
-            </tbody>
+            {pendingFinalCheck.map((item) => (
+              <PendingFinalCheck key={item.documentID} data={item} />
+            ))}
           </table>
           <input type="submit" value="Satisfy"></input>
           <input type="submit" value="Reject"></input>

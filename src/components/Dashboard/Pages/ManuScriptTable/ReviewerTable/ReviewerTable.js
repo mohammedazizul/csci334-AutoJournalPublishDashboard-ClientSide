@@ -1,5 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../../../../App";
+import ReviewerData from "../TableData/ReviewerData";
 import {
   faAlignJustify,
   faQuestionCircle,
@@ -21,6 +23,33 @@ const ReviewerTable = () => {
 
     setRateManuscriptDiv(false);
   }
+
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  console.log("userData: ", loggedInUser);
+
+  // STANDARD GET REQUEST
+  const reviewerDataUrl = `http://localhost/jess-backend/api/read/getreview.php?api_key=RXru1LUOOeKFX03LGSo7&reviewerID=${loggedInUser.personID}`;
+  const [reviewerData, setReviewerData] = useState([]);
+
+  // GET - (WORKING FINE)
+  useEffect(() => {
+    fetch(reviewerDataUrl, {
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        console.log(data);
+        setReviewerData(data);
+      })
+      .catch((error) => {
+        console.error("JSON user data fetching error : ", error);
+      });
+  }, []);
 
   return (
     <div>
@@ -175,7 +204,22 @@ const ReviewerTable = () => {
               <table style={{width: "40%", marginLeft: "auto", marginRight: "auto"}}>
                 <tr>
                   <td>Rate: *</td>
-                  <td><input type="text"></input></td>
+                  <td>
+                    <select>
+                      <option value="default">Rate</option>
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                    </select>
+                  </td>
                 </tr>
                 <tr>
                   <td>Comments: *</td>

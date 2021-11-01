@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import {
   faAlignJustify,
   faExchangeAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import PendingModify from "./TableData/PendingModify";
 
 const Modify = () => {
   let history = useHistory();
@@ -28,6 +29,30 @@ const Modify = () => {
   const goToManuscriptTable = () => {
     history.push("/dashboard/manuscript-table");
   };
+
+  // STANDARD GET REQUEST
+  const pendingModifyDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7`;
+  const [pendingModify, setPendingModify] = useState([]);
+
+  // GET - (WORKING FINE)
+  useEffect(() => {
+    fetch(pendingModifyDataUrl, {
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        console.log(data);
+        setPendingModify(data);
+      })
+      .catch((error) => {
+        console.error("JSON user data fetching error : ", error);
+      });
+  }, []);
 
   return (
     <div>
@@ -57,7 +82,7 @@ const Modify = () => {
               <table className="dataTable">
                 <thead>
                   <tr>
-                    <th><input type="checkbox"></input></th>
+                    <th></th>
                     <th>No.</th>
                     <th>Title</th>
                     <th>Topic</th>
@@ -66,26 +91,9 @@ const Modify = () => {
                     <th>Status</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td><input type="checkbox"></input></td>
-                    <td>S2324</td>
-                    <td>Machine Learning for Medicine</td>
-                    <td>Science</td>
-                    <td>632</td>
-                    <td>19/07/2021</td>
-                    <td>Pending Modify</td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></input></td>
-                    <td>S2345</td>
-                    <td>Medicine with Industry 4.0</td>
-                    <td>Science</td>
-                    <td>432</td>
-                    <td>11/08/2021</td>
-                    <td>Pending Modify</td>
-                  </tr>
-                </tbody>
+                {pendingModify.map((item) => (
+                  <PendingModify key={item.documentID} data={item} />
+                ))}
               </table>
               <button className="btn" id="trueBtn" onClick={isModifySelected}>Modify Selected</button>
               <button className="btn" id="falseBtn" onClick={goToManuscriptTable}>Cancel</button>

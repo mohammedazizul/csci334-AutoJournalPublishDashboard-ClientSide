@@ -1,7 +1,7 @@
 import React from "react";
 
 const ReviewerData = (props) => {
-  const { dob, areaOfExpertise, status, username } = props.data;
+  const { dob, areaOfExpertise, username } = props.data;
 
   return (
     <tbody>
@@ -11,7 +11,7 @@ const ReviewerData = (props) => {
         <td>{}</td>
         <td>{}</td>
         <td>{areaOfExpertise}</td>
-        <td>{status}</td>
+        <td>{}</td>
       </tr>
     </tbody>
   );

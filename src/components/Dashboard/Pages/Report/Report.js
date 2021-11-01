@@ -171,7 +171,6 @@ const Report = () => {
                   <th>Reviewer Name</th>
                   <th>Age</th>
                   <th>Area of Expertise</th>
-                  <th>Sign-up date &amp; time</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -180,7 +179,6 @@ const Report = () => {
                   <td>Tommy</td>
                   <td>33</td>
                   <td>Science</td>
-                  <td>20/09/2021 09:45 am</td>
                   <td>
                     <input type="submit" value="Approve"></input>
                     <input type="submit" value="Reject"></input>
@@ -190,7 +188,6 @@ const Report = () => {
                   <td>Newton</td>
                   <td>29</td>
                   <td>Education</td>
-                  <td>21/09/2021 11:23 am</td>
                   <td>
                     <input type="submit" value="Approve"></input>
                     <input type="submit" value="Reject"></input>
@@ -200,7 +197,6 @@ const Report = () => {
                   <td>Alias</td>
                   <td>43</td>
                   <td>Social Study</td>
-                  <td>22/02/2021 03:43 pm</td>
                   <td>
                     <input type="submit" value="Approve"></input>
                     <input type="submit" value="Reject"></input>
@@ -210,7 +206,6 @@ const Report = () => {
                   <td>Tim</td>
                   <td>36</td>
                   <td>Others</td>
-                  <td>23/09/2021 11:23 am</td>
                   <td>
                     <input type="submit" value="Approve"></input>
                     <input type="submit" value="Reject"></input>

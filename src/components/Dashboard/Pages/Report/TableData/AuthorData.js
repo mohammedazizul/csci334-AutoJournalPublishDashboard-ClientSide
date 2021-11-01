@@ -18,19 +18,6 @@ const AuthorData = (props) => {
         <td>{}</td>
         <td>{}</td>
       </tr>
-      <tr>
-        <td>Total</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        </tr>
     </tbody>
   );
 };

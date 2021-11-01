@@ -6,6 +6,7 @@ import {
   faAlignJustify,
   faEdit,
 } from "@fortawesome/free-solid-svg-icons";
+import PendingReview from "./TableData/PendingReview";
 
 const Assign = () => {
   let history = useHistory();
@@ -13,6 +14,9 @@ const Assign = () => {
   const [isMainAssign, setMainAssign] = useState(true);
 
   const [isAssignReviewers, setAssignReviewers] = useState(false);
+
+  const [documentID, setDocumentID] = useState(null);
+  console.log(documentID)
 
   const isAssignReviewersDashboard = () => {
     setMainAssign(false);
@@ -31,13 +35,36 @@ const Assign = () => {
   };
 
   // STANDARD GET REQUEST
-  const userDataUrl =
-    "http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&type=2";
+  const pendingReviewDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7`;
+  const [pendingReview, setPendingReview] = useState([]);
+
+  // GET - (WORKING FINE)
+  useEffect(() => {
+    fetch(pendingReviewDataUrl, {
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        console.log(data);
+        setPendingReview(data);
+      })
+      .catch((error) => {
+        console.error("JSON user data fetching error : ", error);
+      });
+  }, []);
+
+  // STANDARD GET REQUEST
+  const reviewerNameDataUrl = `http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&type=2`;
   const [reviewerNameData, setReviewerNameData] = useState([]);
 
   // GET - (WORKING FINE)
   useEffect(() => {
-    fetch(userDataUrl, {
+    fetch(reviewerNameDataUrl, {
       method: "GET",
     })
       .then((response) => {
@@ -83,7 +110,7 @@ const Assign = () => {
               <table className="dataTable">
                 <thead>
                   <tr>
-                    <th><input type="checkbox"></input></th>
+                    <th></th>
                     <th>No.</th>
                     <th>Title</th>
                     <th>Topic</th>
@@ -93,28 +120,20 @@ const Assign = () => {
                     <th>Status</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td><input type="checkbox"></input></td>
-                    <td>M232</td>
-                    <td>Medical Robotics</td>
-                    <td>Medicine</td>
-                    <td>432</td>
-                    <td>17/09/2021</td>
-                    <td>Tomas John</td>
-                    <td>Pending Review</td>
-                  </tr>
-                  <tr>
-                    <td><input type="checkbox"></input></td>
-                    <td>S767</td>
-                    <td>AI for Medical Surgery</td>
-                    <td>Science</td>
-                    <td>854</td>
-                    <td>20/12/2020</td>
-                    <td>Qing Yun</td>
-                    <td>Pending Review</td>
-                  </tr>
-                </tbody>
+                {pendingReview.map((item) => (
+                  <tbody key={item.documentID} data={item}>
+                    <tr>
+                      <td><input type="checkbox" value={item.documentID} onChange={(e)=>setDocumentID(e.target.value)}></input></td>
+                      <td>{item.documentID}</td>
+                      <td>{item.title}</td>
+                      <td>{item.topic}</td>
+                      <td>{item.pages}</td>
+                      <td>{item.dateOfSubmission}</td>
+                      <td>{item.authorID}</td>
+                      <td>{item.status}</td>
+                    </tr>
+                  </tbody>
+                ))}
               </table>
               <button className="btn" id="trueBtn" onClick={isAssignReviewersDashboard}>Assign</button>
               <button className="btn" id="falseBtn" onClick={goToManuscriptTable}>Cancel</button>

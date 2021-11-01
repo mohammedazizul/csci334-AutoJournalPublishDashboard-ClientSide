@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import {
   faAlignJustify,
   faPenNib,
 } from "@fortawesome/free-solid-svg-icons";
+import UpdateTableData from "./TableData/UpdateTableData";
 
 const Update = () => {
   let history = useHistory();
@@ -28,6 +29,30 @@ const Update = () => {
   const goToManuscriptTable = () => {
     history.push("/dashboard/manuscript-table");
   };
+
+  // STANDARD GET REQUEST
+  const updateDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7`;
+  const [updateTableData, setUpdateTableData] = useState([]);
+
+  // GET - (WORKING FINE)
+  useEffect(() => {
+    fetch(updateDataUrl, {
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        console.log(data);
+        setUpdateTableData(data);
+      })
+      .catch((error) => {
+        console.error("JSON user data fetching error : ", error);
+      });
+  }, []);
 
   return (
     <div>
@@ -57,7 +82,7 @@ const Update = () => {
             <table className="dataTable">
               <thead>
                 <tr>
-                  <th><input type="checkbox"></input></th>
+                  <th></th>
                   <th>No.</th>
                   <th>Title</th>
                   <th>Topic</th>
@@ -67,148 +92,9 @@ const Update = () => {
                   <th>Status</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td><input type="checkbox"></input></td>
-                  <td>S111</td>
-                  <td>AI Development History</td>
-                  <td>Science</td>
-                  <td>111</td>
-                  <td>11/11/2011</td>
-                  <td>Tomas John</td>
-                  <td>Published</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox"></input></td>
-                  <td>E878</td>
-                  <td>Patriotic Education</td>
-                  <td>Education</td>
-                  <td>346</td>
-                  <td>21/12/2011</td>
-                  <td>Jane</td>
-                  <td>Published</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox"></input></td>
-                  <td>S1323</td>
-                  <td>AI Technique with Industry 4.0</td>
-                  <td>Science</td>
-                  <td>276</td>
-                  <td>07/11/2019</td>
-                  <td>Tomas John</td>
-                  <td>Pending Payment</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox"></input></td>
-                  <td>H212</td>
-                  <td>The Study of Qing Emperors</td>
-                  <td>History</td>
-                  <td>223</td>
-                  <td>24/12/2020</td>
-                  <td>Tomas John</td>
-                  <td>Pending Payment</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox"></input></td>
-                  <td>E387</td>
-                  <td>Safety Education</td>
-                  <td>Education</td>
-                  <td>289</td>
-                  <td>04/07/2017</td>
-                  <td>Tomas John</td>
-                  <td>Pending Final Check</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox"></input></td>
-                  <td>S666</td>
-                  <td>Robotics and Surgical Medicine</td>
-                  <td>Science</td>
-                  <td>786</td>
-                  <td>07/09/2020</td>
-                  <td>Eric</td>
-                  <td>Pending Final Check</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox"></input></td>
-                  <td>S2324</td>
-                  <td>Machine Learning for Medicine</td>
-                  <td>Science</td>
-                  <td>632</td>
-                  <td>19/07/2021</td>
-                  <td>Tomas John</td>
-                  <td>Pending Modify</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox"></input></td>
-                  <td>S2345</td>
-                  <td>Medicine with Industry 4.0</td>
-                  <td>Science</td>
-                  <td>432</td>
-                  <td>11/08/2021</td>
-                  <td>Tomas John</td>
-                  <td>Pending Modify</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox"></input></td>
-                  <td>S376</td>
-                  <td>Machine Learning for Gimification</td>
-                  <td>Science</td>
-                  <td>345</td>
-                  <td>09/08/2015</td>
-                  <td>Tomas John</td>
-                  <td>Paid</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox"></input></td>
-                  <td>SS34</td>
-                  <td>Culture and Encomics</td>
-                  <td>Social Study</td>
-                  <td>444</td>
-                  <td>29/09/2018</td>
-                  <td>Doris Wu</td>
-                  <td>Paid</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox"></input></td>
-                  <td>SS13</td>
-                  <td>Social Study under Multimedia</td>
-                  <td>Social Study</td>
-                  <td>345</td>
-                  <td>24/06/2021</td>
-                  <td>Tomas John</td>
-                  <td>Under Review</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox"></input></td>
-                  <td>E232</td>
-                  <td>Self Defense</td>
-                  <td>Education</td>
-                  <td>124</td>
-                  <td>07/11/2018</td>
-                  <td>Vincent</td>
-                  <td>Under Review</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox"></input></td>
-                  <td>M232</td>
-                  <td>Medical Robotics</td>
-                  <td>Medicine</td>
-                  <td>432</td>
-                  <td>17/09/2021</td>
-                  <td>Tomas John</td>
-                  <td>Pending Review</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox"></input></td>
-                  <td>S767</td>
-                  <td>AI for Medical Surgery</td>
-                  <td>Science</td>
-                  <td>854</td>
-                  <td>20/12/2020</td>
-                  <td>Qing Yun</td>
-                  <td>Pending Review</td>
-                </tr>
-              </tbody>
+              {updateTableData.map((item) => (
+                <UpdateTableData key={item.documentID} data={item} />
+              ))}
             </table>
             <button className="btn" id="trueBtn" onClick={isUpdateInfoDashboard}>Update Info</button>
             <button className="btn" id="falseBtn" onClick={goToManuscriptTable}>Cancel</button>

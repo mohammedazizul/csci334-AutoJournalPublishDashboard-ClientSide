@@ -1,10 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { useHistory } from "react-router";
 import {
   faArrowUp,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Upload = () => {
+  let history = useHistory();
+
+  const goToManuscriptTable = () => {
+    history.push("/dashboard/manuscript-table");
+  };
+  
   return (
     <div>
       <div>
@@ -54,7 +61,7 @@ const Upload = () => {
           </table>
           <div className="inputBtn">
             <input type="submit" value="Submit Manuscript"></input>
-            <input type="reset" value="Cancel"></input>
+            <input type="reset" value="Cancel" onClick={goToManuscriptTable}></input>
           </div>
         </form>
       </div>
