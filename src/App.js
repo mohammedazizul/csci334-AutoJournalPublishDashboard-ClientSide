@@ -17,6 +17,7 @@ function App() {
     username: "",
     personID: "",
     email: "",
+    password: "",
     type: -1,
     dob: "",
     isLoggedIn: false,
