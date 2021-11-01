@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./TopNav.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,9 +16,13 @@ import {
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../Logo/logo192.png";
+import { UserContext } from "../../../App";
 
 const TopNav = () => {
-  let userName = "Tomas John";
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+
+  let userName = `${loggedInUser.username}`;
+  console.log(loggedInUser);
   return (
     <div className="topNavMainDiv">
       <div className="divLeft">
@@ -34,51 +38,50 @@ const TopNav = () => {
       </div>
 
       <div className="divRight">
-        <Link to="/dashboard/review" className="navA">
-          <div className="iconDiv iconDivHover">
-            <FontAwesomeIcon icon={faEye} />
-            <br /> Review
-          </div>
-        </Link>
-
-        <Link to="/dashboard/assign" className="navA">
-          <div className="iconDiv iconDivHover">
-            <FontAwesomeIcon icon={faUserPlus} />
-            <br /> Assign
-          </div>
-        </Link>
-
-        <Link to="/dashboard/finalCheck" className="navA">
-          <div className="iconDiv iconDivHover">
-            <FontAwesomeIcon icon={faCheckCircle} />
-            <br />
-            Final Check
-          </div>
-        </Link>
-
-        <Link to="/dashboard/publish" className="navA">
-          <div className="iconDiv iconDivHover">
-            <FontAwesomeIcon icon={faUpload} />
-            <br />
-            Publish
-          </div>
-        </Link>
-
-        <Link to="/dashboard/update" className="navA">
-          <div className="iconDiv iconDivHover">
-            <FontAwesomeIcon icon={faSyncAlt} />
-            <br />
-            Update
-          </div>
-        </Link>
-
-        <Link to="/dashboard/report" className="navA">
-          <div className="iconDiv iconDivHover">
-            <FontAwesomeIcon icon={faFileAlt} />
-            <br />
-            Report
-          </div>
-        </Link>
+        {/* {!loggedInUser.type === 1 && ( */}
+        <>
+          <Link to="/dashboard/review" className="navA">
+            <div className="iconDiv iconDivHover">
+              <FontAwesomeIcon icon={faEye} />
+              <br /> Review
+            </div>
+          </Link>
+          <Link to="/dashboard/assign" className="navA">
+            <div className="iconDiv iconDivHover">
+              <FontAwesomeIcon icon={faUserPlus} />
+              <br /> Assign
+            </div>
+          </Link>
+          <Link to="/dashboard/finalCheck" className="navA">
+            <div className="iconDiv iconDivHover">
+              <FontAwesomeIcon icon={faCheckCircle} />
+              <br />
+              Final Check
+            </div>
+          </Link>
+          <Link to="/dashboard/publish" className="navA">
+            <div className="iconDiv iconDivHover">
+              <FontAwesomeIcon icon={faUpload} />
+              <br />
+              Publish
+            </div>
+          </Link>
+          <Link to="/dashboard/update" className="navA">
+            <div className="iconDiv iconDivHover">
+              <FontAwesomeIcon icon={faSyncAlt} />
+              <br />
+              Update
+            </div>
+          </Link>
+          <Link to="/dashboard/report" className="navA">
+            <div className="iconDiv iconDivHover">
+              <FontAwesomeIcon icon={faFileAlt} />
+              <br />
+              Report
+            </div>
+          </Link>
+        </>
+        {/* )} */}
 
         <Link to="/dashboard/upload" className="navA">
           <div className="iconDiv iconDivHover">

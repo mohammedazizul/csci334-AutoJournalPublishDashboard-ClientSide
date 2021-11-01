@@ -1,5 +1,5 @@
 import "./SignIn.css";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router";
 import Logo from "../../Logo/logo512.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,8 +9,11 @@ import {
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../../App";
 
 const SignIn = () => {
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+
   let history = useHistory();
 
   const [userEmail, setUserEmail] = useState(null);
@@ -42,6 +45,14 @@ const SignIn = () => {
       })
       .then((data) => {
         console.log("login :", data);
+        setLoggedInUser({
+          username: data[0].username,
+          personID: data[0].personID,
+          email: data[0].email,
+          type: data[0].type,
+          dob: data[0].dob,
+          isLoggedIn: true,
+        });
         history.push({ pathname: "/dashboard/manuscript-table", state: data });
       })
       .catch((error) => {
