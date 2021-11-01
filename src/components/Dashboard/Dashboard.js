@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Dashboard.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Review from "./Pages/Review/Review";
@@ -14,8 +14,11 @@ import TopNav from "./TopNav/TopNav";
 import ManuScriptTable from "./Pages/ManuScriptTable/ManuScriptTable";
 import SignOut from "../Home/SignOut/SignOut";
 import NoMatchFound from "../NoMatchFound/NoMatchFound";
+import { UserContext } from "../../App";
 
 const Dashboard = () => {
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+
   return (
     <div className="dashboardMainDiv">
       <Router>

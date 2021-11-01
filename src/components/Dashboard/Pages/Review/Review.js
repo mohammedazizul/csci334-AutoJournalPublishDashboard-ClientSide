@@ -1,8 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { faAlignJustify, faPenNib } from "@fortawesome/free-solid-svg-icons";
+import { UserContext } from "../../../../App";
 
 const Review = () => {
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  console.log("userData: ", loggedInUser);
+
   const [isMainReview, setMainReview] = useState(true);
 
   const [isRecordInformation, setRecordInformation] = useState(false);
@@ -11,17 +15,17 @@ const Review = () => {
     setMainReview(false);
 
     setRecordInformation(true);
-  }
+  };
 
   const isMainReviewDashboard = () => {
     setMainReview(true);
 
     setRecordInformation(false);
-  }
+  };
 
   // STANDARD GET REQUEST getdocument.php can not access
-  const userDataUrl =
-    "http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7";
+  const userDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7&authorID=${loggedInUser.personID}
+    `;
   const [documentData, setDocumentData] = useState([]);
 
   // GET - (NOT WORKING FINE)
@@ -46,7 +50,7 @@ const Review = () => {
 
   return (
     <div>
-      {isMainReview?
+      {isMainReview ? (
         <div className="mainReviewDiv">
           <div>
             <label>Dashboard / Select Manuscript</label>
@@ -57,7 +61,10 @@ const Review = () => {
               margin: "20px",
             }}
           >
-            <h3><FontAwesomeIcon icon={faAlignJustify}/>&nbsp;Select a manuscript to review</h3>
+            <h3>
+              <FontAwesomeIcon icon={faAlignJustify} />
+              &nbsp;Select a manuscript to review
+            </h3>
           </div>
 
           <div
@@ -72,7 +79,9 @@ const Review = () => {
               <table className="dataTable">
                 <thead>
                   <tr>
-                    <th><input type="checkbox"></input></th>
+                    <th>
+                      <input type="checkbox"></input>
+                    </th>
                     <th>No.</th>
                     <th>Title</th>
                     <th>Topic</th>
@@ -85,7 +94,9 @@ const Review = () => {
                 </thead>
                 <tbody>
                   <tr>
-                    <td><input type="checkbox"></input></td>
+                    <td>
+                      <input type="checkbox"></input>
+                    </td>
                     <td></td>
                     <td>Preschool Education</td>
                     <td>Education</td>
@@ -93,10 +104,14 @@ const Review = () => {
                     <td>21/9/2021</td>
                     <td>Tomas John</td>
                     <td>New</td>
-                    <td><button>View</button></td>
+                    <td>
+                      <button>View</button>
+                    </td>
                   </tr>
                   <tr>
-                    <td><input type="checkbox"></input></td>
+                    <td>
+                      <input type="checkbox"></input>
+                    </td>
                     <td></td>
                     <td>Kinematics and Health</td>
                     <td>Health</td>
@@ -104,18 +119,28 @@ const Review = () => {
                     <td>13/11/2019</td>
                     <td>James Lee</td>
                     <td>New</td>
-                    <td><button>View</button></td>
+                    <td>
+                      <button>View</button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
-              <button className="btn" id="trueBtn" onClick={isRecordInformationDashboard}>Within Scope</button>
-              <button className="btn" id="falseBtn">Out of Scope</button>
+              <button
+                className="btn"
+                id="trueBtn"
+                onClick={isRecordInformationDashboard}
+              >
+                Within Scope
+              </button>
+              <button className="btn" id="falseBtn">
+                Out of Scope
+              </button>
             </form>
           </div>
-        </div>:null
-      }
+        </div>
+      ) : null}
 
-      {isRecordInformation?
+      {isRecordInformation ? (
         <div className="recordInformationDiv">
           <div>
             <label>Dashboard / Record Information</label>
@@ -126,7 +151,10 @@ const Review = () => {
               margin: "20px",
             }}
           >
-            <h3><FontAwesomeIcon icon={faPenNib}/>&nbsp;Record Information</h3>
+            <h3>
+              <FontAwesomeIcon icon={faPenNib} />
+              &nbsp;Record Information
+            </h3>
           </div>
 
           <div className="recordInfoFormDiv">
@@ -135,19 +163,25 @@ const Review = () => {
                 <tbody>
                   <tr>
                     <td>Comments *</td>
-                    <td><textarea></textarea></td>
+                    <td>
+                      <textarea></textarea>
+                    </td>
                   </tr>
                 </tbody>
               </table>
               <div className="inputBtn">
                 <input type="submit" value="Upload"></input>
-                <input type="reset" value="Cancel" onClick={isMainReviewDashboard}></input>
+                <input
+                  type="reset"
+                  value="Cancel"
+                  onClick={isMainReviewDashboard}
+                ></input>
               </div>
             </form>
           </div>
           <span>There are required fields in this form marked *.</span>
-        </div>:null
-      }
+        </div>
+      ) : null}
     </div>
   );
 };
