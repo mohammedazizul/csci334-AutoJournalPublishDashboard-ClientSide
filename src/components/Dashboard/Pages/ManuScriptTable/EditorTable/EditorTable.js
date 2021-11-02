@@ -1,35 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../../../App";
-import AuthorData from "../TableData/AuthorData";
 import EditorData from "../TableData/EditorData";
 
-const EditorAuthorTable = () => {
+const EditorTable = () => {
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
   console.log("userData: ", loggedInUser);
-
-  // STANDARD GET REQUEST
-  const authorDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7`;
-  const [authorData, setAuthorData] = useState([]);
-
-  // GET - (WORKING FINE)
-  useEffect(() => {
-    fetch(authorDataUrl, {
-      method: "GET",
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        console.log(data);
-        setAuthorData(data);
-      })
-      .catch((error) => {
-        console.error("JSON user data fetching error : ", error);
-      });
-  }, []);
 
   // STANDARD GET REQUEST
   const editorDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7`;
@@ -57,10 +32,7 @@ const EditorAuthorTable = () => {
 
   return (
     <div>
-      <h1>Editor Author Table</h1>
-      
       <label>Dashboard</label>
-
       <div className="editorAuthorDashboard">
         <div className="filterDiv">
           <table>
@@ -137,21 +109,19 @@ const EditorAuthorTable = () => {
                   <th>Status</th>
                 </tr>
               </thead>
-              {/* If the user's role is Author will display this data table. */}
-              {authorData.map((item) => (
-                <AuthorData key={item.documentMetaData.documentID} data={item.documentMetaData} />
-              ))}
               {/* If the user's role is Editor will display this data table. */}
               {editorData.map((item) => (
-                <EditorData key={item.documentMetaData.documentID} data={item.documentMetaData} />
+                <EditorData
+                  key={item.documentMetaData.documentID}
+                  data={item.documentMetaData}
+                />
               ))}
             </table>
           </form>
         </div>
       </div>
     </div>
-    
   );
 };
 
-export default EditorAuthorTable;
+export default EditorTable;
