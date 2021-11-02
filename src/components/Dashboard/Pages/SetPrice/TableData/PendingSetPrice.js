@@ -1,6 +1,6 @@
 import React from "react";
 
-const UpdateTableData = (props) => {
+const PendingSetPrice = (props) => {
   const { documentID, title, topic, pages, dateOfSubmission, username, status } = props.data;
 
   return (
@@ -14,9 +14,10 @@ const UpdateTableData = (props) => {
         <td>{dateOfSubmission}</td>
         <td>{username}</td>
         <td>{status}</td>
+        <td><button>View</button></td>
       </tr>
     </tbody>
   );
 };
 
-export default UpdateTableData;
+export default PendingSetPrice;

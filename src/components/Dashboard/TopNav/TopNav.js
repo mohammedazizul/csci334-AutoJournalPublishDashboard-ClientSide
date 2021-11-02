@@ -62,14 +62,13 @@ const TopNav = () => {
                     Final Check
                   </div>
                 </Link>
-                {/* please uncomment */}
-                {/* <Link to="/dashboard/finalCheck" className="navA">
+                <Link to="/dashboard/setPrice" className="navA">
                   <div className="iconDiv iconDivHover">
                     <FontAwesomeIcon icon={faMoneyBillAlt} />
                     <br />
                     Set Price
                   </div>
-                </Link> */}
+                </Link>
                 <Link to="/dashboard/publish" className="navA">
                   <div className="iconDiv iconDivHover">
                     <FontAwesomeIcon icon={faUpload} />

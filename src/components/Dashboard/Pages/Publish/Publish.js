@@ -31,7 +31,7 @@ const Publish = () => {
   };
 
   // STANDARD GET REQUEST
-  const paidDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7`;
+  const paidDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&status=Paid`;
   const [paid, setPaid] = useState([]);
 
   // GET - (WORKING FINE)
@@ -52,7 +52,7 @@ const Publish = () => {
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  }, []);
+  },[]);
 
   return (
     <div>
@@ -94,7 +94,10 @@ const Publish = () => {
                   </tr>
                 </thead>
                 {paid.map((item) => (
-                  <Paid key={item.documentID} data={item} />
+                  <Paid
+                    key={item.documentMetaData.documentID}
+                    data={item.documentMetaData}
+                  />
                 ))}
               </table>
               <button className="btn" id="trueBtn" onClick={isRecordJournalInfoDashboard}>Publish</button>

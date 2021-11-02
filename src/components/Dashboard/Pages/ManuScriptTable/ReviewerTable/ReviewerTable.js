@@ -8,6 +8,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const ReviewerTable = () => {
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  console.log("userData: ", loggedInUser);
+
   const [isMainReviewerDiv, setMainReviewerDiv] = useState(true);
 
   const [isRateManuscriptDiv, setRateManuscriptDiv] = useState(false);
@@ -23,9 +26,6 @@ const ReviewerTable = () => {
 
     setRateManuscriptDiv(false);
   };
-
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
-  console.log("userData: ", loggedInUser);
 
   // STANDARD GET REQUEST
   const reviewerDataUrl = `http://localhost/jess-backend/api/read/getreview.php?api_key=RXru1LUOOeKFX03LGSo7&reviewerID=${loggedInUser.personID}`;
@@ -49,7 +49,7 @@ const ReviewerTable = () => {
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  }, []);
+  },[]);
 
   return (
     <div>
@@ -142,6 +142,12 @@ const ReviewerTable = () => {
                     </td>
                   </tr>
                 </tbody>
+                {reviewerData.map((item) => (
+                  <ReviewerData
+                    key={item.documentMetaData.documentID}
+                    data={item.documentMetaData}
+                  />
+                ))}
               </table>
             </form>
           </div>
@@ -228,31 +234,33 @@ const ReviewerTable = () => {
                   marginRight: "auto",
                 }}
               >
-                <tr>
-                  <td>Rate: *</td>
-                  <td>
-                    <select>
-                      <option value="default">Rate</option>
-                      <option value="0">0</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Comments: *</td>
-                  <td>
-                    <textarea></textarea>
-                  </td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td>Rate: *</td>
+                    <td>
+                      <select>
+                        <option value="default">Rate</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Comments: *</td>
+                    <td>
+                      <textarea></textarea>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
               <span
                 style={{ position: "absolute", left: "0", padding: "20px" }}

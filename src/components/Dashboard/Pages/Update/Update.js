@@ -31,7 +31,7 @@ const Update = () => {
   };
 
   // STANDARD GET REQUEST
-  const updateDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7`;
+  const updateDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&status=Pending Compile`;
   const [updateTableData, setUpdateTableData] = useState([]);
 
   // GET - (WORKING FINE)
@@ -52,7 +52,7 @@ const Update = () => {
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  }, []);
+  },[]);
 
   return (
     <div>
@@ -93,7 +93,10 @@ const Update = () => {
                 </tr>
               </thead>
               {updateTableData.map((item) => (
-                <UpdateTableData key={item.documentID} data={item} />
+                <UpdateTableData
+                  key={item.documentMetaData.documentID}
+                  data={item.documentMetaData}
+                />
               ))}
             </table>
             <button className="btn" id="trueBtn" onClick={isUpdateInfoDashboard}>Update Info</button>
@@ -135,7 +138,7 @@ const Update = () => {
                 </tr>
                 <tr>
                   <td>Comments</td>
-                  <td colSpan="3"><textarea placeholder="Nothing Special"></textarea></td>
+                  <td colSpan="3"><textarea></textarea></td>
                 </tr>
                 <tr></tr>
                 <tr style={{textAlign: "center"}}>

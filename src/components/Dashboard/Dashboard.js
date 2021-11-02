@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Review from "./Pages/Review/Review";
 import Assign from "./Pages/Assign/Assign";
 import FinalCheck from "./Pages/FinalCheck/FinalCheck";
+import SetPrice from "./Pages/SetPrice/SetPrice";
 import Publish from "./Pages/Publish/Publish";
 import Update from "./Pages/Update/Update";
 import Report from "./Pages/Report/Report";
@@ -35,6 +36,9 @@ const Dashboard = () => {
           </Route>
           <Route path="/dashboard/finalCheck">
             <FinalCheck />
+          </Route>
+          <Route path="/dashboard/setPrice">
+            <SetPrice />
           </Route>
           <Route path="/dashboard/publish">
             <Publish />

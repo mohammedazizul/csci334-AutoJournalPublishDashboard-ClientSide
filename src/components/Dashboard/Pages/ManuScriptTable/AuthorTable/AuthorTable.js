@@ -7,7 +7,7 @@ const AuthorTable = () => {
   console.log("userData: ", loggedInUser);
 
   // STANDARD GET REQUEST
-  const authorDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7`;
+  const authorDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&authorID=${loggedInUser.personID}`;
   const [authorData, setAuthorData] = useState([]);
 
   // GET - (WORKING FINE)
@@ -28,18 +28,17 @@ const AuthorTable = () => {
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  }, []);
+  },[]);
 
   return (
     <div>
       <label>Dashboard</label>
       <div className="editorAuthorDashboard">
-        <div className="filterDiv">
+        {/* <div className="filterDiv">
           <table>
             <tbody>
               <tr>
                 <td>
-                  {/* Filter by Topic */}
                   <select>
                     <option value="">Filter by Topic</option>
                     <option value="history">History</option>
@@ -51,7 +50,6 @@ const AuthorTable = () => {
                   </select>
                 </td>
                 <td>
-                  {/* Filter by Pages */}
                   <select>
                     <option value="">Filter by Pages</option>
                     <option value="<100">&lt; 100</option>
@@ -63,7 +61,6 @@ const AuthorTable = () => {
                   </select>
                 </td>
                 <td>
-                  {/* Filter by Date */}
                   <select>
                     <option value="">Filter by Date</option>
                     <option value="1week">Last one week</option>
@@ -75,7 +72,6 @@ const AuthorTable = () => {
                   </select>
                 </td>
                 <td>
-                  {/* Filter by Status */}
                   <select>
                     <option value="">Filter by Status</option>
                     <option value="1week">New</option>
@@ -93,7 +89,7 @@ const AuthorTable = () => {
               </tr>
             </tbody>
           </table>
-        </div>
+        </div> */}
         <div className="editorDashboard">
           <form method="GET">
             <table className="dataTable">

@@ -156,6 +156,11 @@ input[type=text], select, textarea {
 }
 
 .modifyFormDiv tr:nth-child(4) textarea {
+    height: 10vh;
+    width: 99%;
+}
+
+.modifyFormDiv tr:nth-child(5) textarea {
     height: 7vh;
     width: 99%;
 }
@@ -436,4 +441,20 @@ h1 {
 
 .rateManuscriptForm input[type=submit], .rateManuscriptForm input[type=reset] {
     background-color: rgba(255, 255, 255, 0.5);
+}
+
+.setPriceFormDiv {
+    margin: auto;
+    width: 20%;
+    padding: 10px;
+    text-align: center;
+}
+
+.setPriceFormDiv table, .setPriceFormDiv td {
+    border: 0px;
+}
+
+.setPriceFormDiv input[type=text] {
+    height: 3vh;
+    width: 10vw;
 }

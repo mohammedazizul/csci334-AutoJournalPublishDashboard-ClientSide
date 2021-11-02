@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import { UserContext } from "../../../../App";
 import {
   faAlignJustify,
   faExchangeAlt,
@@ -9,6 +10,9 @@ import PendingModify from "./TableData/PendingModify";
 
 const Modify = () => {
   let history = useHistory();
+
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  console.log("userData: ", loggedInUser);
 
   const [isMainModify, setMainModify] = useState(true);
 
@@ -31,7 +35,7 @@ const Modify = () => {
   };
 
   // STANDARD GET REQUEST
-  const pendingModifyDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7`;
+  const pendingModifyDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&authorID=${loggedInUser.personID}&status=Pending Modify`;
   const [pendingModify, setPendingModify] = useState([]);
 
   // GET - (WORKING FINE)
@@ -52,7 +56,7 @@ const Modify = () => {
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  }, []);
+  },[]);
 
   return (
     <div>
@@ -92,7 +96,10 @@ const Modify = () => {
                   </tr>
                 </thead>
                 {pendingModify.map((item) => (
-                  <PendingModify key={item.documentID} data={item} />
+                  <PendingModify
+                    key={item.documentMetaData.documentID}
+                    data={item.documentMetaData}
+                  />
                 ))}
               </table>
               <button className="btn" id="trueBtn" onClick={isModifySelected}>Modify Selected</button>
@@ -133,8 +140,12 @@ const Modify = () => {
                     <td><input type="text" value="Science" readOnly></input></td>
                   </tr>
                   <tr>
+                    <td>Comments</td>
+                    <td><textarea value="Nothing Special" readOnly></textarea></td>
+                  </tr>
+                  <tr>
                     <td>Remarks</td>
-                    <td><textarea placeholder="Nothing Special"></textarea></td>
+                    <td><textarea></textarea></td>
                   </tr>
                   <tr>
                     <td>Attachments *</td>

@@ -25,7 +25,7 @@ const Review = () => {
   };
 
   // STANDARD GET REQUEST
-  const newDocumentDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7`;
+  const newDocumentDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&status=New`;
   const [newDocumentData, setNewDocumentData] = useState([]);
 
   // GET - (WORKING FINE)
@@ -46,7 +46,7 @@ const Review = () => {
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  }, []);
+  },[]);
 
   return (
     <div>
@@ -91,7 +91,10 @@ const Review = () => {
                   </tr>
                 </thead>
                 {newDocumentData.map((item) => (
-                  <NewDocumentData key={item.documentID} data={item} />
+                  <NewDocumentData
+                    key={item.documentMetaData.documentID}
+                    data={item.documentMetaData}
+                  />
                 ))}
               </table>
               <button
