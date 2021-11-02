@@ -1,15 +1,7 @@
 import React from "react";
 
 const EditorData = (props) => {
-  const {
-    documentID,
-    title,
-    topic,
-    pages,
-    dateOfSubmission,
-    authorID,
-    status,
-  } = props.data;
+  const { documentID, title, topic, pages, dateOfSubmission, authorID, status } = props.data;
 
   return (
     <tbody>
