@@ -14,6 +14,7 @@ import {
   faFileUpload,
   faEdit,
   faUserCircle,
+  faKey,
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../Logo/logo192.png";
 import { UserContext } from "../../../App";
@@ -61,6 +62,14 @@ const TopNav = () => {
                     Final Check
                   </div>
                 </Link>
+                {/* please uncomment */}
+                {/* <Link to="/dashboard/finalCheck" className="navA">
+                  <div className="iconDiv iconDivHover">
+                    <FontAwesomeIcon icon={faMoneyBillAlt} />
+                    <br />
+                    Set Price
+                  </div>
+                </Link> */}
                 <Link to="/dashboard/publish" className="navA">
                   <div className="iconDiv iconDivHover">
                     <FontAwesomeIcon icon={faUpload} />
@@ -112,6 +121,13 @@ const TopNav = () => {
             )}
           </>
         )}
+        <Link to="/forgot-password2" className="navA">
+          <div className="iconDiv iconDivHover">
+            <FontAwesomeIcon icon={faKey} />
+            <br />
+            Reset
+          </div>
+        </Link>
         <Link to="/dashboard/signOut" className="navA">
           <div className="iconDiv iconDivHover">
             <FontAwesomeIcon icon={faSignOutAlt} />

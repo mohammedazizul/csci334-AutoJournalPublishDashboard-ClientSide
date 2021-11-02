@@ -1,7 +1,8 @@
 import React from "react";
 
 const AuthorData = (props) => {
-  const { documentID, title, topic, pages, dateOfSubmission, username, status } = props.data;
+  const { documentID, title, topic, pages, dateOfSubmission, status } =
+    props.data;
 
   return (
     <tbody>
@@ -11,7 +12,6 @@ const AuthorData = (props) => {
         <td>{topic}</td>
         <td>{pages}</td>
         <td>{dateOfSubmission}</td>
-        <td>{username}</td>
         <td>{status}</td>
       </tr>
     </tbody>
