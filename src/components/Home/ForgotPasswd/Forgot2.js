@@ -1,13 +1,48 @@
 import "./Forgot.css";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExchangeAlt, faLock, faSyncAlt } from "@fortawesome/free-solid-svg-icons";
+import { UserContext } from "../../../App";
 
 const Forgot3 = () => {
   let history = useHistory();
+
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+
   const [pwd, setPwd] = useState(null);
   const [pwdConfirm, setPwdConfirm] = useState(null);
+
+  let formData = new FormData();
+  formData.append("emailAddress", loggedInUser.email);
+  formData.append("newPassword", pwd);
+
+  const processChange = () => {
+    // to Display the key/value pairs
+    for (var pair of formData.entries()) {
+      console.log("Form Data: ", pair[0] + ", " + pair[1]);
+    }
+
+    const urlToPost = `http://localhost/jess-backend/processes/changepassword.php`;
+
+    fetch(urlToPost, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: formData,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+          console.log("Change password :", data);
+          history.push({ pathname: "/sign-in", state: data });
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+  };
 
   const [PwdError, setPwdError] = useState({
     display: "none",
@@ -53,8 +88,7 @@ const Forgot3 = () => {
       });
     }else {
       console.log("user new password: ", pwd);
-      //
-      history.push("/sign-in");
+      processChange();
     }
   };
 

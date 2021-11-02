@@ -1,5 +1,5 @@
 import "./Forgot.css";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,11 +8,53 @@ import {
   faPaperPlane,
   faSyncAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import { UserContext } from "../../../App";
 
 const Forgot1 = () => {
   let history = useHistory();
+
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+
   const [userEmail, setUserEmail] = useState(null);
   const [TAC, setTAC] = useState(null);
+
+  let formData = new FormData();
+  formData.append("email", userEmail);
+
+  const processForgot = () => {
+    // to Display the key/value pairs
+    for (var pair of formData.entries()) {
+      console.log("Form Data: ", pair[0] + ", " + pair[1]);
+    }
+
+    const urlToPost = `http://localhost/jess-backend/processes/forgotpassword.php`;
+
+    fetch(urlToPost, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: formData,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        if(data.condition==="success")
+        {
+          console.log("Forgot password :", data);
+          history.push({ pathname: "/forgot-password2", state: data });
+          setLoggedInUser({
+            email: data.email,
+          });
+        }
+        else
+          alert("User doesn't exist, please sign up first");
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+  };
 
   const [emailError, setEmailError] = useState({
     display: "none",
@@ -53,16 +95,14 @@ const Forgot1 = () => {
     }else if(!re.test(userEmail)){
       e.preventDefault();
       alert("Email Format: ...@...com !");
-    }else if (TAC === null) {
+    }else if (TAC === null || TAC !=="867532") {
       e.preventDefault();
       setTACError({
         display: "",
         color: "red",
       });
     }else {
-      console.log("user email: ", userEmail);
-      //
-      history.push("/forgot-password2");
+      processForgot();
     }
   };
 
@@ -91,7 +131,7 @@ const Forgot1 = () => {
 
         <label><FontAwesomeIcon icon={faKey} />&nbsp;&nbsp;</label>
         <input type="text" placeholder="TAC" onChange={handleTAC}/><br />
-        <span style={TACError}>Please enter the 6-digit TAC</span>
+        <span style={TACError}>Please enter the correct 6-digit TAC</span>
         <br />
         <br />
 
