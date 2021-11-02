@@ -8,7 +8,7 @@ const EditorAuthorTable = () => {
   console.log("userData: ", loggedInUser);
 
   // STANDARD GET REQUEST
-  const authorDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7&authorID=${loggedInUser.personID}`;
+  const authorDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7`;
   const [authorData, setAuthorData] = useState([]);
 
   // GET - (WORKING FINE)
@@ -32,7 +32,7 @@ const EditorAuthorTable = () => {
   }, []);
 
   // STANDARD GET REQUEST
-  const editorDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7`;
+  const editorDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7`;
   const [editorData, setEditorData] = useState([]);
 
   // GET - (WORKING FINE)
@@ -139,12 +139,12 @@ const EditorAuthorTable = () => {
               </thead>
               {/* If the user's role is Author will display this data table. */}
               {authorData.map((item) => (
-                <AuthorData key={item.documentID} data={item} />
+                <AuthorData key={item.documentMetaData.documentID} data={item.documentMetaData} />
               ))}
               {/* If the user's role is Editor will display this data table. */}
-              {/* {editorData.map((item) => (
-                <EditorData key={item.documentID} data={item} />
-              ))} */}
+              {editorData.map((item) => (
+                <EditorData key={item.documentMetaData.documentID} data={item.documentMetaData} />
+              ))}
             </table>
           </form>
         </div>
