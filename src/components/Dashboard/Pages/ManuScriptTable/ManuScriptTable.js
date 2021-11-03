@@ -10,9 +10,9 @@ const ManuScriptTable = () => {
 
   return (
     <div>
-      {loggedInUser.type === 2 && <ReviewerTable />}
       {loggedInUser.type === 0 && <EditorTable />}
       {loggedInUser.type === 1 && <AuthorTable />}
+      {loggedInUser.type === 2 && <ReviewerTable />}
     </div>
   );
 };

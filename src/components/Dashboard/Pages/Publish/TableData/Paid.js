@@ -1,7 +1,7 @@
 import React from "react";
 
 const Paid = (props) => {
-  const { documentID, title, topic, pages, dateOfSubmission, authorID, status } = props.data;
+  const { documentID, title, topic, pages, dateOfSubmission, username, status } = props.data;
 
   return (
     <tbody>
@@ -12,7 +12,7 @@ const Paid = (props) => {
         <td>{topic}</td>
         <td>{pages}</td>
         <td>{dateOfSubmission}</td>
-        <td>{authorID}</td>
+        <td>{username}</td>
         <td>{status}</td>
         <td><button>View</button></td>
       </tr>

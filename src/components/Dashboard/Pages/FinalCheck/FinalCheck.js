@@ -7,7 +7,7 @@ import PendingFinalCheck from "./TableData/PendingFinalCheck";
 
 const FinalCheck = () => {
   // STANDARD GET REQUEST
-  const pendingFinalCheckDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7`;
+  const pendingFinalCheckDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&status=Pending Final Check`;
   const [pendingFinalCheck, setPendingFinalCheck] = useState([]);
 
   // GET - (WORKING FINE)
@@ -28,7 +28,7 @@ const FinalCheck = () => {
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  }, []);
+  },[]);
 
   return (
     <div>
@@ -50,14 +50,13 @@ const FinalCheck = () => {
           margin: "20px",
           borderRadius: "5px",
           textAlign: "center",
-          height: "250px",
         }}
       >
         <form method="POST">
           <table className="dataTable">
             <thead>
               <tr>
-                <th><input type="checkbox"></input></th>
+                <th></th>
                 <th>No.</th>
                 <th>Title</th>
                 <th>Topic</th>
@@ -69,7 +68,10 @@ const FinalCheck = () => {
               </tr>
             </thead>
             {pendingFinalCheck.map((item) => (
-              <PendingFinalCheck key={item.documentID} data={item} />
+              <PendingFinalCheck
+                key={item.documentMetaData.documentID}
+                data={item.documentMetaData}
+              />
             ))}
           </table>
           <input type="submit" value="Satisfy"></input>

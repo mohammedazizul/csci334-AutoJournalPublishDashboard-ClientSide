@@ -15,9 +15,6 @@ const Assign = () => {
 
   const [isAssignReviewers, setAssignReviewers] = useState(false);
 
-  const [documentID, setDocumentID] = useState(null);
-  console.log(documentID)
-
   const isAssignReviewersDashboard = () => {
     setMainAssign(false);
 
@@ -35,7 +32,7 @@ const Assign = () => {
   };
 
   // STANDARD GET REQUEST
-  const pendingReviewDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7`;
+  const pendingReviewDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&status=Pending Review`;
   const [pendingReview, setPendingReview] = useState([]);
 
   // GET - (WORKING FINE)
@@ -56,7 +53,7 @@ const Assign = () => {
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  }, []);
+  },[]);
 
   // STANDARD GET REQUEST
   const reviewerNameDataUrl = `http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&type=2`;
@@ -80,7 +77,7 @@ const Assign = () => {
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  }, []);
+  },[]);
 
   return (
     <div>
@@ -121,18 +118,10 @@ const Assign = () => {
                   </tr>
                 </thead>
                 {pendingReview.map((item) => (
-                  <tbody key={item.documentID} data={item}>
-                    <tr>
-                      <td><input type="checkbox" value={item.documentID} onChange={(e)=>setDocumentID(e.target.value)}></input></td>
-                      <td>{item.documentID}</td>
-                      <td>{item.title}</td>
-                      <td>{item.topic}</td>
-                      <td>{item.pages}</td>
-                      <td>{item.dateOfSubmission}</td>
-                      <td>{item.authorID}</td>
-                      <td>{item.status}</td>
-                    </tr>
-                  </tbody>
+                  <PendingReview
+                    key={item.documentMetaData.documentID}
+                    data={item.documentMetaData}
+                  />
                 ))}
               </table>
               <button className="btn" id="trueBtn" onClick={isAssignReviewersDashboard}>Assign</button>

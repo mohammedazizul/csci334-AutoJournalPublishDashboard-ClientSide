@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import { UserContext } from "../../../../App";
 import {
   faAlignJustify,
   faCreditCard,
@@ -14,6 +15,9 @@ import PendingPayment from "./TableData/PendingPayment";
 
 const Payment = () => {
   let history = useHistory();
+
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  console.log("userData: ", loggedInUser);
 
   const [isMainPayment, setMainPayment] = useState(true);
 
@@ -29,6 +33,18 @@ const Payment = () => {
     setMainPayment(true);
 
     setPaymentMethod(false);
+
+    setCardBtnClick(false);
+    setBankBtnClick(false);
+    setPaypalBtnClick(false);
+    setApplepayBtnClick(false);
+
+    setPaymentSuccessful({
+      display: "none",
+    })
+    setPaymentError({
+      display: "none",
+    })
   }
 
   const goToManuscriptTable = () => {
@@ -36,7 +52,7 @@ const Payment = () => {
   };
 
   // STANDARD GET REQUEST
-  const pendingPaymentDataUrl = `http://localhost/jess-backend/api/read/getmetadata.php?api_key=RXru1LUOOeKFX03LGSo7`;
+  const pendingPaymentDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&authorID=${loggedInUser.personID}&status=Pending Payment`;
   const [pendingPayment, setPendingPayment] = useState([]);
 
   // GET - (WORKING FINE)
@@ -57,7 +73,137 @@ const Payment = () => {
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  }, []);
+  },[]);
+
+  const [isCardBtnClick, setCardBtnClick] = useState(false);
+  const [isBankBtnClick, setBankBtnClick] = useState(false);
+  const [isPaypalBtnClick, setPaypalBtnClick] = useState(false);
+  const [isApplepayBtnClick, setApplepayBtnClick] = useState(false);
+
+  const handleCardButtom = () => {
+    if (isCardBtnClick === false) {
+      document.querySelector("#card").style.backgroundColor = "grey";
+      document.querySelector("#bank").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#paypal").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#applepay").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      setCardBtnClick(true);
+      setBankBtnClick(false);
+      setPaypalBtnClick(false);
+      setApplepayBtnClick(false);
+    }
+    else if (isCardBtnClick === true) {
+      document.querySelector("#card").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#bank").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#paypal").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#applepay").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      setCardBtnClick(false);
+      setBankBtnClick(false);
+      setPaypalBtnClick(false);
+      setApplepayBtnClick(false);
+    }
+  }
+
+  const handleBankButtom = () => {
+    if (isBankBtnClick === false) {
+      document.querySelector("#card").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#bank").style.backgroundColor = "grey";
+      document.querySelector("#paypal").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#applepay").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      setCardBtnClick(false);
+      setBankBtnClick(true);
+      setPaypalBtnClick(false);
+      setApplepayBtnClick(false);
+    }
+    else if (isBankBtnClick === true) {
+      document.querySelector("#card").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#bank").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#paypal").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#applepay").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      setCardBtnClick(false);
+      setBankBtnClick(false);
+      setPaypalBtnClick(false);
+      setApplepayBtnClick(false);
+    }
+  }
+
+  const handlePaypalButtom = () => {
+    if (isPaypalBtnClick === false) {
+      document.querySelector("#card").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#bank").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#paypal").style.backgroundColor = "grey";
+      document.querySelector("#applepay").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      setCardBtnClick(false);
+      setBankBtnClick(false);
+      setPaypalBtnClick(true);
+      setApplepayBtnClick(false);
+    }
+    else if (isPaypalBtnClick === true) {
+      document.querySelector("#card").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#bank").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#paypal").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#applepay").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      setCardBtnClick(false);
+      setBankBtnClick(false);
+      setPaypalBtnClick(false);
+      setApplepayBtnClick(false);
+    }
+  }
+
+  const handleApplepayButtom = () => {
+    if (isApplepayBtnClick === false) {
+      document.querySelector("#card").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#bank").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#paypal").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#applepay").style.backgroundColor = "grey";
+      setCardBtnClick(false);
+      setBankBtnClick(false);
+      setPaypalBtnClick(false);
+      setApplepayBtnClick(true);
+    }
+    else if (isApplepayBtnClick === true) {
+      document.querySelector("#card").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#bank").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#paypal").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      document.querySelector("#applepay").style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      setCardBtnClick(false);
+      setBankBtnClick(false);
+      setPaypalBtnClick(false);
+      setApplepayBtnClick(false);
+    }
+  }
+
+  const [paymentSuccessful, setPaymentSuccessful] = useState({
+    display: "none",
+  });
+
+  const [paymentError, setPaymentError] = useState({
+    display: "none",
+  });
+
+  const handlePlacePayment = (e) => {
+    if (isCardBtnClick === true || isCardBtnClick === true ||isCardBtnClick === true ||isCardBtnClick === true) {
+      e.preventDefault();
+      setPaymentSuccessful({
+        display: "",
+        color: "green",
+        fontSize: "32px",
+      })
+      setPaymentError({
+        display: "none",
+      })
+    }
+    else {
+      e.preventDefault();
+      setPaymentSuccessful({
+        display: "none",
+      })
+      setPaymentError({
+        display: "",
+        color: "red",
+        fontSize: "32px",
+      })
+    }
+  }
 
   return (
     <div>
@@ -99,7 +245,10 @@ const Payment = () => {
                   </tr>
                 </thead>
                 {pendingPayment.map((item) => (
-                  <PendingPayment key={item.documentID} data={item} />
+                  <PendingPayment
+                    key={item.documentMetaData.documentID}
+                    data={item.documentMetaData}
+                  />
                 ))}
               </table>
               <br />
@@ -136,22 +285,24 @@ const Payment = () => {
               textAlign: "center",
             }}
           >
-            <form method="POST">
-              <table className="paymentTable">
-                <tbody>
-                  <tr>
-                    <th><button><FontAwesomeIcon icon={faCreditCard}/>&nbsp;Credit / Debit Card</button></th>
-                    <th><button><FontAwesomeIcon icon={faUniversity}/>&nbsp;Online Banking</button></th>
-                  </tr>
-                  <tr>
-                    <th><button><FontAwesomeIcon icon={faCcPaypal}/>&nbsp;Paypal</button></th>
-                    <th><button><FontAwesomeIcon icon={faApple}/>&nbsp;Apple Pay</button></th>
-                  </tr>
-                </tbody>
-              </table>
-              <input type="submit" value="Place Payment"></input>
-              <input type="reset" value="Cancel" onClick={isMainPaymentDashboard}></input>
-            </form>
+            <table className="paymentTable">
+              <tbody>
+                <tr>
+                  <th><button id="card" onClick={handleCardButtom}><FontAwesomeIcon icon={faCreditCard}/>&nbsp;Credit / Debit Card</button></th>
+                  <th><button id="bank" onClick={handleBankButtom}><FontAwesomeIcon icon={faUniversity}/>&nbsp;Online Banking</button></th>
+                </tr>
+                <tr>
+                  <th><button id="paypal" onClick={handlePaypalButtom}><FontAwesomeIcon icon={faCcPaypal}/>&nbsp;Paypal</button></th>
+                  <th><button id="applepay" onClick={handleApplepayButtom}><FontAwesomeIcon icon={faApple}/>&nbsp;Apple Pay</button></th>
+                </tr>
+              </tbody>
+            </table>
+            <input type="submit" value="Place Payment" onClick={handlePlacePayment}></input>
+            <input type="reset" value="Cancel" onClick={isMainPaymentDashboard}></input>
+          </div>
+          <div style={{ textAlign: "center" }}>
+            <span style={paymentSuccessful}><b>Payment Successful</b></span>
+            <span style={paymentError}><b>Please Select one of the Method</b></span>
           </div>
         </div>:null
       }
