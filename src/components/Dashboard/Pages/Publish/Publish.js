@@ -31,7 +31,7 @@ const Publish = () => {
   };
 
   // STANDARD GET REQUEST
-  const paidDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&status=Paid`;
+  const paidDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&docStatus=Paid`;
   const [paid, setPaid] = useState([]);
 
   // GET - (WORKING FINE)

@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { faAlignJustify, faUndo } from "@fortawesome/free-solid-svg-icons";
 import ReviewerData from "./TableData/ReviewerData";
+import NewReviewerData from "./TableData/NewReviewerData";
 import AuthorData from "./TableData/AuthorData";
 
 const Report = () => {
@@ -36,8 +37,7 @@ const Report = () => {
   };
 
   // STANDARD GET REQUEST
-  const reviewerDataUrl =
-    "http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&type=2";
+  const reviewerDataUrl = "http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&type=2&status=Available,On Leave,Occupied";
   const [reviewerData, setReviewerData] = useState([]);
 
   // GET - (WORKING FINE)
@@ -60,6 +60,31 @@ const Report = () => {
       });
   }, []);
 
+  // STANDARD GET REQUEST
+  const newReviewerDataUrl = "http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&type=2&status=Pending Approval";
+  const [newReviewerData, setNewReviewerData] = useState([]);
+
+  // GET - (WORKING FINE)
+  useEffect(() => {
+    fetch(newReviewerDataUrl, {
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        console.log(data);
+        setNewReviewerData(data);
+      })
+      .catch((error) => {
+        console.error("JSON user data fetching error : ", error);
+      });
+  }, []);
+
+  // STANDARD GET REQUEST
   const authorDataUrl =
     "http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&type=1";
   const [authorData, setAuthorData] = useState([]);
@@ -174,44 +199,9 @@ const Report = () => {
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>Tommy</td>
-                  <td>33</td>
-                  <td>Science</td>
-                  <td>
-                    <input type="submit" value="Approve"></input>
-                    <input type="submit" value="Reject"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Newton</td>
-                  <td>29</td>
-                  <td>Education</td>
-                  <td>
-                    <input type="submit" value="Approve"></input>
-                    <input type="submit" value="Reject"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Alias</td>
-                  <td>43</td>
-                  <td>Social Study</td>
-                  <td>
-                    <input type="submit" value="Approve"></input>
-                    <input type="submit" value="Reject"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Tim</td>
-                  <td>36</td>
-                  <td>Others</td>
-                  <td>
-                    <input type="submit" value="Approve"></input>
-                    <input type="submit" value="Reject"></input>
-                  </td>
-                </tr>
-              </tbody>
+              {newReviewerData.map((item) => (
+                <NewReviewerData key={item.personID} data={item} />
+              ))}
             </table>
           </form>
           <button onClick={isMainReportDashboard}>
@@ -243,9 +233,9 @@ const Report = () => {
                   <th>Publication Rate</th>
                 </tr>
               </thead>
-              {authorData.map((item) => (
+              {/* {authorData.map((item) => (
                 <AuthorData key={item.personID} data={item} />
-              ))}
+              ))} */}
             </table>
           </form>
           <button onClick={isMainReportDashboard}>

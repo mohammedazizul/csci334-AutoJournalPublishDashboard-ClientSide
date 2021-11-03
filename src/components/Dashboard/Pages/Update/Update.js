@@ -31,7 +31,7 @@ const Update = () => {
   };
 
   // STANDARD GET REQUEST
-  const updateDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&status=Pending Compile`;
+  const updateDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&docStatus=Pending Compile`;
   const [updateTableData, setUpdateTableData] = useState([]);
 
   // GET - (WORKING FINE)
@@ -126,26 +126,31 @@ const Update = () => {
               <tbody>
                 <tr>
                   <td>No.</td>
-                  <td colSpan="3"><input type="text" value="H212" readOnly></input></td>
+                  <td><input type="text" value="H212" readOnly></input></td>
                 </tr>
                 <tr>
                   <td>Pages</td>
-                  <td colSpan="3"><input type="text" value="223" readOnly></input></td>
+                  <td><input type="text" value="223" readOnly></input></td>
                 </tr>
                 <tr>
                   <td>Author Name</td>
-                  <td colSpan="3"><input type="text" value="Tomas John" readOnly></input></td>
+                  <td><input type="text" value="Tomas John" readOnly></input></td>
                 </tr>
                 <tr>
-                  <td>Comments</td>
-                  <td colSpan="3"><textarea></textarea></td>
+                  <td>Reviewer 1 Point #: 7.5</td>
+                  <td><input type="text" value="Ok" readOnly></input></td>
                 </tr>
-                <tr></tr>
-                <tr style={{textAlign: "center"}}>
-                  <td>Point 1: 7.5</td>
-                  <td>Point 2: 6.8</td>
-                  <td>Point 3: 7.5</td>
-                  <td>*</td>
+                <tr>
+                  <td>Reviewer 2 Point #: 6.8</td>
+                  <td><input type="text" value="Not good" readOnly></input></td>
+                </tr>
+                <tr>
+                  <td>Reviewer 3 Point #: 7.5</td>
+                  <td><input type="text" value="Ok" readOnly></input></td>
+                </tr>
+                <tr>
+                  <td>Editor Comments *</td>
+                  <td><textarea></textarea></td>
                 </tr>
               </tbody>
             </table>
@@ -155,7 +160,7 @@ const Update = () => {
             </div>
           </form>
         </div>
-        <span>Dynamic field, appear after reviewing only *</span>
+        <span>Dynamic field, appear after reviewing only #. The field marked * is the only field can edit.</span>
       </div>:null
       }
     </div>
