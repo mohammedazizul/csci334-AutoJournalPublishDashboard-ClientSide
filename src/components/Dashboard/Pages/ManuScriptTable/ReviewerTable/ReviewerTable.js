@@ -28,7 +28,7 @@ const ReviewerTable = () => {
   };
 
   // STANDARD GET REQUEST
-  const reviewerDataUrl = `http://localhost/jess-backend/api/read/getreview.php?api_key=RXru1LUOOeKFX03LGSo7&reviewerID=${loggedInUser.personID}`;
+  const reviewerDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&reviewerID=${loggedInUser.personID}`;
   const [reviewerData, setReviewerData] = useState([]);
 
   // GET - (WORKING FINE)

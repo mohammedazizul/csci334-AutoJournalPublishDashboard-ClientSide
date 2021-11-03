@@ -46,11 +46,11 @@ const SignIn = () => {
       .then((data) => {
         console.log("login :", data);
         setLoggedInUser({
-          username: data[0].username,
-          personID: data[0].personID,
-          email: data[0].email,
-          type: data[0].type,
-          dob: data[0].dob,
+          username: data.username,
+          personID: data.personID,
+          email: data.email,
+          type: data.type,
+          dob: data.dob,
           isLoggedIn: true,
         });
         history.push({ pathname: "/dashboard/manuscript-table", state: data });
