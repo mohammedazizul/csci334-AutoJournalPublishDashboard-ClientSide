@@ -32,7 +32,7 @@ const Assign = () => {
   };
 
   // STANDARD GET REQUEST
-  const pendingReviewDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&status=Pending Review`;
+  const pendingReviewDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&docStatus=Pending Review,Pending Additional Reviewer`;
   const [pendingReview, setPendingReview] = useState([]);
 
   // GET - (WORKING FINE)
@@ -56,7 +56,7 @@ const Assign = () => {
   },[]);
 
   // STANDARD GET REQUEST
-  const reviewerNameDataUrl = `http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&type=2`;
+  const reviewerNameDataUrl = `http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&type=2&status=Available`;
   const [reviewerNameData, setReviewerNameData] = useState([]);
 
   // GET - (WORKING FINE)

@@ -35,7 +35,7 @@ const Modify = () => {
   };
 
   // STANDARD GET REQUEST
-  const pendingModifyDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&authorID=${loggedInUser.personID}&status=Pending Modify`;
+  const pendingModifyDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&authorID=${loggedInUser.personID}&docStatus=Pending Modify`;
   const [pendingModify, setPendingModify] = useState([]);
 
   // GET - (WORKING FINE)
@@ -144,7 +144,7 @@ const Modify = () => {
                     <td><textarea value="Nothing Special" readOnly></textarea></td>
                   </tr>
                   <tr>
-                    <td>Remarks</td>
+                    <td>Remarks *</td>
                     <td><textarea></textarea></td>
                   </tr>
                   <tr>
@@ -159,7 +159,7 @@ const Modify = () => {
               </div>
             </form>
           </div>
-          <span>There are required fields in this form marked *.</span>
+          <span>There are required fields in this form marked *. Else fields read only.</span>
         </div>:null
       }
     </div>

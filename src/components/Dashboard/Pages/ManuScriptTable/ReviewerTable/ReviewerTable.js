@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../../../App";
-import ReviewerData from "../TableData/ReviewerData";
 import {
   faAlignJustify,
   faQuestionCircle,
@@ -78,76 +77,11 @@ const ReviewerTable = () => {
                     <th>Pages</th>
                     <th>Submit Date</th>
                     <th>Author Name</th>
-                    <th>Status</th>
                     <th>Rating</th>
                     <th>Comments</th>
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>S2324</td>
-                    <td>Machine Learning for Medicine</td>
-                    <td>Science</td>
-                    <td>632</td>
-                    <td>19/07/2021</td>
-                    <td>Tomas John</td>
-                    <td>Pending Modify</td>
-                    <td>6.7</td>
-                    <td>Need Modify</td>
-                    <td>
-                      <button>View</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>S2345</td>
-                    <td>Medicine with Industry 4.0</td>
-                    <td>Science</td>
-                    <td>432</td>
-                    <td>11/08/2021</td>
-                    <td>Tomas John</td>
-                    <td>Pending Modify</td>
-                    <td>7.3</td>
-                    <td>Good</td>
-                    <td>
-                      <button>View</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>S376</td>
-                    <td>Machine Learning for Gimification</td>
-                    <td>Science</td>
-                    <td>345</td>
-                    <td>09/08/2015</td>
-                    <td>Tomas John</td>
-                    <td>Paid</td>
-                    <td>7.3</td>
-                    <td>Good</td>
-                    <td>
-                      <button>View</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>SS34</td>
-                    <td>Culture and Encomics</td>
-                    <td>Social Study</td>
-                    <td>444</td>
-                    <td>29/09/2018</td>
-                    <td>Doris Wu</td>
-                    <td>Paid</td>
-                    <td>8.5</td>
-                    <td>Perfect</td>
-                    <td>
-                      <button>View</button>
-                    </td>
-                  </tr>
-                </tbody>
-                {reviewerData.map((item) => (
-                  <ReviewerData
-                    key={item.documentMetaData.documentID}
-                    data={item.documentMetaData}
-                  />
-                ))}
               </table>
             </form>
           </div>

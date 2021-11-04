@@ -25,7 +25,7 @@ const Review = () => {
   };
 
   // STANDARD GET REQUEST
-  const newDocumentDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&status=New`;
+  const newDocumentDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&docStatus=New`;
   const [newDocumentData, setNewDocumentData] = useState([]);
 
   // GET - (WORKING FINE)

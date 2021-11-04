@@ -52,7 +52,7 @@ const Payment = () => {
   };
 
   // STANDARD GET REQUEST
-  const pendingPaymentDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&authorID=${loggedInUser.personID}&status=Pending Payment`;
+  const pendingPaymentDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&authorID=${loggedInUser.personID}&docStatus=Pending Payment`;
   const [pendingPayment, setPendingPayment] = useState([]);
 
   // GET - (WORKING FINE)
@@ -181,7 +181,7 @@ const Payment = () => {
   });
 
   const handlePlacePayment = (e) => {
-    if (isCardBtnClick === true || isCardBtnClick === true ||isCardBtnClick === true ||isCardBtnClick === true) {
+    if (isCardBtnClick === true || isBankBtnClick === true ||isPaypalBtnClick === true ||isApplepayBtnClick === true) {
       e.preventDefault();
       setPaymentSuccessful({
         display: "",

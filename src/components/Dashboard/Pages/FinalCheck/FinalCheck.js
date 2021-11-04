@@ -7,7 +7,7 @@ import PendingFinalCheck from "./TableData/PendingFinalCheck";
 
 const FinalCheck = () => {
   // STANDARD GET REQUEST
-  const pendingFinalCheckDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&status=Pending Final Check`;
+  const pendingFinalCheckDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&docStatus=Pending Final Check`;
   const [pendingFinalCheck, setPendingFinalCheck] = useState([]);
 
   // GET - (WORKING FINE)

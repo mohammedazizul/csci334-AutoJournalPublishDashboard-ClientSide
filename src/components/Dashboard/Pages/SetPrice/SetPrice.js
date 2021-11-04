@@ -30,7 +30,7 @@ const SetPrice = () => {
   };
 
   // STANDARD GET REQUEST
-  const pendingSetPriceDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&status=Pending Set Price`;
+  const pendingSetPriceDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&docStatus=On Hold`;
   const [pendingSetPrice, setPendingSetPrice] = useState([]);
 
   // GET - (WORKING FINE)

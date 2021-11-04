@@ -152,7 +152,7 @@ input[type=text], select, textarea {
 
 .modifyFormDiv input[type=text] {
     height: 3vh;
-    width: 15vw;
+    width: 25vw;
 }
 
 .modifyFormDiv tr:nth-child(4) textarea {
@@ -323,6 +323,10 @@ input[type=text], select, textarea {
 .updateInfoDiv input[type=text] {
     height: 3vh;
     width: 13vw;
+}
+
+.updateInfoDiv tr:nth-child(4) input[type=text], .updateInfoDiv tr:nth-child(5) input[type=text], .updateInfoDiv tr:nth-child(6) input[type=text] {
+    width: 99%
 }
 
 .updateInfoDiv textarea {
