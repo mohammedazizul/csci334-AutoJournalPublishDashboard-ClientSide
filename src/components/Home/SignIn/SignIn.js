@@ -58,11 +58,7 @@ const SignIn = () => {
       .catch((error) => {
         console.log("Error: ", error);
       });
-<<<<<<< HEAD
-  }; //
-=======
   };
->>>>>>> 0cc9641 (Reviewer Dashboard Fetch Data Completed)
 
   const [emailError, setEmailError] = useState({
     display: "none",
