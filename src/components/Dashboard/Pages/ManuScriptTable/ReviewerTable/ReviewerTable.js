@@ -5,6 +5,8 @@ import {
   faAlignJustify,
   faQuestionCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import ReviewHistoryData from "../TableData/ReviewHistoryData";
+import PendingRatingData from "../TableData/PendingRatingData";
 
 const ReviewerTable = () => {
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
@@ -27,12 +29,12 @@ const ReviewerTable = () => {
   };
 
   // STANDARD GET REQUEST
-  const reviewerDataUrl = `http://localhost/jess-backend/api/read/getreview.php?api_key=RXru1LUOOeKFX03LGSo7&reviewerID=${loggedInUser.personID}`;
-  const [reviewerData, setReviewerData] = useState([]);
+  const reviewHistoryDataUrl = `http://localhost/jess-backend/api/read/getreview.php?api_key=RXru1LUOOeKFX03LGSo7&reviewerID=${loggedInUser.personID}&status=completed`;
+  const [reviewHistoryData, setReviewHistoryData] = useState([]);
 
   // GET - (WORKING FINE)
   useEffect(() => {
-    fetch(reviewerDataUrl, {
+    fetch(reviewHistoryDataUrl, {
       method: "GET",
     })
       .then((response) => {
@@ -43,7 +45,31 @@ const ReviewerTable = () => {
       })
       .then((data) => {
         console.log(data);
-        setReviewerData(data);
+        setReviewHistoryData(data);
+      })
+      .catch((error) => {
+        console.error("JSON user data fetching error : ", error);
+      });
+  },[]);
+
+  // STANDARD GET REQUEST
+  const pendingRatingDataUrl = `http://localhost/jess-backend/api/read/getreview.php?api_key=RXru1LUOOeKFX03LGSo7&reviewerID=${loggedInUser.personID}&status=pending`;
+  const [pendingRatingData, setPendingRatingData] = useState([]);
+
+  // GET - (WORKING FINE)
+  useEffect(() => {
+    fetch(pendingRatingDataUrl, {
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        console.log(data);
+        setPendingRatingData(data);
       })
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
@@ -82,6 +108,12 @@ const ReviewerTable = () => {
                     <th>Action</th>
                   </tr>
                 </thead>
+                {reviewHistoryData.map((item) => (
+                  <ReviewHistoryData
+                    key={item.documentID}
+                    data={item}
+                  />
+                ))}
               </table>
             </form>
           </div>
@@ -119,34 +151,13 @@ const ReviewerTable = () => {
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>SS13</td>
-                    <td>Social Study under Multimedia</td>
-                    <td>Social Study</td>
-                    <td>345</td>
-                    <td>24/06/2021</td>
-                    <td>Tomas John</td>
-                    <td>Under Review</td>
-                    <td>
-                      <button>View</button>
-                      <button onClick={isRateManuscriptDashboard}>Rate</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>E232</td>
-                    <td>Self Defense</td>
-                    <td>Education</td>
-                    <td>124</td>
-                    <td>07/11/2018</td>
-                    <td>Vincent</td>
-                    <td>Under Review</td>
-                    <td>
-                      <button>View</button>
-                      <button onClick={isRateManuscriptDashboard}>Rate</button>
-                    </td>
-                  </tr>
-                </tbody>
+                {pendingRatingData.map((item) => (
+                  <PendingRatingData
+                    key={item.documentID}
+                    data={item}
+                    function={isRateManuscriptDashboard}
+                  />
+                ))}
               </table>
             </form>
           </div>
