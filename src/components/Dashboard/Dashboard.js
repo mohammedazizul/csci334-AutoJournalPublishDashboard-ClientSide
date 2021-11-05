@@ -15,11 +15,8 @@ import TopNav from "./TopNav/TopNav";
 import ManuScriptTable from "./Pages/ManuScriptTable/ManuScriptTable";
 import SignOut from "../Home/SignOut/SignOut";
 import NoMatchFound from "../NoMatchFound/NoMatchFound";
-import { UserContext } from "../../App";
 
 const Dashboard = () => {
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
-
   return (
     <div className="dashboardMainDiv">
       <Router>
