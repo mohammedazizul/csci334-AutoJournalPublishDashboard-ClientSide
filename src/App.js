@@ -9,6 +9,7 @@ import Forgot1 from "./components/Home/ForgotPasswd/Forgot1";
 import Forgot2 from "./components/Home/ForgotPasswd/Forgot2";
 import NoMatchFound from "./components/NoMatchFound/NoMatchFound";
 import { createContext, useState } from "react";
+import PrivateRoute from "./components/AppRouter/PrivateRoute/PrivateRoute";
 
 export const UserContext = createContext(null);
 
@@ -48,9 +49,9 @@ function App() {
           <Route path="/forgot-password2">
             <Forgot2 />
           </Route>
-          <Route path="/dashboard">
+          <PrivateRoute path="/dashboard">
             <Dashboard />
-          </Route>
+          </PrivateRoute>
           <Route path="*">
             <NoMatchFound />
           </Route>
