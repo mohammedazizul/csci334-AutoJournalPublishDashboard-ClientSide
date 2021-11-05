@@ -58,7 +58,7 @@ const SignIn = () => {
       .catch((error) => {
         console.log("Error: ", error);
       });
-  }; //
+  };
 
   const [emailError, setEmailError] = useState({
     display: "none",
