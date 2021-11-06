@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 const PendingRatingData = (props) => {
   const { documentID } = props.data;
-  const { isRateManuscriptDashboard } = props.function;
 
   // STANDARD GET REQUEST
   const docInfoDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&docID=${documentID}`;
@@ -50,7 +49,7 @@ const PendingRatingData = (props) => {
       ))}
       <td>
         <button>View</button>
-        <button onClick={props.function}>Rate</button>
+        <button onClick={props.isRateManuscriptDashboard}>Rate</button>
       </td>
     </tr>
   );

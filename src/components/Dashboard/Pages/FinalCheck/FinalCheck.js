@@ -73,8 +73,10 @@ const FinalCheck = () => {
               />
             ))}
           </table>
-          <input type="submit" value="Satisfy"></input>
-          <input type="submit" value="Reject"></input>
+          <div className="inputBtn">
+            <input type="button" value="Satisfy"></input>
+            <input type="button" value="Reject"></input>
+          </div>
         </form>
       </div>
     </div>

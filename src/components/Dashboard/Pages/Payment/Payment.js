@@ -296,8 +296,8 @@ const Payment = () => {
                 </tr>
               </tbody>
             </table>
-            <input type="submit" value="Place Payment" onClick={handlePlacePayment}></input>
-            <input type="reset" value="Cancel" onClick={isMainPaymentDashboard}></input>
+            <input type="button" value="Place Payment" onClick={handlePlacePayment}></input>
+            <input type="button" value="Cancel" onClick={isMainPaymentDashboard}></input>
           </div>
           <div style={{ textAlign: "center" }}>
             <span style={paymentSuccessful}><b>Payment Successful</b></span>

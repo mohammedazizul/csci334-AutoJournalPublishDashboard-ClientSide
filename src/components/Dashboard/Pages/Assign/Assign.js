@@ -212,9 +212,9 @@ const Assign = () => {
                   </tbody>
                 </table>
               </div>
-              <div>
-                <button className="btn" id="trueBtn">Assign</button>
-                <button className="btn" id="falseBtn" onClick={isMainAssignDashboard}>Cancel</button>
+              <div className="inputBtn">
+                <input type="button" value="Assign"></input>
+                <input type="button" value="Cancel" onClick={isMainAssignDashboard}></input>
               </div>
             </form>
           </div>

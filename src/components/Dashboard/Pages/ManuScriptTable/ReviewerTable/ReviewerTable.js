@@ -156,7 +156,7 @@ const ReviewerTable = () => {
                     <PendingRatingData
                       key={item.documentID}
                       data={item}
-                      function={isRateManuscriptDashboard}
+                      isRateManuscriptDashboard={isRateManuscriptDashboard}
                     />
                   ))}
                 </tbody>
@@ -214,9 +214,9 @@ const ReviewerTable = () => {
               >
                 There are required fields in this form marked *.
               </span>
-              <input type="submit" value="Confirm"></input>
+              <input type="button" value="Confirm"></input>
               <input
-                type="reset"
+                type="button"
                 value="Cancel"
                 onClick={isMainReviewerDashboard}
               ></input>

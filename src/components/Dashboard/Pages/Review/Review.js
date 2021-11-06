@@ -141,9 +141,9 @@ const Review = () => {
                 </tbody>
               </table>
               <div className="inputBtn">
-                <input type="submit" value="Upload"></input>
+                <input type="button" value="Upload"></input>
                 <input
-                  type="reset"
+                  type="button"
                   value="Cancel"
                   onClick={isMainReviewDashboard}
                 ></input>

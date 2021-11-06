@@ -18,16 +18,32 @@ const Modify = () => {
 
   const [isManuscriptNo, setModifySelected] = useState(false);
 
-  const isModifySelected = () => {
-    setMainModify(false);
+  const [selectedData, setSelectedData] = useState(null);
 
-    setModifySelected(true);
+  const [selectedError, setSelectedError] = useState({
+    display: "none",
+  })
+
+  const isModifySelected = (e) => {
+    if (selectedData !== null) {
+      setMainModify(false);
+
+      setModifySelected(true);
+    } else {
+      e.preventDefault();
+      setSelectedError({
+        display: "",
+        color: "red",
+      });
+    }
   }
 
   const isMainManu = () => {
     setMainModify(true);
 
     setModifySelected(false);
+
+    setSelectedData(null);
   }
 
   const goToManuscriptTable = () => {
@@ -58,6 +74,89 @@ const Modify = () => {
       });
   },[]);
 
+  const [authorRemarks, setAuthorRemarks] = useState(null);
+  const [attachments, setAttachments] = useState(null);
+
+  // STANDARD POST REQUEST - POST - (NOT WORKING FINE)
+  // creating data to send to BE
+  let formData = new FormData();
+  formData.append("authorRemarks", authorRemarks);
+  formData.append("document", attachments);
+
+  const processUpdateModify = () => {
+    // to Display the key/value pairs
+    for (var pair of formData.entries()) {
+      console.log("Form Data: ", pair[0] + ", " + pair[1]);
+    }
+
+    const urlToPost = `http://localhost/jess-backend/processes/editDocument.php`;
+
+    fetch(urlToPost, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: formData,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("upload :", data);
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+  };
+
+  const [authorRemarksError, setAuthorRemarksError] = useState({
+    display: "none",
+  });
+  const [attachmentsError, setAttachmentsError] = useState({
+    display: "none",
+  });
+
+  const handleAuthorRemarks = (e) => {
+    let remarks = e.target.value;
+    setAuthorRemarks(remarks);
+
+    if (remarks !== "") {
+      setAuthorRemarksError({
+        display: "none",
+      });
+    }
+  };
+
+  const handleAttachments = (e) => {
+    let attachments = e.target.files[0];
+    setAttachments(attachments);
+
+    if (attachments !== "") {
+      setAttachmentsError({
+        display: "none",
+      });
+    }
+  };
+
+  const handleUpdateModify = (e) => {
+    if (authorRemarks === null || authorRemarks === "") {
+      e.preventDefault();
+      setAuthorRemarksError({
+        display: "",
+        color: "red",
+      });
+    } else if (attachments === null || attachments === "") {
+      e.preventDefault();
+      setAttachmentsError({
+        display: "",
+        color: "red",
+      });
+    } else {
+      processUpdateModify();
+      document.getElementById("modifyForm").reset();
+    }
+  };
+
   return (
     <div>
       {isMainModify?
@@ -82,7 +181,7 @@ const Modify = () => {
               textAlign: "center",
             }}
           >
-            <form method="GET">
+            <form method="GET" id="modifyTable">
               <table className="dataTable">
                 <thead>
                   <tr>
@@ -98,12 +197,15 @@ const Modify = () => {
                   <PendingModify
                     key={item.documentMetaDataObject.documentID}
                     data={item.documentMetaDataObject}
+                    setSelectedData={setSelectedData}
+                    setSelectedError={setSelectedError}
                   />
                 ))}
               </table>
               <button className="btn" id="trueBtn" onClick={isModifySelected}>Modify Selected</button>
               <button className="btn" id="falseBtn" onClick={goToManuscriptTable}>Cancel</button>
             </form>
+            <span style={selectedError}>Please select a manuscript to modify</span>
           </div>
         </div>:null
       }
@@ -123,38 +225,46 @@ const Modify = () => {
           </div>
 
           <div className="modifyFormDiv">
-            <form method="POST">
+            <form method="POST" id="modifyForm">
               <table>
                 <tbody>
                   <tr>
                     <td>No.</td>
-                    <td><input type="text" value="S2324" readOnly></input></td>
+                    <td><input type="text" value={selectedData[0]} readOnly></input></td>
                   </tr>
                   <tr>
                     <td>Title</td>
-                    <td><input type="text" value="Machine Learning for Medicine" readOnly></input></td>
+                    <td><input type="text" value={selectedData[1]} readOnly></input></td>
                   </tr>
                   <tr>
                     <td>Topic</td>
-                    <td><input type="text" value="Science" readOnly></input></td>
+                    <td><input type="text" value={selectedData[2]} readOnly></input></td>
                   </tr>
                   <tr>
                     <td>Comments</td>
-                    <td><textarea value="Nothing Special" readOnly></textarea></td>
+                    <td><textarea value={selectedData[3]} readOnly></textarea></td>
                   </tr>
                   <tr>
                     <td>Remarks *</td>
-                    <td><textarea></textarea></td>
+                    <td>
+                      <textarea onChange={handleAuthorRemarks}></textarea>
+                      <br />
+                      <span style={authorRemarksError}>Please enter your remarks</span>
+                    </td>
                   </tr>
                   <tr>
                     <td>Attachments *</td>
-                    <td><input type="file"></input></td>
+                    <td>
+                      <input type="file" onChange={handleAttachments}></input>
+                      <br />
+                      <span style={attachmentsError}>Please enter your remarks</span>
+                    </td>
                   </tr>
                 </tbody>
               </table>
               <div className="inputBtn">
-                <input type="submit" value="Update Manuscript"></input>
-                <input type="reset" value="Cancel" onClick={isMainManu}></input>
+                <input type="button" value="Update Manuscript" onClick={handleUpdateModify}></input>
+                <input type="button" value="Cancel" onClick={isMainManu}></input>
               </div>
             </form>
           </div>

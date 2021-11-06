@@ -135,8 +135,8 @@ const Publish = () => {
                 </tbody>
               </table>
               <div className="inputBtn">
-                <input type="submit" value="Confirm"></input>
-                <input type="reset" value="Cancel" onClick={isMainPublishDashboard}></input>
+                <input type="button" value="Confirm"></input>
+                <input type="button" value="Cancel" onClick={isMainPublishDashboard}></input>
               </div>
             </form>
           </div>

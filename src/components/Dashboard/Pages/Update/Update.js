@@ -154,8 +154,8 @@ const Update = () => {
               </tbody>
             </table>
             <div className="inputBtn">
-              <input type="submit" value="Confirm"></input>
-              <input type="reset" value="Cancel" onClick={isMainUpdateDashboard}></input>
+              <input type="button" value="Confirm"></input>
+              <input type="button" value="Cancel" onClick={isMainUpdateDashboard}></input>
             </div>
           </form>
         </div>

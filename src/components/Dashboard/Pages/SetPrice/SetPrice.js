@@ -132,8 +132,8 @@ const SetPrice = () => {
                 </tbody>
               </table>
               <div className="inputBtn">
-                <input type="submit" value="Update"></input>
-                <input type="reset" value="Cancel" onClick={isMainSetPriceDashboard}></input>
+                <input type="button" value="Update"></input>
+                <input type="button" value="Cancel" onClick={isMainSetPriceDashboard}></input>
               </div>
             </form>
           </div>
