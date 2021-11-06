@@ -1,7 +1,7 @@
 import React from "react";
 
 const EditorData = (props) => {
-  const { documentID, title, topic, pages, dateOfSubmission, username, status } = props.data;
+  const { documentID, title, topic, dateOfSubmission, authorUsername, documentStatus } = props.data;
 
   return (
     <tbody>
@@ -9,10 +9,9 @@ const EditorData = (props) => {
         <td>{documentID}</td>
         <td>{title}</td>
         <td>{topic}</td>
-        <td>{pages}</td>
         <td>{dateOfSubmission}</td>
-        <td>{username}</td>
-        <td>{status}</td>
+        <td>{authorUsername}</td>
+        <td>{documentStatus}</td>
       </tr>
     </tbody>
   );

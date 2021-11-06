@@ -238,7 +238,6 @@ const Payment = () => {
                     <th>No.</th>
                     <th>Title</th>
                     <th>Topic</th>
-                    <th>Pages</th>
                     <th>Submit Date</th>
                     <th>Status</th>
                     <th>Amount</th>
@@ -246,8 +245,8 @@ const Payment = () => {
                 </thead>
                 {pendingPayment.map((item) => (
                   <PendingPayment
-                    key={item.documentMetaData.documentID}
-                    data={item.documentMetaData}
+                    key={item.documentMetaDataObject.documentID}
+                    data={item.documentMetaDataObject}
                   />
                 ))}
               </table>

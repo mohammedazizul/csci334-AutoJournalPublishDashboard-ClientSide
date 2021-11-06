@@ -60,7 +60,6 @@ const FinalCheck = () => {
                 <th>No.</th>
                 <th>Title</th>
                 <th>Topic</th>
-                <th>Pages</th>
                 <th>Submit Date</th>
                 <th>Author Name</th>
                 <th>Status</th>
@@ -69,8 +68,8 @@ const FinalCheck = () => {
             </thead>
             {pendingFinalCheck.map((item) => (
               <PendingFinalCheck
-                key={item.documentMetaData.documentID}
-                data={item.documentMetaData}
+                key={item.documentMetaDataObject.documentID}
+                data={item.documentMetaDataObject}
               />
             ))}
           </table>

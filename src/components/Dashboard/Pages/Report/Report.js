@@ -233,9 +233,9 @@ const Report = () => {
                   <th>Publication Rate</th>
                 </tr>
               </thead>
-              {/* {authorData.map((item) => (
+              {authorData.map((item) => (
                 <AuthorData key={item.personID} data={item} />
-              ))} */}
+              ))}
             </table>
           </form>
           <button onClick={isMainReportDashboard}>

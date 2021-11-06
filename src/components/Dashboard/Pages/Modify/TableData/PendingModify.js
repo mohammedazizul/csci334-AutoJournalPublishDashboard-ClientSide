@@ -1,7 +1,7 @@
 import React from "react";
 
 const PendingModify = (props) => {
-  const { documentID, title, topic, pages, dateOfSubmission, status } = props.data;
+  const { documentID, title, topic, dateOfSubmission, documentStatus } = props.data;
 
   return (
     <tbody>
@@ -10,9 +10,8 @@ const PendingModify = (props) => {
         <td>{documentID}</td>
         <td>{title}</td>
         <td>{topic}</td>
-        <td>{pages}</td>
         <td>{dateOfSubmission}</td>
-        <td>{status}</td>
+        <td>{documentStatus}</td>
       </tr>
     </tbody>
   );

@@ -29,35 +29,30 @@ const PendingRatingData = (props) => {
   },[]);
 
   return (
-    <tbody>
-      <tr>
-        {docInfoData.map((item) => (
-          <td key={item.documentMetaData.documentID}>{item.documentMetaData.documentID}</td>
-        ))}
-        {docInfoData.map((item) => (
-          <td key={item.documentMetaData.documentID}>{item.documentMetaData.title}</td>
-        ))}
-        {docInfoData.map((item) => (
-          <td key={item.documentMetaData.documentID}>{item.documentMetaData.topic}</td>
-        ))}
-        {docInfoData.map((item) => (
-          <td key={item.documentMetaData.documentID}>{item.documentMetaData.pages}</td>
-        ))}
-        {docInfoData.map((item) => (
-          <td key={item.documentMetaData.documentID}>{item.documentMetaData.dateOfSubmission}</td>
-        ))}
-        {docInfoData.map((item) => (
-          <td key={item.documentMetaData.documentID}>{item.documentMetaData.username}</td>
-        ))}
-        {docInfoData.map((item) => (
-          <td key={item.documentMetaData.documentID}>{item.documentMetaData.status}</td>
-        ))}
-        <td>
-          <button>View</button>
-          <button onClick={props.function}>Rate</button>
-        </td>
-      </tr>
-    </tbody>
+    <tr>
+      {docInfoData.map((item) => (
+        <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.documentID}</td>
+      ))}
+      {docInfoData.map((item) => (
+        <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.title}</td>
+      ))}
+      {docInfoData.map((item) => (
+        <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.topic}</td>
+      ))}
+      {docInfoData.map((item) => (
+        <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.dateOfSubmission}</td>
+      ))}
+      {docInfoData.map((item) => (
+        <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.authorUsername}</td>
+      ))}
+      {docInfoData.map((item) => (
+        <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.documentStatus}</td>
+      ))}
+      <td>
+        <button>View</button>
+        <button onClick={props.function}>Rate</button>
+      </td>
+    </tr>
   );
 };
 
