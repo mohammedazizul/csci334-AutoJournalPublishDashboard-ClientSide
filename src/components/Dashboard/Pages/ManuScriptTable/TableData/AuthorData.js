@@ -15,7 +15,7 @@ const AuthorData = (props) => {
         <td>
           {/* suggestions from Rayan  */}
           {/* on click switch to view page display all info about single manuscript and allow to download */}
-          <button>VIEW</button>
+          <button>View</button>
         </td>
       </tr>
     </tbody>

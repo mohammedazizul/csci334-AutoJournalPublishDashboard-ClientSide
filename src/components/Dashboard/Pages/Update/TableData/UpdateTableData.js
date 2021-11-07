@@ -13,6 +13,7 @@ const UpdateTableData = (props) => {
         <td>{dateOfSubmission}</td>
         <td>{authorUsername}</td>
         <td>{documentStatus}</td>
+        <td><button>View</button></td>
       </tr>
     </tbody>
   );

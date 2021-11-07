@@ -196,6 +196,7 @@ const Modify = () => {
                     <th>Topic</th>
                     <th>Submit Date</th>
                     <th>Status</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 {pendingModify.map((item) => (

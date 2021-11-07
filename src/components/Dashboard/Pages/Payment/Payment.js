@@ -20,10 +20,28 @@ const Payment = () => {
 
   const [isPaymentMehod, setPaymentMethod] = useState(false);
 
-  const isPaymentMethodDashboard = () => {
-    setMainPayment(false);
+  const [selectedData, setSelectedData] = useState(null);
 
-    setPaymentMethod(true);
+  const [selectedError, setSelectedError] = useState({
+    display: "none",
+  })
+
+  const isPaymentMethodDashboard = (e) => {
+    if (selectedData !== null) {
+      setMainPayment(false);
+
+      setPaymentMethod(true);
+
+      setDocumentID(selectedData);
+
+      setChoice("pay");
+    } else {
+      e.preventDefault();
+      setSelectedError({
+        display: "",
+        color: "red",
+      });
+    }
   };
 
   const isMainPaymentDashboard = () => {
@@ -71,6 +89,56 @@ const Payment = () => {
         console.error("JSON user data fetching error : ", error);
       });
   }, []);
+
+  const [documentID, setDocumentID] = useState(null);
+  const [choice, setChoice] = useState("cancel");
+
+  // STANDARD POST REQUEST - POST - (NOT WORKING FINE)
+  // creating data to send to BE
+  let formData = new FormData();
+  formData.append("documentID", selectedData);
+  formData.append("authorID", loggedInUser.personID);
+  formData.append("choice", choice);
+
+  const processPayment = () => {
+    // to Display the key/value pairs
+    for (var pair of formData.entries()) {
+      console.log("Form Data: ", pair[0] + ", " + pair[1]);
+    }
+
+    const urlToPost = `http://localhost/jess-backend/processes/authorPayment.php`;
+
+    fetch(urlToPost, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: formData,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("upload :", data);
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+  };
+
+  const handleCancel = (e) => {
+    if (selectedData !== null) {
+      e.preventDefault();
+      processPayment();
+    }
+    else {
+      e.preventDefault();
+      setSelectedError({
+        display: "",
+        color: "red",
+      });
+    }
+  }
 
   const [isCardBtnClick, setCardBtnClick] = useState(false);
   const [isBankBtnClick, setBankBtnClick] = useState(false);
@@ -209,6 +277,7 @@ const Payment = () => {
       isApplepayBtnClick === true
     ) {
       e.preventDefault();
+      processPayment();
       setPaymentSuccessful({
         display: "",
         color: "green",
@@ -228,45 +297,6 @@ const Payment = () => {
         fontSize: "32px",
       });
     }
-    //
-    processPayment();
-  };
-
-  // FAKE
-  const documentIDs = [];
-  documentIDs[0] = "D5";
-  console.log(typeof documentIDs);
-
-  // STANDARD POST REQUEST - POST - (WORKING FINE)
-  // creating data to send to BE
-  const formData = new FormData();
-  formData.append("authorID", loggedInUser.personID); // OKAY
-  formData.append("documentIDs", documentIDs); //  documentIDs should be an array
-
-  const processPayment = () => {
-    // to Display the key/value pairs
-    for (var pair of formData.entries()) {
-      console.log("Form Data: ", pair[0] + ", " + pair[1]);
-    }
-
-    const urlToPost = `http://localhost/jess-backend/processes/authorPayment.php`;
-
-    fetch(urlToPost, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-      },
-      body: formData,
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Process Payment :", data);
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-      });
   };
 
   return (
@@ -294,16 +324,13 @@ const Payment = () => {
               margin: "20px",
               borderRadius: "5px",
               textAlign: "center",
-              height: "250px",
             }}
           >
-            <form method="GET">
+            <form method="GET" id="paymentForm">
               <table className="dataTable">
                 <thead>
                   <tr>
-                    <th>
-                      <input type="checkbox"></input>
-                    </th>
+                    <th></th>
                     <th>No.</th>
                     <th>Title</th>
                     <th>Topic</th>
@@ -316,11 +343,12 @@ const Payment = () => {
                   <PendingPayment
                     key={item.documentMetaDataObject.documentID}
                     data={item.documentMetaDataObject}
+                    setSelectedData={setSelectedData}
+                    setSelectedError={setSelectedError}
                   />
                 ))}
               </table>
-              <br />
-              <span>Total: RM</span>
+
               <div>
                 <button
                   className="btn"
@@ -329,7 +357,7 @@ const Payment = () => {
                 >
                   Pay for Selected
                 </button>
-                <button className="btn" id="cancelPaymentBtn">
+                <button className="btn" id="cancelPaymentBtn" value="cancel" onClick={handleCancel}>
                   Cancel Payment
                 </button>
                 <button
@@ -341,6 +369,7 @@ const Payment = () => {
                 </button>
               </div>
             </form>
+            <span style={selectedError}>Please select a manuscript to pay</span>
           </div>
         </div>
       ) : null}

@@ -36,6 +36,7 @@ const PendingModify = (props) => {
         <td>{topic}</td>
         <td>{dateOfSubmission}</td>
         <td>{documentStatus}</td>
+        <td><button>View</button></td>
       </tr>
     </tbody>
   );

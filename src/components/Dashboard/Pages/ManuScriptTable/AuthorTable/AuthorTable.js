@@ -100,7 +100,7 @@ const AuthorTable = () => {
                   <th>Topic</th>
                   <th>Submit Date</th>
                   <th>Status</th>
-                  <th>Buttons</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               {authorData.map((item) => (
