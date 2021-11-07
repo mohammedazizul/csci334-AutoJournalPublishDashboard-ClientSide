@@ -29,6 +29,8 @@ const Modify = () => {
       setMainModify(false);
 
       setModifySelected(true);
+
+      setDocumentID(selectedData[0]);
     } else {
       e.preventDefault();
       setSelectedError({
@@ -74,12 +76,15 @@ const Modify = () => {
       });
   },[]);
 
+  const [documentID, setDocumentID] = useState(null);
   const [authorRemarks, setAuthorRemarks] = useState(null);
   const [attachments, setAttachments] = useState(null);
 
   // STANDARD POST REQUEST - POST - (NOT WORKING FINE)
   // creating data to send to BE
   let formData = new FormData();
+  formData.append("documentID", documentID);
+  formData.append("personID", loggedInUser.personID);
   formData.append("authorRemarks", authorRemarks);
   formData.append("document", attachments);
 
