@@ -15,6 +15,8 @@ import {
   faEdit,
   faUserCircle,
   faKey,
+  faTable,
+  faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../Logo/logo192.png";
 import { UserContext } from "../../../App";
@@ -39,6 +41,13 @@ const TopNav = () => {
       </div>
 
       <div className="divRight">
+        <Link to="/dashboard/manuscript-table" className="navA">
+          <div className="iconDiv iconDivHover">
+            <FontAwesomeIcon icon={faHome} />
+            <br />
+            Home
+          </div>
+        </Link>
         {(loggedInUser.type === 1 || loggedInUser.type === 0) && (
           <>
             {loggedInUser.type === 0 && (
@@ -127,6 +136,7 @@ const TopNav = () => {
             Reset
           </div>
         </Link>
+
         <Link to="/dashboard/signOut" className="navA">
           <div className="iconDiv iconDivHover">
             <FontAwesomeIcon icon={faSignOutAlt} />
