@@ -1,7 +1,7 @@
 import React from "react";
 
 const PendingPayment = (props) => {
-  const { documentID, title, topic, pages, dateOfSubmission, status, price } = props.data;
+  const { documentID, title, topic, dateOfSubmission, documentStatus, price } = props.data;
 
   return (
     <tbody>
@@ -10,9 +10,8 @@ const PendingPayment = (props) => {
         <td>{documentID}</td>
         <td>{title}</td>
         <td>{topic}</td>
-        <td>{pages}</td>
         <td>{dateOfSubmission}</td>
-        <td>{status}</td>
+        <td>{documentStatus}</td>
         <td>{price}</td>
       </tr>
     </tbody>

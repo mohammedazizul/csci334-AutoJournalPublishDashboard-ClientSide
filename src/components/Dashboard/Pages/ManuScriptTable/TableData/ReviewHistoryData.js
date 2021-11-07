@@ -28,31 +28,26 @@ const ReviewHistoryData = (props) => {
   },[]);
 
   return (
-    <tbody>
-      <tr>
-        {docInfoData.map((item) => (
-          <td key={item.documentMetaData.documentID}>{item.documentMetaData.documentID}</td>
-        ))}
-        {docInfoData.map((item) => (
-          <td key={item.documentMetaData.documentID}>{item.documentMetaData.title}</td>
-        ))}
-        {docInfoData.map((item) => (
-          <td key={item.documentMetaData.documentID}>{item.documentMetaData.topic}</td>
-        ))}
-        {docInfoData.map((item) => (
-          <td key={item.documentMetaData.documentID}>{item.documentMetaData.pages}</td>
-        ))}
-        {docInfoData.map((item) => (
-          <td key={item.documentMetaData.documentID}>{item.documentMetaData.dateOfSubmission}</td>
-        ))}
-        {docInfoData.map((item) => (
-          <td key={item.documentMetaData.documentID}>{item.documentMetaData.username}</td>
-        ))}
-        <td>{rating}</td>
-        <td>{comment}</td>
-        <td><button>View</button></td>
-      </tr>
-    </tbody>
+    <tr>
+      {docInfoData.map((item) => (
+        <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.documentID}</td>
+      ))}
+      {docInfoData.map((item) => (
+        <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.title}</td>
+      ))}
+      {docInfoData.map((item) => (
+        <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.topic}</td>
+      ))}
+      {docInfoData.map((item) => (
+        <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.dateOfSubmission}</td>
+      ))}
+      {docInfoData.map((item) => (
+        <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.authorUsername}</td>
+      ))}
+      <td>{rating}</td>
+      <td>{comment}</td>
+      <td><button>View</button></td>
+    </tr>
   );
 };
 

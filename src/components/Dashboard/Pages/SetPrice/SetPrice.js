@@ -85,7 +85,6 @@ const SetPrice = () => {
                   <th>No.</th>
                   <th>Title</th>
                   <th>Topic</th>
-                  <th>Pages</th>
                   <th>Submit Date</th>
                   <th>Author Name</th>
                   <th>Status</th>
@@ -94,8 +93,8 @@ const SetPrice = () => {
               </thead>
               {pendingSetPrice.map((item) => (
                 <PendingSetPrice
-                  key={item.documentMetaData.documentID}
-                  data={item.documentMetaData}
+                  key={item.documentMetaDataObject.documentID}
+                  data={item.documentMetaDataObject}
                 />
               ))}
             </table>
@@ -133,8 +132,8 @@ const SetPrice = () => {
                 </tbody>
               </table>
               <div className="inputBtn">
-                <input type="submit" value="Update"></input>
-                <input type="reset" value="Cancel" onClick={isMainSetPriceDashboard}></input>
+                <input type="button" value="Update"></input>
+                <input type="button" value="Cancel" onClick={isMainSetPriceDashboard}></input>
               </div>
             </form>
           </div>

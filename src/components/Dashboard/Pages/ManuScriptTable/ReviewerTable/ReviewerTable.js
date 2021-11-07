@@ -100,7 +100,6 @@ const ReviewerTable = () => {
                     <th>No.</th>
                     <th>Title</th>
                     <th>Topic</th>
-                    <th>Pages</th>
                     <th>Submit Date</th>
                     <th>Author Name</th>
                     <th>Rating</th>
@@ -108,12 +107,14 @@ const ReviewerTable = () => {
                     <th>Action</th>
                   </tr>
                 </thead>
-                {reviewHistoryData.map((item) => (
-                  <ReviewHistoryData
-                    key={item.documentID}
-                    data={item}
-                  />
-                ))}
+                <tbody>
+                  {reviewHistoryData.map((item) => (
+                    <ReviewHistoryData
+                      key={item.documentID}
+                      data={item}
+                    />
+                  ))}
+                </tbody>
               </table>
             </form>
           </div>
@@ -144,20 +145,21 @@ const ReviewerTable = () => {
                     <th>No.</th>
                     <th>Title</th>
                     <th>Topic</th>
-                    <th>Pages</th>
                     <th>Submit Date</th>
                     <th>Author Name</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
-                {pendingRatingData.map((item) => (
-                  <PendingRatingData
-                    key={item.documentID}
-                    data={item}
-                    function={isRateManuscriptDashboard}
-                  />
-                ))}
+                <tbody>
+                  {pendingRatingData.map((item) => (
+                    <PendingRatingData
+                      key={item.documentID}
+                      data={item}
+                      isRateManuscriptDashboard={isRateManuscriptDashboard}
+                    />
+                  ))}
+                </tbody>
               </table>
             </form>
           </div>
@@ -212,9 +214,9 @@ const ReviewerTable = () => {
               >
                 There are required fields in this form marked *.
               </span>
-              <input type="submit" value="Confirm"></input>
+              <input type="button" value="Confirm"></input>
               <input
-                type="reset"
+                type="button"
                 value="Cancel"
                 onClick={isMainReviewerDashboard}
               ></input>

@@ -111,7 +111,6 @@ const Assign = () => {
                     <th>No.</th>
                     <th>Title</th>
                     <th>Topic</th>
-                    <th>Pages</th>
                     <th>Submit Date</th>
                     <th>Author Name</th>
                     <th>Status</th>
@@ -119,8 +118,8 @@ const Assign = () => {
                 </thead>
                 {pendingReview.map((item) => (
                   <PendingReview
-                    key={item.documentMetaData.documentID}
-                    data={item.documentMetaData}
+                    key={item.documentMetaDataObject.documentID}
+                    data={item.documentMetaDataObject}
                   />
                 ))}
               </table>
@@ -213,9 +212,9 @@ const Assign = () => {
                   </tbody>
                 </table>
               </div>
-              <div>
-                <button className="btn" id="trueBtn">Assign</button>
-                <button className="btn" id="falseBtn" onClick={isMainAssignDashboard}>Cancel</button>
+              <div className="inputBtn">
+                <input type="button" value="Assign"></input>
+                <input type="button" value="Cancel" onClick={isMainAssignDashboard}></input>
               </div>
             </form>
           </div>

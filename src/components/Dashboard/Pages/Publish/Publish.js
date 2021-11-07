@@ -86,7 +86,6 @@ const Publish = () => {
                     <th>No.</th>
                     <th>Title</th>
                     <th>Topic</th>
-                    <th>Pages</th>
                     <th>Submit Date</th>
                     <th>Author Name</th>
                     <th>Status</th>
@@ -95,8 +94,8 @@ const Publish = () => {
                 </thead>
                 {paid.map((item) => (
                   <Paid
-                    key={item.documentMetaData.documentID}
-                    data={item.documentMetaData}
+                    key={item.documentMetaDataObject.documentID}
+                    data={item.documentMetaDataObject}
                   />
                 ))}
               </table>
@@ -136,8 +135,8 @@ const Publish = () => {
                 </tbody>
               </table>
               <div className="inputBtn">
-                <input type="submit" value="Confirm"></input>
-                <input type="reset" value="Cancel" onClick={isMainPublishDashboard}></input>
+                <input type="button" value="Confirm"></input>
+                <input type="button" value="Cancel" onClick={isMainPublishDashboard}></input>
               </div>
             </form>
           </div>

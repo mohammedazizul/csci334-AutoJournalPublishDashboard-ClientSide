@@ -86,7 +86,6 @@ const Update = () => {
                   <th>No.</th>
                   <th>Title</th>
                   <th>Topic</th>
-                  <th>Pages</th>
                   <th>Submit Date</th>
                   <th>Author Name</th>
                   <th>Status</th>
@@ -94,8 +93,8 @@ const Update = () => {
               </thead>
               {updateTableData.map((item) => (
                 <UpdateTableData
-                  key={item.documentMetaData.documentID}
-                  data={item.documentMetaData}
+                  key={item.documentMetaDataObject.documentID}
+                  data={item.documentMetaDataObject}
                 />
               ))}
             </table>
@@ -155,8 +154,8 @@ const Update = () => {
               </tbody>
             </table>
             <div className="inputBtn">
-              <input type="submit" value="Confirm"></input>
-              <input type="reset" value="Cancel" onClick={isMainUpdateDashboard}></input>
+              <input type="button" value="Confirm"></input>
+              <input type="button" value="Cancel" onClick={isMainUpdateDashboard}></input>
             </div>
           </form>
         </div>
