@@ -28,7 +28,7 @@ const AuthorTable = () => {
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  },[]);
+  }, []);
 
   return (
     <div>
@@ -100,6 +100,7 @@ const AuthorTable = () => {
                   <th>Topic</th>
                   <th>Submit Date</th>
                   <th>Status</th>
+                  <th>Buttons</th>
                 </tr>
               </thead>
               {authorData.map((item) => (
