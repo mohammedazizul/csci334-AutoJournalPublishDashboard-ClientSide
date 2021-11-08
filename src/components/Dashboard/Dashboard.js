@@ -15,6 +15,7 @@ import TopNav from "./TopNav/TopNav";
 import ManuScriptTable from "./Pages/ManuScriptTable/ManuScriptTable";
 import SignOut from "../Home/SignOut/SignOut";
 import NoMatchFound from "../NoMatchFound/NoMatchFound";
+import ResetPassword from "../Dashboard/Pages/ResetPassword/ResetPassword";
 
 const Dashboard = () => {
   return (
@@ -54,6 +55,9 @@ const Dashboard = () => {
           </Route>
           <Route path="/dashboard/payment">
             <Payment />
+          </Route>
+          <Route path="/dashboard/resetPassword">
+            <ResetPassword />
           </Route>
           <Route path="/dashboard/signOut">
             <SignOut />

@@ -129,7 +129,7 @@ const TopNav = () => {
             )}
           </>
         )}
-        <Link to="/forgot-password2" className="navA">
+        <Link to="/dashboard/resetPassword" className="navA">
           <div className="iconDiv iconDivHover">
             <FontAwesomeIcon icon={faKey} />
             <br />
