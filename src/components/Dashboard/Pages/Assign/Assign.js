@@ -114,6 +114,7 @@ const Assign = () => {
                     <th>Submit Date</th>
                     <th>Author Name</th>
                     <th>Status</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 {pendingReview.map((item) => (
