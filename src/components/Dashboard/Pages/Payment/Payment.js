@@ -18,7 +18,7 @@ const Payment = () => {
 
   const [isMainPayment, setMainPayment] = useState(true);
 
-  const [isPaymentMehod, setPaymentMethod] = useState(false);
+  const [isPaymentMethod, setPaymentMethod] = useState(false);
 
   const [selectedData, setSelectedData] = useState(null);
 
@@ -69,26 +69,33 @@ const Payment = () => {
   // STANDARD GET REQUEST
   const pendingPaymentDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&authorID=${loggedInUser.personID}&docStatus=Pending Payment`;
   const [pendingPayment, setPendingPayment] = useState([]);
+  const [updateManuscriptPayTable, setUpdateManuscriptPayTable] =
+    useState(true);
 
   // GET - (WORKING FINE)
   useEffect(() => {
-    fetch(pendingPaymentDataUrl, {
-      method: "GET",
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
+    if (updateManuscriptPayTable) {
+      fetch(pendingPaymentDataUrl, {
+        method: "GET",
       })
-      .then((data) => {
-        console.log(data);
-        setPendingPayment(data);
-      })
-      .catch((error) => {
-        console.error("JSON user data fetching error : ", error);
-      });
-  }, []);
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw response;
+        })
+        .then((data) => {
+          console.log(data);
+          setPendingPayment(data);
+          if (data) {
+            setUpdateManuscriptPayTable(false);
+          }
+        })
+        .catch((error) => {
+          console.error("JSON user data fetching error : ", error);
+        });
+    }
+  }, [pendingPaymentDataUrl, updateManuscriptPayTable]);
 
   const [documentID, setDocumentID] = useState(null);
   const [choice, setChoice] = useState("cancel");
@@ -120,6 +127,8 @@ const Payment = () => {
       })
       .then((data) => {
         console.log("upload :", data);
+        setUpdateManuscriptPayTable(true);
+        isMainPaymentDashboard();
       })
       .catch((error) => {
         console.log("Error: ", error);
@@ -378,7 +387,7 @@ const Payment = () => {
         </div>
       ) : null}
 
-      {isPaymentMehod ? (
+      {isPaymentMethod ? (
         <div className="paymentMethodSelectedDiv">
           <div>
             <label>Dashboard / Select Payment Method</label>
