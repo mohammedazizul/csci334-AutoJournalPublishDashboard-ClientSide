@@ -45,15 +45,20 @@ const SignIn = () => {
       })
       .then((data) => {
         console.log("login :", data);
-        setLoggedInUser({
-          username: data.username,
-          personID: data.personID,
-          email: data.email,
-          type: data.type,
-          dob: data.dob,
-          isLoggedIn: true,
-        });
-        history.push({ pathname: "/dashboard/manuscript-table", state: data });
+        if(data.error){
+          history.push({ pathname: "/", state: data });
+          alert(data.error);
+        }else {
+          setLoggedInUser({
+            username: data.username,
+            personID: data.personID,
+            email: data.email,
+            type: data.type,
+            dob: data.dob,
+            isLoggedIn: true,
+          });
+          history.push({ pathname: "/dashboard/manuscript-table", state: data });
+        }
       })
       .catch((error) => {
         console.log("Error: ", error);
