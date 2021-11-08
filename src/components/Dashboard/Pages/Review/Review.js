@@ -5,7 +5,7 @@ import { UserContext } from "../../../../App";
 import NewDocumentData from "./TableData/NewDocumentData";
 
 const Review = () => {
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [loggedInUser] = useContext(UserContext);
   console.log("userData: ", loggedInUser);
 
   const [isMainReview, setMainReview] = useState(true);
@@ -46,7 +46,7 @@ const Review = () => {
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  },[]);
+  }, []);
 
   return (
     <div>

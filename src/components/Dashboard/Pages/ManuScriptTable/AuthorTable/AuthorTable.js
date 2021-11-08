@@ -3,7 +3,7 @@ import { UserContext } from "../../../../../App";
 import AuthorData from "../TableData/AuthorData";
 
 const AuthorTable = () => {
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [loggedInUser] = useContext(UserContext);
   console.log("userData: ", loggedInUser);
 
   // STANDARD GET REQUEST

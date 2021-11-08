@@ -1,13 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router";
-import {
-  faArrowUp,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { UserContext } from "../../../../App";
 
 const Upload = () => {
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [loggedInUser] = useContext(UserContext);
 
   let history = useHistory();
 
@@ -102,9 +100,9 @@ const Upload = () => {
     if (topic !== "") {
       setDocTopicSpecifyError({
         display: "none",
-      })
+      });
     }
-  }
+  };
 
   const handleAuthorRemarks = (e) => {
     let remarks = e.target.value;
@@ -127,7 +125,7 @@ const Upload = () => {
       });
     }
   };
-  
+
   const handleUpload = (e) => {
     if (docTitle === null || docTitle === "") {
       e.preventDefault();
@@ -141,7 +139,10 @@ const Upload = () => {
         display: "",
         color: "red",
       });
-    } else if (docTopic === "other" && (docTopicSpecify === null || docTopicSpecify === "")) {
+    } else if (
+      docTopic === "other" &&
+      (docTopicSpecify === null || docTopicSpecify === "")
+    ) {
       e.preventDefault();
       setDocTopicSpecifyError({
         display: "",
@@ -176,7 +177,10 @@ const Upload = () => {
           margin: "20px",
         }}
       >
-        <h3><FontAwesomeIcon icon={faArrowUp}/>&nbsp;Upload new manuscript</h3>
+        <h3>
+          <FontAwesomeIcon icon={faArrowUp} />
+          &nbsp;Upload new manuscript
+        </h3>
       </div>
 
       <div className="uploadDiv">
@@ -188,7 +192,9 @@ const Upload = () => {
                 <td colSpan="2">
                   <input type="text" onChange={handleDocTitle}></input>
                   &nbsp;
-                  <span style={docTitleError}>Please enter the manuscript title</span>
+                  <span style={docTitleError}>
+                    Please enter the manuscript title
+                  </span>
                 </td>
               </tr>
               <tr>
@@ -204,12 +210,17 @@ const Upload = () => {
                     <option value="other">Other</option>
                   </select>
                   <br />
-                  <span style={docTopicError}>Please select the manuscript topic</span>
+                  <span style={docTopicError}>
+                    Please select the manuscript topic
+                  </span>
                 </td>
                 <td>
-                  If others, please specify &nbsp; <input type="text" onChange={handleDocTopicSpecify}></input>
+                  If others, please specify &nbsp;{" "}
+                  <input type="text" onChange={handleDocTopicSpecify}></input>
                   <br />
-                  <span style={docTopicSpecifyError}>Please enter the topic specify</span>
+                  <span style={docTopicSpecifyError}>
+                    Please enter the topic specify
+                  </span>
                 </td>
               </tr>
               <tr>
@@ -217,7 +228,9 @@ const Upload = () => {
                 <td colSpan="2">
                   <textarea onChange={handleAuthorRemarks}></textarea>
                   <br />
-                  <span style={authorRemarksError}>Please enter your remarks</span>
+                  <span style={authorRemarksError}>
+                    Please enter your remarks
+                  </span>
                 </td>
               </tr>
               <tr>
@@ -225,14 +238,24 @@ const Upload = () => {
                 <td colSpan="2">
                   <input type="file" onChange={handleAttachments}></input>
                   <br />
-                  <span style={attachmentsError}>Please submit the attachments</span>
+                  <span style={attachmentsError}>
+                    Please submit the attachments
+                  </span>
                 </td>
               </tr>
             </tbody>
           </table>
           <div className="inputBtn">
-            <input type="button" value="Submit Manuscript" onClick={handleUpload}></input>
-            <input type="button" value="Cancel" onClick={goToManuscriptTable}></input>
+            <input
+              type="button"
+              value="Submit Manuscript"
+              onClick={handleUpload}
+            ></input>
+            <input
+              type="button"
+              value="Cancel"
+              onClick={goToManuscriptTable}
+            ></input>
           </div>
         </form>
       </div>

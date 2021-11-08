@@ -13,7 +13,7 @@ import { UserContext } from "../../../App";
 const Forgot1 = () => {
   let history = useHistory();
 
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [, setLoggedInUser] = useContext(UserContext);
 
   const [userEmail, setUserEmail] = useState(null);
   const [TAC, setTAC] = useState(null);
@@ -40,16 +40,13 @@ const Forgot1 = () => {
         return response.json();
       })
       .then((data) => {
-        if(data.condition==="success")
-        {
+        if (data.condition === "success") {
           console.log("Forgot password :", data);
           history.push({ pathname: "/forgot-password2", state: data });
           setLoggedInUser({
             email: data.email,
           });
-        }
-        else
-          alert("User doesn't exist, please sign up first");
+        } else alert("User doesn't exist, please sign up first");
       })
       .catch((error) => {
         console.log("Error: ", error);
@@ -92,16 +89,16 @@ const Forgot1 = () => {
         display: "",
         color: "red",
       });
-    }else if(!re.test(userEmail)){
+    } else if (!re.test(userEmail)) {
       e.preventDefault();
       alert("Email Format: ...@...com !");
-    }else if (TAC === null || TAC !=="867532") {
+    } else if (TAC === null || TAC !== "867532") {
       e.preventDefault();
       setTACError({
         display: "",
         color: "red",
       });
-    }else {
+    } else {
       processForgot();
     }
   };
@@ -123,25 +120,34 @@ const Forgot1 = () => {
       <br />
       <br />
 
-        <label><FontAwesomeIcon icon={faEnvelopeOpen} />&nbsp;&nbsp;</label>
-        <input type="text" placeholder="Email" onChange={handleUserEmail} /><br />
-        <span style={emailError}>please enter your email</span>
-        <br />
-        <br />
+      <label>
+        <FontAwesomeIcon icon={faEnvelopeOpen} />
+        &nbsp;&nbsp;
+      </label>
+      <input type="text" placeholder="Email" onChange={handleUserEmail} />
+      <br />
+      <span style={emailError}>please enter your email</span>
+      <br />
+      <br />
 
-        <label><FontAwesomeIcon icon={faKey} />&nbsp;&nbsp;</label>
-        <input type="text" placeholder="TAC" onChange={handleTAC}/><br />
-        <span style={TACError}>Please enter the correct 6-digit TAC</span>
-        <br />
-        <br />
+      <label>
+        <FontAwesomeIcon icon={faKey} />
+        &nbsp;&nbsp;
+      </label>
+      <input type="text" placeholder="TAC" onChange={handleTAC} />
+      <br />
+      <span style={TACError}>Please enter the correct 6-digit TAC</span>
+      <br />
+      <br />
 
-        <button 
-                  type="submit" 
-                  style={{ backgroundColor: "#eb94f9" }}
-                  onClick={handleSubmit}>
-            <FontAwesomeIcon icon={faPaperPlane} />
-            &nbsp;&nbsp; Validate
-        </button>
+      <button
+        type="submit"
+        style={{ backgroundColor: "#eb94f9" }}
+        onClick={handleSubmit}
+      >
+        <FontAwesomeIcon icon={faPaperPlane} />
+        &nbsp;&nbsp; Validate
+      </button>
     </div>
   );
 };

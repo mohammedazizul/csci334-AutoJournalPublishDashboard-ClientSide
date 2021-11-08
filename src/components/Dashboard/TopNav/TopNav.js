@@ -15,14 +15,13 @@ import {
   faEdit,
   faUserCircle,
   faKey,
-  faTable,
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../Logo/logo192.png";
 import { UserContext } from "../../../App";
 
 const TopNav = () => {
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [loggedInUser] = useContext(UserContext);
 
   let userName = `${loggedInUser.username}`;
   console.log(loggedInUser);
