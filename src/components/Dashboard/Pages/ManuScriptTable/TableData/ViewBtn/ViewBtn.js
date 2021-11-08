@@ -1,8 +1,8 @@
 import React from "react";
 
-const PendingSetPrice = (props) => {
+const ViewBtn = (props) => {
   const { documentID, dateOfSubmission, title, topic, authorUsername, authorRemarks, editorUsername, editorRemarks, documentStatus, printDate, journalIssue } = props.data;
-  
+
   const handleDownloadDoc = (e) => {
     e.preventDefault();
 
@@ -26,19 +26,8 @@ const PendingSetPrice = (props) => {
   }
 
   return (
-    <tbody>
-      <tr>
-        <td><input type="checkbox"></input></td>
-        <td>{documentID}</td>
-        <td>{title}</td>
-        <td>{topic}</td>
-        <td>{dateOfSubmission}</td>
-        <td>{authorUsername}</td>
-        <td>{documentStatus}</td>
-        <td><button onClick={handleDownloadDoc}>View</button></td>
-      </tr>
-    </tbody>
+        <button onClick={handleDownloadDoc}>View</button>
   );
 };
 
-export default PendingSetPrice;
+export default ViewBtn;

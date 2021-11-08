@@ -6,6 +6,7 @@ import {
   faPenNib,
 } from "@fortawesome/free-solid-svg-icons";
 import Paid from "./TableData/Paid";
+import ViewDocumentPopUp from "../ViewDocumentPopUp/ViewDocumentPopUp";
 
 const Publish = () => {
   let history = useHistory();
@@ -33,26 +34,45 @@ const Publish = () => {
   // STANDARD GET REQUEST
   const paidDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&docStatus=Paid`;
   const [paid, setPaid] = useState([]);
+  const [updatePaidTable, setUpdatePaidTable] = useState(true);
 
   // GET - (WORKING FINE)
   useEffect(() => {
-    fetch(paidDataUrl, {
-      method: "GET",
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
+    if (updatePaidTable) {
+      fetch(paidDataUrl, {
+        method: "GET",
       })
-      .then((data) => {
-        console.log(data);
-        setPaid(data);
-      })
-      .catch((error) => {
-        console.error("JSON user data fetching error : ", error);
-      });
-  },[]);
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw response;
+        })
+        .then((data) => {
+          console.log(data);
+          setPaid(data);
+          if (data) {
+            setUpdatePaidTable(false);
+          }
+        })
+        .catch((error) => {
+          console.error("JSON user data fetching error : ", error);
+        });
+    }
+  },[paidDataUrl, updatePaidTable]);
+
+  const [viewDocument, setViewDocument] = useState(null);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpen = () => {
+    setIsOpen(!isOpen);
+  }
+
+  const downloadDocument = (e) => {
+    e.preventDefault();
+    document.getElementById("downloadDocumentForm").submit();
+  }
 
   return (
     <div>
@@ -96,6 +116,8 @@ const Publish = () => {
                   <Paid
                     key={item.documentMetaDataObject.documentID}
                     data={item.documentMetaDataObject}
+                    setViewDocument={setViewDocument}
+                    handleOpen={handleOpen}
                   />
                 ))}
               </table>
@@ -140,8 +162,59 @@ const Publish = () => {
               </div>
             </form>
           </div>
-        </div>:null
-      }
+        </div>:null}
+
+        <div>
+        {isOpen && <ViewDocumentPopUp
+          content={<>
+            <table className="downloadManuscriptTable">
+              <tbody>
+                <tr>
+                  <td>No. : </td>
+                  <td>{viewDocument[0]}</td>
+                  <td>Submit Date :</td>
+                  <td>{viewDocument[1]}</td>
+                </tr>
+                <tr>
+                  <td>Title :</td>
+                  <td>{viewDocument[2]}</td>
+                  <td>Topic :</td>
+                  <td>{viewDocument[3]}</td>
+                </tr>
+                <tr>
+                  <td>Author Name :</td>
+                  <td>{viewDocument[4]}</td>
+                  <td>Author Remarks :</td>
+                  <td><textarea value={viewDocument[5]} readOnly></textarea></td>
+                </tr>
+                <tr>
+                  <td>Editor Name :</td>
+                  <td>{viewDocument[6]}</td>
+                  <td>Editor Remarks :</td>
+                  <td><textarea value={viewDocument[7]} readOnly></textarea></td>
+                </tr>
+                <tr>
+                  <td>Status :</td>
+                  <td>{viewDocument[8]}</td>
+                  <td>Print Date :</td>
+                  <td>{viewDocument[9]}</td>
+                </tr>
+                <tr>
+                  <td>Journal Issue :</td>
+                  <td colSpan="3">{viewDocument[10]}</td>
+                </tr>
+                <tr>
+                  <td colSpan="4"><button onClick={downloadDocument}>Download</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <form target="_blank" method="post" id="downloadDocumentForm" action="http://localhost/jess-backend/processes/downloadDocument.php">
+              <input type="hidden" name="documentID" id="documentID" value={viewDocument[0]}/>
+            </form>
+          </>}
+          handleClose={handleOpen}
+        />}
+      </div>
     </div>
   );
 };

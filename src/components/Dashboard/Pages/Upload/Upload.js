@@ -25,7 +25,11 @@ const Upload = () => {
   let formData = new FormData();
   formData.append("personID", loggedInUser.personID);
   formData.append("title", docTitle);
-  formData.append("topic", docTopic);
+  if (docTopic === "Other") {
+    formData.append("topic", docTopicSpecify);
+  } else {
+    formData.append("topic", docTopic);
+  }
   formData.append("authorRemarks", authorRemarks);
   formData.append("document", attachments);
 
@@ -65,6 +69,9 @@ const Upload = () => {
   const [attachmentsError, setAttachmentsError] = useState({
     display: "none",
   });
+  const [uploadStatusError, setUploadStatusError] = useState({
+    display: "none",
+  });
 
   const handleDocTitle = (e) => {
     let title = e.target.value;
@@ -88,7 +95,7 @@ const Upload = () => {
       setDocTopicSpecifyError({
         display: "none",
       });
-    } else if (topic === "other") {
+    } else if (topic === "Other") {
       handleDocTopicSpecify();
     }
   };
@@ -140,7 +147,7 @@ const Upload = () => {
         color: "red",
       });
     } else if (
-      docTopic === "other" &&
+      docTopic === "Other" &&
       (docTopicSpecify === null || docTopicSpecify === "")
     ) {
       e.preventDefault();
@@ -162,6 +169,12 @@ const Upload = () => {
       });
     } else {
       processUploadDoc();
+      alert("Upload Successfully");
+      setUploadStatusError({
+        display: "",
+        color: "green",
+        fontSize: "32px",
+      });
       document.getElementById("uploadForm").reset();
     }
   };
@@ -202,12 +215,12 @@ const Upload = () => {
                 <td>
                   <select onChange={handleDocTopic}>
                     <option value="">Select Topic</option>
-                    <option value="history">History</option>
-                    <option value="science">Science</option>
-                    <option value="medicine">Medicine</option>
-                    <option value="education">Education</option>
-                    <option value="social study">Social Study</option>
-                    <option value="other">Other</option>
+                    <option value="History">History</option>
+                    <option value="Science">Science</option>
+                    <option value="Medicine">Medicine</option>
+                    <option value="Education">Education</option>
+                    <option value="Social study">Social Study</option>
+                    <option value="Other">Other</option>
                   </select>
                   <br />
                   <span style={docTopicError}>
@@ -258,6 +271,9 @@ const Upload = () => {
             ></input>
           </div>
         </form>
+        <div style={{ textAlign: "center" }}>
+          <span style={uploadStatusError}>Upload Successfully</span>
+        </div>
       </div>
       <span>There are required fields in this form marked *.</span>
     </div>

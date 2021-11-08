@@ -1,13 +1,28 @@
 import React from "react";
-import { useState } from "react/cjs/react.development";
 
 const AuthorData = (props) => {
-  const { documentID, title, topic, dateOfSubmission, documentStatus } = props.data;
-
-  const handleViewDocument = (e) => {
+  const { documentID, dateOfSubmission, title, topic, authorUsername, authorRemarks, editorUsername, editorRemarks, documentStatus, printDate, journalIssue } = props.data;
+  
+  const handleDownloadDoc = (e) => {
     e.preventDefault();
-    props.setViewDocument(documentID);
-    document.getElementById("docform").submit();
+
+    if (authorRemarks === null || authorRemarks === "") {
+      const array = [documentID, dateOfSubmission, title, topic, authorUsername, "", editorUsername, editorRemarks, documentStatus, printDate, journalIssue];
+      props.setViewDocument(array);
+      props.handleOpen();
+    } else if (editorRemarks === null || authorRemarks === "") {
+      const array = [documentID, dateOfSubmission, title, topic, authorUsername, authorRemarks, editorUsername, "", documentStatus, printDate, journalIssue];
+      props.setViewDocument(array);
+      props.handleOpen();
+    } else if ((authorRemarks === null || authorRemarks === "") && (editorRemarks === null || authorRemarks === "")) {
+      const array = [documentID, dateOfSubmission, title, topic, authorUsername, "", editorUsername, "", documentStatus, printDate, journalIssue];
+      props.setViewDocument(array);
+      props.handleOpen();
+    } else {
+      const array = [documentID, dateOfSubmission, title, topic, authorUsername, authorRemarks, editorUsername, editorRemarks, documentStatus, printDate, journalIssue];
+      props.setViewDocument(array);
+      props.handleOpen();
+    }
   }
 
   return (
@@ -18,7 +33,7 @@ const AuthorData = (props) => {
         <td>{topic}</td>
         <td>{dateOfSubmission}</td>
         <td>{documentStatus}</td>
-        <td><button onClick={props.handleOpen}>View</button></td>
+        <td><button onClick={handleDownloadDoc}>View</button></td>
       </tr>
     </tbody>
   );

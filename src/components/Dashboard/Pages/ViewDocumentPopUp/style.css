@@ -40,14 +40,39 @@
 
 .downloadManuscriptTable {
   width: 100%;
+  border: 0px;
 }
 
-.downloadManuscriptTable tr:first-child {
+.downloadManuscriptTable button {
+  background-color: deepskyblue;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.downloadManuscriptTable tbody tr:nth-child(even) {
+  background-color: #E5E8E8;
+}
+
+.downloadManuscriptTable td {
+  vertical-align: top;
+  border: 0px;
+}
+
+.downloadManuscriptTable tr:first-child, .downloadManuscriptTable tr:nth-child(2), .downloadManuscriptTable tr:nth-child(5) {
   height: 3vh;
 }
 
+.downloadManuscriptTable tr:nth-child(6) {
+  height: 5vh;
+}
+
+.downloadManuscriptTable tr:nth-child(7) {
+  text-align: right;
+}
+
 .downloadManuscriptTable tr td:first-child {
-  width: 13%;
+  width: 10%;
 }
 
 .downloadManuscriptTable tr td:nth-child(3) {
@@ -55,6 +80,6 @@
 }
 
 .downloadManuscriptTable textarea {
-  width: 95%;
+  width: 99%;
   height: 10vh;
 }

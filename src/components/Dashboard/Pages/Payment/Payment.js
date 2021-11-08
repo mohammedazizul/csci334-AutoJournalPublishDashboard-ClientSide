@@ -26,13 +26,15 @@ const Payment = () => {
     display: "none",
   });
 
+  const [cancelledError, setCancelledError] = useState({
+    display: "none",
+  });
+
   const isPaymentMethodDashboard = (e) => {
     if (selectedData !== null) {
       setMainPayment(false);
 
       setPaymentMethod(true);
-
-      setDocumentID(selectedData);
 
       setChoice("pay");
     } else {
@@ -40,6 +42,9 @@ const Payment = () => {
       setSelectedError({
         display: "",
         color: "red",
+      });
+      setCancelledError({
+        display: "none",
       });
     }
   };
@@ -54,6 +59,9 @@ const Payment = () => {
     setPaypalBtnClick(false);
     setApplepayBtnClick(false);
 
+    setSelectedData(null);
+    setChoice("cancel");
+    
     setPaymentSuccessful({
       display: "none",
     });
@@ -69,8 +77,7 @@ const Payment = () => {
   // STANDARD GET REQUEST
   const pendingPaymentDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&authorID=${loggedInUser.personID}&docStatus=Pending Payment`;
   const [pendingPayment, setPendingPayment] = useState([]);
-  const [updateManuscriptPayTable, setUpdateManuscriptPayTable] =
-    useState(true);
+  const [updateManuscriptPayTable, setUpdateManuscriptPayTable] = useState(true);
 
   // GET - (WORKING FINE)
   useEffect(() => {
@@ -97,7 +104,6 @@ const Payment = () => {
     }
   }, [pendingPaymentDataUrl, updateManuscriptPayTable]);
 
-  const [documentID, setDocumentID] = useState(null);
   const [choice, setChoice] = useState("cancel");
 
   // STANDARD POST REQUEST - POST - (NOT WORKING FINE)
@@ -139,9 +145,13 @@ const Payment = () => {
     if (selectedData !== null) {
       e.preventDefault();
       processPayment();
+      alert("Payment Cancelled");
     } else {
       e.preventDefault();
       setSelectedError({
+        display: "none",
+      })
+      setCancelledError({
         display: "",
         color: "red",
       });
@@ -286,6 +296,7 @@ const Payment = () => {
     ) {
       e.preventDefault();
       processPayment();
+      alert("Payment Successfully");
       setPaymentSuccessful({
         display: "",
         color: "green",
@@ -353,6 +364,7 @@ const Payment = () => {
                     data={item.documentMetaDataObject}
                     setSelectedData={setSelectedData}
                     setSelectedError={setSelectedError}
+                    setCancelledError={setCancelledError}
                   />
                 ))}
               </table>
@@ -383,6 +395,7 @@ const Payment = () => {
               </div>
             </form>
             <span style={selectedError}>Please select a manuscript to pay</span>
+            <span style={cancelledError}>Please select a manuscript to cancel</span>
           </div>
         </div>
       ) : null}

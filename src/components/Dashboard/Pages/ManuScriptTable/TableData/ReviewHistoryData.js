@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ViewBtn from "./ViewBtn/ViewBtn";
 
 const ReviewHistoryData = (props) => {
   const { documentID, rating, comment} = props.data;
@@ -6,12 +7,14 @@ const ReviewHistoryData = (props) => {
   // STANDARD GET REQUEST
   const docInfoDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&docID=${documentID}`;
   const [docInfoData, setDocInfoData] = useState([]);
+  const [updateDocInfoData, setUpdateDocInfoData] = useState(true);
 
   // GET - (WORKING FINE)
   useEffect(() => {
-    fetch(docInfoDataUrl, {
-      method: "GET",
-    })
+    if (updateDocInfoData) {
+      fetch(docInfoDataUrl, {
+        method: "GET",
+      })
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -21,11 +24,15 @@ const ReviewHistoryData = (props) => {
       .then((data) => {
         console.log(data);
         setDocInfoData(data);
+        if (data) {
+          setUpdateDocInfoData(false);
+        }
       })
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  },[]);
+    }
+  },[docInfoDataUrl, updateDocInfoData]);
 
   return (
     <tr>
@@ -46,7 +53,16 @@ const ReviewHistoryData = (props) => {
       ))}
       <td>{rating}</td>
       <td>{comment}</td>
-      <td><button>View</button></td>
+      <td>
+        {docInfoData.map((item) => (
+          <ViewBtn
+            key={item.documentMetaDataObject.documentID}
+            data={item.documentMetaDataObject}
+            setViewDocument={props.setViewDocument}
+            handleOpen={props.handleOpen}
+          />
+        ))}
+      </td>
     </tr>
   );
 };

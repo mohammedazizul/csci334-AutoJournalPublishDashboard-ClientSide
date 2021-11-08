@@ -7,10 +7,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ReviewHistoryData from "../TableData/ReviewHistoryData";
 import PendingRatingData from "../TableData/PendingRatingData";
+import ViewDocumentPopUp from "../../ViewDocumentPopUp/ViewDocumentPopUp";
 
 const ReviewerTable = () => {
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [loggedInUser] = useContext(UserContext);
   console.log("userData: ", loggedInUser);
+
+  const [selectedData, setSelectedData] = useState(null);
 
   const [isMainReviewerDiv, setMainReviewerDiv] = useState(true);
 
@@ -26,17 +29,21 @@ const ReviewerTable = () => {
     setMainReviewerDiv(true);
 
     setRateManuscriptDiv(false);
+
+    setSelectedData(null);
   };
 
   // STANDARD GET REQUEST
-  const reviewHistoryDataUrl = `http://localhost/jess-backend/api/read/getreview.php?api_key=RXru1LUOOeKFX03LGSo7&reviewerID=${loggedInUser.personID}&status=completed`;
+  const reviewHistoryDataUrl = `http://localhost/jess-backend/api/read/getreview.php?api_key=RXru1LUOOeKFX03LGSo7&reviewerID=${loggedInUser.personID}&status=complete`;
   const [reviewHistoryData, setReviewHistoryData] = useState([]);
+  const [updateHistoryTable, setUpdateHistoryTable] = useState(true);
 
   // GET - (WORKING FINE)
   useEffect(() => {
-    fetch(reviewHistoryDataUrl, {
-      method: "GET",
-    })
+    if (updateHistoryTable) {
+      fetch(reviewHistoryDataUrl, {
+        method: "GET",
+      })
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -46,21 +53,27 @@ const ReviewerTable = () => {
       .then((data) => {
         console.log(data);
         setReviewHistoryData(data);
+        if (data) {
+          setUpdateHistoryTable(false);
+        }
       })
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  },[]);
+    }
+  },[reviewHistoryDataUrl, updateHistoryTable]);
 
   // STANDARD GET REQUEST
   const pendingRatingDataUrl = `http://localhost/jess-backend/api/read/getreview.php?api_key=RXru1LUOOeKFX03LGSo7&reviewerID=${loggedInUser.personID}&status=pending`;
   const [pendingRatingData, setPendingRatingData] = useState([]);
+  const [updateRatingTable, setUpdateRatingTable] = useState(true);
 
   // GET - (WORKING FINE)
   useEffect(() => {
-    fetch(pendingRatingDataUrl, {
-      method: "GET",
-    })
+    if (updateRatingTable) {
+      fetch(pendingRatingDataUrl, {
+        method: "GET",
+      })
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -70,11 +83,116 @@ const ReviewerTable = () => {
       .then((data) => {
         console.log(data);
         setPendingRatingData(data);
+        if (data) {
+          setUpdateRatingTable(false);
+        }
       })
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  },[]);
+    }
+  },[pendingRatingDataUrl, updateRatingTable]);
+
+  const [rating, setRating] = useState(null);
+  const [comment, setComment] = useState(null);
+
+  // STANDARD POST REQUEST - POST - (NOT WORKING FINE)
+  // creating data to send to BE
+  let formData = new FormData();
+  formData.append("documentID", selectedData);
+  formData.append("personID", loggedInUser.personID);
+  formData.append("rating", rating);
+  formData.append("comment", comment);
+
+  const processRate = () => {
+    // to Display the key/value pairs
+    for (var pair of formData.entries()) {
+      console.log("Form Data: ", pair[0] + ", " + pair[1]);
+    }
+
+    const urlToPost = `http://localhost/jess-backend/processes/rate.php`;
+
+    fetch(urlToPost, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: formData,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("upload :", data);
+        setUpdateRatingTable(true);
+        setUpdateHistoryTable(true);
+        isMainReviewerDashboard();
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+  };
+
+  const [rateError, setRateError] = useState({
+    display: "none",
+  });
+  const [commentError, setCommentError] = useState({
+    display: "none",
+  });
+
+  const handleRating = (e) => {
+    let rate = e.target.value;
+    setRating(rate);
+
+    if (rate !== "") {
+      setRateError({
+        display: "none",
+      });
+    }
+  };
+
+  const handleComment = (e) => {
+    let cm = e.target.value;
+    setComment(cm);
+
+    if (cm !== "") {
+      setCommentError({
+        display: "none",
+      });
+    }
+  };
+
+  const handleUpdateRate = (e) => {
+    if (rating === null || rating === "") {
+      e.preventDefault();
+      setRateError({
+        display: "",
+        color: "red",
+      });
+    } else if (comment === null || comment === "") {
+      e.preventDefault();
+      setCommentError({
+        display: "",
+        color: "red",
+      });
+    } else {
+      processRate();
+      alert("Update Successfully");
+    }
+  };
+
+  const [viewDocument, setViewDocument] = useState(null);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpen = () => {
+    setIsOpen(!isOpen);
+  }
+
+  const downloadDocument = (e) => {
+    e.preventDefault();
+    document.getElementById("downloadDocumentForm").submit();
+  }
 
   return (
     <div>
@@ -112,6 +230,8 @@ const ReviewerTable = () => {
                     <ReviewHistoryData
                       key={item.documentID}
                       data={item}
+                      setViewDocument={setViewDocument}
+                      handleOpen={handleOpen}
                     />
                   ))}
                 </tbody>
@@ -157,6 +277,9 @@ const ReviewerTable = () => {
                       key={item.documentID}
                       data={item}
                       isRateManuscriptDashboard={isRateManuscriptDashboard}
+                      setSelectedData={setSelectedData}
+                      setViewDocument={setViewDocument}
+                      handleOpen={handleOpen}
                     />
                   ))}
                 </tbody>
@@ -185,8 +308,8 @@ const ReviewerTable = () => {
                   <tr>
                     <td>Rate: *</td>
                     <td>
-                      <select>
-                        <option value="default">Rate</option>
+                      <select onChange={handleRating}>
+                        <option value="">Rate</option>
                         <option value="0">0</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -199,12 +322,16 @@ const ReviewerTable = () => {
                         <option value="9">9</option>
                         <option value="10">10</option>
                       </select>
+                      &nbsp;
+                      <span style={rateError}>Please rate the manuscript</span>
                     </td>
                   </tr>
                   <tr>
                     <td>Comments: *</td>
                     <td>
-                      <textarea></textarea>
+                      <textarea onChange={handleComment}></textarea>
+                      <br />
+                      <span style={commentError}>Please enter the comment</span>
                     </td>
                   </tr>
                 </tbody>
@@ -214,7 +341,7 @@ const ReviewerTable = () => {
               >
                 There are required fields in this form marked *.
               </span>
-              <input type="button" value="Confirm"></input>
+              <input type="button" value="Confirm" onClick={handleUpdateRate}></input>
               <input
                 type="button"
                 value="Cancel"
@@ -224,6 +351,58 @@ const ReviewerTable = () => {
           </div>
         </div>
       ) : null}
+
+      <div>
+        {isOpen && <ViewDocumentPopUp
+          content={<>
+            <table className="downloadManuscriptTable">
+              <tbody>
+                <tr>
+                  <td>No. : </td>
+                  <td>{viewDocument[0]}</td>
+                  <td>Submit Date :</td>
+                  <td>{viewDocument[1]}</td>
+                </tr>
+                <tr>
+                  <td>Title :</td>
+                  <td>{viewDocument[2]}</td>
+                  <td>Topic :</td>
+                  <td>{viewDocument[3]}</td>
+                </tr>
+                <tr>
+                  <td>Author Name :</td>
+                  <td>{viewDocument[4]}</td>
+                  <td>Author Remarks :</td>
+                  <td><textarea value={viewDocument[5]} readOnly></textarea></td>
+                </tr>
+                <tr>
+                  <td>Editor Name :</td>
+                  <td>{viewDocument[6]}</td>
+                  <td>Editor Remarks :</td>
+                  <td><textarea value={viewDocument[7]} readOnly></textarea></td>
+                </tr>
+                <tr>
+                  <td>Status :</td>
+                  <td>{viewDocument[8]}</td>
+                  <td>Print Date :</td>
+                  <td>{viewDocument[9]}</td>
+                </tr>
+                <tr>
+                  <td>Journal Issue :</td>
+                  <td colSpan="3">{viewDocument[10]}</td>
+                </tr>
+                <tr>
+                  <td colSpan="4"><button onClick={downloadDocument}>Download</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <form target="_blank" method="post" id="downloadDocumentForm" action="http://localhost/jess-backend/processes/downloadDocument.php">
+              <input type="hidden" name="documentID" id="documentID" value={viewDocument[0]}/>
+            </form>
+          </>}
+          handleClose={handleOpen}
+        />}
+      </div>
     </div>
   );
 };

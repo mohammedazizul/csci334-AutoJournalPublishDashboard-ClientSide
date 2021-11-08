@@ -10,12 +10,14 @@ const AuthorTable = () => {
   // STANDARD GET REQUEST
   const authorDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&authorID=${loggedInUser.personID}`;
   const [authorData, setAuthorData] = useState([]);
+  const [updateAuthorData, setUpdateAuthorData] = useState(true);
 
   // GET - (WORKING FINE)
   useEffect(() => {
-    fetch(authorDataUrl, {
-      method: "GET",
-    })
+    if (updateAuthorData) {
+      fetch(authorDataUrl, {
+        method: "GET",
+      })
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -25,45 +27,28 @@ const AuthorTable = () => {
       .then((data) => {
         console.log(data);
         setAuthorData(data);
-      })
-      .catch((error) => {
-        console.error("JSON user data fetching error : ", error);
-      });
-  }, []);
-
-  // STANDARD GET REQUEST
-  const viewDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&docID=D1`;
-  const [viewData, setViewData] = useState([]);
-
-  // GET - (WORKING FINE)
-  useEffect(() => {
-    fetch(viewDataUrl, {
-      method: "GET",
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
+        if (data) {
+          setUpdateAuthorData(false);
         }
-        throw response;
-      })
-      .then((data) => {
-        console.log(data);
-        setViewData(data);
       })
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  }, []);
+    }
+  }, [authorDataUrl, updateAuthorData]);
+
+  const [viewDocument, setViewDocument] = useState(null);
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleOpen = (e) => {
-    e.preventDefault();
+  const handleOpen = () => {
     setIsOpen(!isOpen);
   }
 
-  const [viewDocument, setViewDocument] = useState(null);
-  console.log(viewDocument);
+  const downloadDocument = (e) => {
+    e.preventDefault();
+    document.getElementById("downloadDocumentForm").submit();
+  }
 
   return (
     <div>
@@ -161,62 +146,46 @@ const AuthorTable = () => {
               <tbody>
                 <tr>
                   <td>No. : </td>
-                  {viewData.map((item) =>
-                    <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.documentID}</td>
-                  )}
+                  <td>{viewDocument[0]}</td>
                   <td>Submit Date :</td>
-                  {viewData.map((item) =>
-                    <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.dateOfSubmission}</td>
-                  )}
+                  <td>{viewDocument[1]}</td>
                 </tr>
                 <tr>
                   <td>Title :</td>
-                  {viewData.map((item) =>
-                    <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.title}</td>
-                  )}
+                  <td>{viewDocument[2]}</td>
                   <td>Topic :</td>
-                  {viewData.map((item) =>
-                    <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.topic}</td>
-                  )}
+                  <td>{viewDocument[3]}</td>
                 </tr>
                 <tr>
                   <td>Author Name :</td>
-                  {viewData.map((item) =>
-                    <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.authorUsername}</td>
-                  )}
+                  <td>{viewDocument[4]}</td>
                   <td>Author Remarks :</td>
-                  {viewData.map((item) =>
-                    <td key={item.documentMetaDataObject.documentID}><textarea readOnly>{item.documentMetaDataObject.authorRemarks}</textarea></td>
-                  )}
+                  <td><textarea value={viewDocument[5]} readOnly></textarea></td>
                 </tr>
                 <tr>
                   <td>Editor Name :</td>
-                  {viewData.map((item) =>
-                    <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.editorID}</td>
-                  )}
+                  <td>{viewDocument[6]}</td>
                   <td>Editor Remarks :</td>
-                  {viewData.map((item) =>
-                    <td key={item.documentMetaDataObject.documentID}><textarea readOnly>{item.documentMetaDataObject.editorRemarks}</textarea></td>
-                  )}
+                  <td><textarea value={viewDocument[7]} readOnly></textarea></td>
                 </tr>
                 <tr>
                   <td>Status :</td>
-                  {viewData.map((item) =>
-                    <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.documentStatus}</td>
-                  )}
+                  <td>{viewDocument[8]}</td>
                   <td>Print Date :</td>
-                  {viewData.map((item) =>
-                    <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.printDate}</td>
-                  )}
+                  <td>{viewDocument[9]}</td>
                 </tr>
                 <tr>
                   <td>Journal Issue :</td>
-                  {viewData.map((item) =>
-                    <td key={item.documentMetaDataObject.documentID} colSpan="3"><textarea readOnly>{item.documentMetaDataObject.journalIssue}</textarea></td>
-                  )}
+                  <td colSpan="3">{viewDocument[10]}</td>
+                </tr>
+                <tr>
+                  <td colSpan="4"><button onClick={downloadDocument}>Download</button></td>
                 </tr>
               </tbody>
             </table>
+            <form target="_blank" method="post" id="downloadDocumentForm" action="http://localhost/jess-backend/processes/downloadDocument.php">
+              <input type="hidden" name="documentID" id="documentID" value={viewDocument[0]}/>
+            </form>
           </>}
           handleClose={handleOpen}
         />}

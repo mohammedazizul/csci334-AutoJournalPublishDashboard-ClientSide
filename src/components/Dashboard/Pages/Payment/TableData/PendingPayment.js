@@ -7,11 +7,13 @@ const PendingPayment = (props) => {
     let radio = e.target.checked;
 
     if ( radio === true ) {
-      const array = [documentID]
       props.setSelectedData(documentID);
       props.setSelectedError({
         display: "none",
-      })
+      });
+      props.setCancelledError({
+        display: "none",
+      });
     }
   }
 
