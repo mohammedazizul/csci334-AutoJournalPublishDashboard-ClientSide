@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../../App";
 
 const SignIn = () => {
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [, setLoggedInUser] = useContext(UserContext);
 
   let history = useHistory();
 
@@ -27,9 +27,9 @@ const SignIn = () => {
 
   const processSignin = () => {
     // to Display the key/value pairs
-    for (var pair of formData.entries()) {
-      console.log("Form Data: ", pair[0] + ", " + pair[1]);
-    }
+    // for (var pair of formData.entries()) {
+    //   console.log("Form Data: ", pair[0] + ", " + pair[1]);
+    // }
 
     const urlToPost = `http://localhost/jess-backend/processes/login.php`;
 
@@ -44,11 +44,11 @@ const SignIn = () => {
         return response.json();
       })
       .then((data) => {
-        console.log("login :", data);
-        if(data.error){
+        console.log("Sign in :", data);
+        if (data.error) {
           history.push({ pathname: "/", state: data });
           alert(data.error);
-        }else {
+        } else {
           setLoggedInUser({
             username: data.username,
             personID: data.personID,
@@ -57,7 +57,10 @@ const SignIn = () => {
             dob: data.dob,
             isLoggedIn: true,
           });
-          history.push({ pathname: "/dashboard/manuscript-table", state: data });
+          history.push({
+            pathname: "/dashboard/manuscript-table",
+            state: data,
+          });
         }
       })
       .catch((error) => {
@@ -112,8 +115,6 @@ const SignIn = () => {
         color: "red",
       });
     } else {
-      console.log("user email: ", userEmail);
-      console.log("user password: ", userPasswd);
       processSignin();
     }
   };

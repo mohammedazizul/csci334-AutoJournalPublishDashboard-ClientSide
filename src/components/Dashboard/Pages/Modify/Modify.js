@@ -11,7 +11,7 @@ import PendingModify from "./TableData/PendingModify";
 const Modify = () => {
   let history = useHistory();
 
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [loggedInUser] = useContext(UserContext);
   console.log("userData: ", loggedInUser);
 
   const [isMainModify, setMainModify] = useState(true);
@@ -22,7 +22,7 @@ const Modify = () => {
 
   const [selectedError, setSelectedError] = useState({
     display: "none",
-  })
+  });
 
   const isModifySelected = (e) => {
     if (selectedData !== null) {
@@ -38,7 +38,7 @@ const Modify = () => {
         color: "red",
       });
     }
-  }
+  };
 
   const isMainManu = () => {
     setMainModify(true);
@@ -46,7 +46,7 @@ const Modify = () => {
     setModifySelected(false);
 
     setSelectedData(null);
-  }
+  };
 
   const goToManuscriptTable = () => {
     history.push("/dashboard/manuscript-table");
@@ -74,7 +74,7 @@ const Modify = () => {
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  },[]);
+  }, []);
 
   const [documentID, setDocumentID] = useState(null);
   const [authorRemarks, setAuthorRemarks] = useState(null);
@@ -164,7 +164,7 @@ const Modify = () => {
 
   return (
     <div>
-      {isMainModify?
+      {isMainModify ? (
         <div className="mainModifyDiv">
           <div>
             <label>Dashboard / Select Manuscript</label>
@@ -175,7 +175,10 @@ const Modify = () => {
               margin: "20px",
             }}
           >
-            <h3><FontAwesomeIcon icon={faAlignJustify}/>&nbsp;Select a manuscript to modify</h3>
+            <h3>
+              <FontAwesomeIcon icon={faAlignJustify} />
+              &nbsp;Select a manuscript to modify
+            </h3>
           </div>
 
           <div
@@ -208,15 +211,25 @@ const Modify = () => {
                   />
                 ))}
               </table>
-              <button className="btn" id="trueBtn" onClick={isModifySelected}>Modify Selected</button>
-              <button className="btn" id="falseBtn" onClick={goToManuscriptTable}>Cancel</button>
+              <button className="btn" id="trueBtn" onClick={isModifySelected}>
+                Modify Selected
+              </button>
+              <button
+                className="btn"
+                id="falseBtn"
+                onClick={goToManuscriptTable}
+              >
+                Cancel
+              </button>
             </form>
-            <span style={selectedError}>Please select a manuscript to modify</span>
+            <span style={selectedError}>
+              Please select a manuscript to modify
+            </span>
           </div>
-        </div>:null
-      }
+        </div>
+      ) : null}
 
-      {isManuscriptNo?
+      {isManuscriptNo ? (
         <div className="modifySelectedDiv">
           <div>
             <label>Dashboard / Upload Manuscript</label>
@@ -227,7 +240,10 @@ const Modify = () => {
               margin: "20px",
             }}
           >
-            <h3><FontAwesomeIcon icon={faExchangeAlt}/>&nbsp;Modify pending manuscript</h3>
+            <h3>
+              <FontAwesomeIcon icon={faExchangeAlt} />
+              &nbsp;Modify pending manuscript
+            </h3>
           </div>
 
           <div className="modifyFormDiv">
@@ -236,26 +252,48 @@ const Modify = () => {
                 <tbody>
                   <tr>
                     <td>No.</td>
-                    <td><input type="text" value={selectedData[0]} readOnly></input></td>
+                    <td>
+                      <input
+                        type="text"
+                        value={selectedData[0]}
+                        readOnly
+                      ></input>
+                    </td>
                   </tr>
                   <tr>
                     <td>Title</td>
-                    <td><input type="text" value={selectedData[1]} readOnly></input></td>
+                    <td>
+                      <input
+                        type="text"
+                        value={selectedData[1]}
+                        readOnly
+                      ></input>
+                    </td>
                   </tr>
                   <tr>
                     <td>Topic</td>
-                    <td><input type="text" value={selectedData[2]} readOnly></input></td>
+                    <td>
+                      <input
+                        type="text"
+                        value={selectedData[2]}
+                        readOnly
+                      ></input>
+                    </td>
                   </tr>
                   <tr>
                     <td>Comments</td>
-                    <td><textarea value={selectedData[3]} readOnly></textarea></td>
+                    <td>
+                      <textarea value={selectedData[3]} readOnly></textarea>
+                    </td>
                   </tr>
                   <tr>
                     <td>Remarks *</td>
                     <td>
                       <textarea onChange={handleAuthorRemarks}></textarea>
                       <br />
-                      <span style={authorRemarksError}>Please enter your remarks</span>
+                      <span style={authorRemarksError}>
+                        Please enter your remarks
+                      </span>
                     </td>
                   </tr>
                   <tr>
@@ -263,20 +301,33 @@ const Modify = () => {
                     <td>
                       <input type="file" onChange={handleAttachments}></input>
                       <br />
-                      <span style={attachmentsError}>Please enter your remarks</span>
+                      <span style={attachmentsError}>
+                        Please enter your remarks
+                      </span>
                     </td>
                   </tr>
                 </tbody>
               </table>
               <div className="inputBtn">
-                <input type="button" value="Update Manuscript" onClick={handleUpdateModify}></input>
-                <input type="button" value="Cancel" onClick={isMainManu}></input>
+                <input
+                  type="button"
+                  value="Update Manuscript"
+                  onClick={handleUpdateModify}
+                ></input>
+                <input
+                  type="button"
+                  value="Cancel"
+                  onClick={isMainManu}
+                ></input>
               </div>
             </form>
           </div>
-          <span>There are required fields in this form marked *. Else fields read only.</span>
-        </div>:null
-      }
+          <span>
+            There are required fields in this form marked *. Else fields read
+            only.
+          </span>
+        </div>
+      ) : null}
     </div>
   );
 };

@@ -1,8 +1,10 @@
 import React from "react";
 import { useContext } from "react";
-import { UserContext } from "../../../App";
+import { useHistory } from "react-router";
+import { UserContext } from "../../../../App";
 
 const SignOut = () => {
+  let history = useHistory();
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
 
   const backToSignIn = () => {
@@ -15,6 +17,8 @@ const SignOut = () => {
       dob: "",
       isLoggedIn: false,
     });
+    console.log("User Signed Out!");
+    history.push("/");
   };
   return (
     <div style={{ textAlign: "center", paddingTop: "100px" }}>

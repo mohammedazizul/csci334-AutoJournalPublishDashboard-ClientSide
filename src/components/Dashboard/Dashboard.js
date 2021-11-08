@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./Dashboard.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Review from "./Pages/Review/Review";
@@ -13,9 +13,9 @@ import Modify from "./Pages/Modify/Modify";
 import Payment from "./Pages/Payment/Payment";
 import TopNav from "./TopNav/TopNav";
 import ManuScriptTable from "./Pages/ManuScriptTable/ManuScriptTable";
-import SignOut from "../Home/SignOut/SignOut";
 import NoMatchFound from "../NoMatchFound/NoMatchFound";
 import ResetPassword from "../Dashboard/Pages/ResetPassword/ResetPassword";
+import SignOut from "./Pages/SignOut/SignOut";
 
 const Dashboard = () => {
   return (

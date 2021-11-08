@@ -13,7 +13,7 @@ import PendingPayment from "./TableData/PendingPayment";
 const Payment = () => {
   let history = useHistory();
 
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [loggedInUser] = useContext(UserContext);
   console.log("userData: ", loggedInUser);
 
   const [isMainPayment, setMainPayment] = useState(true);
@@ -24,7 +24,7 @@ const Payment = () => {
 
   const [selectedError, setSelectedError] = useState({
     display: "none",
-  })
+  });
 
   const isPaymentMethodDashboard = (e) => {
     if (selectedData !== null) {
@@ -130,15 +130,14 @@ const Payment = () => {
     if (selectedData !== null) {
       e.preventDefault();
       processPayment();
-    }
-    else {
+    } else {
       e.preventDefault();
       setSelectedError({
         display: "",
         color: "red",
       });
     }
-  }
+  };
 
   const [isCardBtnClick, setCardBtnClick] = useState(false);
   const [isBankBtnClick, setBankBtnClick] = useState(false);
@@ -357,7 +356,12 @@ const Payment = () => {
                 >
                   Pay for Selected
                 </button>
-                <button className="btn" id="cancelPaymentBtn" value="cancel" onClick={handleCancel}>
+                <button
+                  className="btn"
+                  id="cancelPaymentBtn"
+                  value="cancel"
+                  onClick={handleCancel}
+                >
                   Cancel Payment
                 </button>
                 <button
