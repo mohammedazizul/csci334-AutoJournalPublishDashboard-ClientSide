@@ -26,10 +26,9 @@ const About = () => {
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  }, []);
 
-  // STANDARD POST REQUEST
-  // POST - (WORKING FINE)
+    document.getElementById("docform").submit();
+  }, []);
 
   const [inputText, setInputText] = useState("");
   const [responseData, setResponseData] = useState(null);
@@ -40,28 +39,6 @@ const About = () => {
   // for (var pair of formData.entries()) {
   //   console.log("Form Data: ", pair[0] + ", " + pair[1]);
   // }
-
-  const sendData = () => {
-    const urlToPost = `http://localhost/jess-backend/api/create/createperson.php`;
-
-    fetch(urlToPost, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: formData,
-    })
-      .then((response) =>
-        // console.log(response.text()) // uncomment it for console log
-        // making forceful response in FE if their is
-        response.text().then(setResponseData("Successfully Inserted !"))
-      )
-      .catch((error) => {
-        console.log("Error: ", error);
-      });
-  };
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -87,10 +64,17 @@ const About = () => {
         id=""
         onChange={(e) => setInputText(e.target.value)}
       />
-      <button onClick={sendData}>Click To Insert</button>
+      <button>Click To Insert</button>
       <div style={{ color: "green" }}>
         {responseData && "Successfully Inserted !"}
       </div>
+
+      <form target="_blank" method="post" id="docform"
+            action="http://localhost/jess-backend/processes/downloadDocument.php">
+        <input type="hidden" name="documentID" id="documentID" value="D1"/>
+      </form>
+
+      <iframe name="myframe" id="myframe" width="1200" height="1000"></iframe>
     </div>
   );
 };
