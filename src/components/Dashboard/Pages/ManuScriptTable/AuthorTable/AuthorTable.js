@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../../../App";
 import AuthorData from "../TableData/AuthorData";
+import ViewDocumentPopUp from "../../ViewDocumentPopUp/ViewDocumentPopUp";
 
 const AuthorTable = () => {
   const [loggedInUser] = useContext(UserContext);
@@ -29,6 +30,40 @@ const AuthorTable = () => {
         console.error("JSON user data fetching error : ", error);
       });
   }, []);
+
+  // STANDARD GET REQUEST
+  const viewDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&docID=D1`;
+  const [viewData, setViewData] = useState([]);
+
+  // GET - (WORKING FINE)
+  useEffect(() => {
+    fetch(viewDataUrl, {
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        console.log(data);
+        setViewData(data);
+      })
+      .catch((error) => {
+        console.error("JSON user data fetching error : ", error);
+      });
+  }, []);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpen = (e) => {
+    e.preventDefault();
+    setIsOpen(!isOpen);
+  }
+
+  const [viewDocument, setViewDocument] = useState(null);
+  console.log(viewDocument);
 
   return (
     <div>
@@ -90,7 +125,7 @@ const AuthorTable = () => {
             </tbody>
           </table>
         </div> */}
-        <div className="editorDashboard">
+        <div className="authorDashboard">
           <form method="GET">
             <table className="dataTable">
               <thead>
@@ -107,11 +142,84 @@ const AuthorTable = () => {
                 <AuthorData
                   key={item.documentMetaDataObject.documentID}
                   data={item.documentMetaDataObject}
+                  setViewDocument={setViewDocument}
+                  handleOpen={handleOpen}
                 />
               ))}
             </table>
           </form>
+          <form target="_blank" method="post" id="docform" action="http://localhost/jess-backend/processes/downloadDocument.php" >
+            <input type="hidden" name="documentID" id="documentID" />
+          </form>
         </div>
+      </div>
+
+      <div>
+        {isOpen && <ViewDocumentPopUp
+          content={<>
+            <table className="downloadManuscriptTable">
+              <tbody>
+                <tr>
+                  <td>No. : </td>
+                  {viewData.map((item) =>
+                    <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.documentID}</td>
+                  )}
+                  <td>Submit Date :</td>
+                  {viewData.map((item) =>
+                    <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.dateOfSubmission}</td>
+                  )}
+                </tr>
+                <tr>
+                  <td>Title :</td>
+                  {viewData.map((item) =>
+                    <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.title}</td>
+                  )}
+                  <td>Topic :</td>
+                  {viewData.map((item) =>
+                    <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.topic}</td>
+                  )}
+                </tr>
+                <tr>
+                  <td>Author Name :</td>
+                  {viewData.map((item) =>
+                    <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.authorUsername}</td>
+                  )}
+                  <td>Author Remarks :</td>
+                  {viewData.map((item) =>
+                    <td key={item.documentMetaDataObject.documentID}><textarea readOnly>{item.documentMetaDataObject.authorRemarks}</textarea></td>
+                  )}
+                </tr>
+                <tr>
+                  <td>Editor Name :</td>
+                  {viewData.map((item) =>
+                    <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.editorID}</td>
+                  )}
+                  <td>Editor Remarks :</td>
+                  {viewData.map((item) =>
+                    <td key={item.documentMetaDataObject.documentID}><textarea readOnly>{item.documentMetaDataObject.editorRemarks}</textarea></td>
+                  )}
+                </tr>
+                <tr>
+                  <td>Status :</td>
+                  {viewData.map((item) =>
+                    <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.documentStatus}</td>
+                  )}
+                  <td>Print Date :</td>
+                  {viewData.map((item) =>
+                    <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.printDate}</td>
+                  )}
+                </tr>
+                <tr>
+                  <td>Journal Issue :</td>
+                  {viewData.map((item) =>
+                    <td key={item.documentMetaDataObject.documentID} colSpan="3"><textarea readOnly>{item.documentMetaDataObject.journalIssue}</textarea></td>
+                  )}
+                </tr>
+              </tbody>
+            </table>
+          </>}
+          handleClose={handleOpen}
+        />}
       </div>
     </div>
   );

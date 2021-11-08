@@ -1,8 +1,14 @@
 import React from "react";
+import { useState } from "react/cjs/react.development";
 
 const AuthorData = (props) => {
-  const { documentID, title, topic, dateOfSubmission, documentStatus } =
-    props.data;
+  const { documentID, title, topic, dateOfSubmission, documentStatus } = props.data;
+
+  const handleViewDocument = (e) => {
+    e.preventDefault();
+    props.setViewDocument(documentID);
+    document.getElementById("docform").submit();
+  }
 
   return (
     <tbody>
@@ -12,11 +18,7 @@ const AuthorData = (props) => {
         <td>{topic}</td>
         <td>{dateOfSubmission}</td>
         <td>{documentStatus}</td>
-        <td>
-          {/* suggestions from Rayan  */}
-          {/* on click switch to view page display all info about single manuscript and allow to download */}
-          <button>View</button>
-        </td>
+        <td><button onClick={props.handleOpen}>View</button></td>
       </tr>
     </tbody>
   );
