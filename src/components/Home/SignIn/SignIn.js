@@ -162,6 +162,14 @@ const SignIn = () => {
         <FontAwesomeIcon icon={faUserCircle} />
         &nbsp;&nbsp; Sign in
       </button>
+
+      <br />
+
+      <Link to="/sign-up">
+        <p>Do not have a account, Click to register</p>
+      </Link>
+
+      <br />
     </div>
   );
 };

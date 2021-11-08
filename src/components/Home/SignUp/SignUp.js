@@ -10,6 +10,7 @@ import {
   faCalendarDay,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   let history = useHistory();
@@ -292,6 +293,9 @@ const SignUp = () => {
           <FontAwesomeIcon icon={faUserPlus} />
           &nbsp;&nbsp; Sign up
         </button>
+        <Link to="/sign-in">
+          <p>Already have an account, Click to Sing in</p>
+        </Link>
       </div>
     </div>
   );
