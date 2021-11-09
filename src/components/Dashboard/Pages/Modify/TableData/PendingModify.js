@@ -1,20 +1,32 @@
 import React from "react";
 
 const PendingModify = (props) => {
-  const { documentID, title, topic, dateOfSubmission, documentStatus, editorRemarks } = props.data;
+  const { documentID, dateOfSubmission, title, topic, authorUsername, authorRemarks, editorUsername, editorRemarks, documentStatus, printDate, journalIssue } = props.data;
 
   const handleSelectDocID = (e) => {
     let radio = e.target.checked;
 
     if ( radio === true) {
-      if (editorRemarks == null) {
-        const array = [documentID, title, topic, "No Comments"];
+      if (editorRemarks === null || editorRemarks === "") {
+        const array = [documentID, title, topic, "No Comments", authorRemarks];
+        props.setSelectedData(array);
+        props.setSelectedError({
+          display: "none",
+        })
+      } else if (authorRemarks === null || authorRemarks === "") {
+        const array = [documentID, title, topic, editorRemarks, "No Comments"];
+        props.setSelectedData(array);
+        props.setSelectedError({
+          display: "none",
+        })
+      } else if ((editorRemarks === null || editorRemarks === "") && (authorRemarks === null || authorRemarks === "")) {
+        const array = [documentID, title, topic, "No Comments", "No Comments"];
         props.setSelectedData(array);
         props.setSelectedError({
           display: "none",
         })
       } else {
-        const array = [documentID, title, topic, editorRemarks];
+        const array = [documentID, title, topic, editorRemarks, authorRemarks];
         props.setSelectedData(array);
         props.setSelectedError({
           display: "none",
@@ -27,6 +39,28 @@ const PendingModify = (props) => {
     }
   }
 
+  const handleDownloadDoc = (e) => {
+    e.preventDefault();
+
+    if (authorRemarks === null || authorRemarks === "") {
+      const array = [documentID, dateOfSubmission, title, topic, authorUsername, "", editorUsername, editorRemarks, documentStatus, printDate, journalIssue];
+      props.setViewDocument(array);
+      props.handleOpen();
+    } else if (editorRemarks === null || authorRemarks === "") {
+      const array = [documentID, dateOfSubmission, title, topic, authorUsername, authorRemarks, editorUsername, "", documentStatus, printDate, journalIssue];
+      props.setViewDocument(array);
+      props.handleOpen();
+    } else if ((authorRemarks === null || authorRemarks === "") && (editorRemarks === null || authorRemarks === "")) {
+      const array = [documentID, dateOfSubmission, title, topic, authorUsername, "", editorUsername, "", documentStatus, printDate, journalIssue];
+      props.setViewDocument(array);
+      props.handleOpen();
+    } else {
+      const array = [documentID, dateOfSubmission, title, topic, authorUsername, authorRemarks, editorUsername, editorRemarks, documentStatus, printDate, journalIssue];
+      props.setViewDocument(array);
+      props.handleOpen();
+    }
+  }
+
   return (
     <tbody>
       <tr>
@@ -36,7 +70,7 @@ const PendingModify = (props) => {
         <td>{topic}</td>
         <td>{dateOfSubmission}</td>
         <td>{documentStatus}</td>
-        <td><button>View</button></td>
+        <td><button onClick={handleDownloadDoc}>View</button></td>
       </tr>
     </tbody>
   );

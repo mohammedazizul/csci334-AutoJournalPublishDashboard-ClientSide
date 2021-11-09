@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from "react";
+import ViewBtn from "./ViewBtn/ViewBtn";
 
 const PendingRatingData = (props) => {
   const { documentID } = props.data;
 
+  const handleSelectDocID = (e) => {
+    e.preventDefault();
+    props.setSelectedData(documentID);
+    props.isRateManuscriptDashboard();
+  }
+
   // STANDARD GET REQUEST
   const docInfoDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&docID=${documentID}`;
   const [docInfoData, setDocInfoData] = useState([]);
+  const [updateDocInfoData, setUpdateDocInfoData] = useState(true);
 
   // GET - (WORKING FINE)
   useEffect(() => {
-    fetch(docInfoDataUrl, {
-      method: "GET",
-    })
+    if (updateDocInfoData) {
+      fetch(docInfoDataUrl, {
+        method: "GET",
+      })
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -21,11 +30,15 @@ const PendingRatingData = (props) => {
       .then((data) => {
         console.log(data);
         setDocInfoData(data);
+        if (data) {
+          setUpdateDocInfoData(false);
+        }
       })
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  },[]);
+    }
+  },[docInfoDataUrl, updateDocInfoData]);
 
   return (
     <tr>
@@ -48,8 +61,15 @@ const PendingRatingData = (props) => {
         <td key={item.documentMetaDataObject.documentID}>{item.documentMetaDataObject.documentStatus}</td>
       ))}
       <td>
-        <button>View</button>
-        <button onClick={props.isRateManuscriptDashboard}>Rate</button>
+        {docInfoData.map((item) => (
+          <ViewBtn
+            key={item.documentMetaDataObject.documentID}
+            data={item.documentMetaDataObject}
+            setViewDocument={props.setViewDocument}
+            handleOpen={props.handleOpen}
+          />
+        ))}
+        <button onClick={handleSelectDocID}>Rate</button>
       </td>
     </tr>
   );

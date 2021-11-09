@@ -7,6 +7,7 @@ import {
   faExchangeAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import PendingModify from "./TableData/PendingModify";
+import ViewDocumentPopUp from "../ViewDocumentPopUp/ViewDocumentPopUp";
 
 const Modify = () => {
   let history = useHistory();
@@ -55,12 +56,14 @@ const Modify = () => {
   // STANDARD GET REQUEST
   const pendingModifyDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&authorID=${loggedInUser.personID}&docStatus=Pending Modify`;
   const [pendingModify, setPendingModify] = useState([]);
+  const [updateModifyTable, setUpdateModifyTable] = useState(true);
 
   // GET - (WORKING FINE)
   useEffect(() => {
-    fetch(pendingModifyDataUrl, {
-      method: "GET",
-    })
+    if (updateModifyTable) {
+      fetch(pendingModifyDataUrl, {
+        method: "GET",
+      })
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -70,11 +73,15 @@ const Modify = () => {
       .then((data) => {
         console.log(data);
         setPendingModify(data);
+        if (data) {
+          setUpdateModifyTable(false);
+        }
       })
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
-  }, []);
+    }
+  }, [pendingModifyDataUrl, updateModifyTable]);
 
   const [documentID, setDocumentID] = useState(null);
   const [authorRemarks, setAuthorRemarks] = useState(null);
@@ -108,6 +115,8 @@ const Modify = () => {
       })
       .then((data) => {
         console.log("upload :", data);
+        setUpdateModifyTable(true);
+        isMainManu();
       })
       .catch((error) => {
         console.log("Error: ", error);
@@ -158,9 +167,23 @@ const Modify = () => {
       });
     } else {
       processUpdateModify();
+      alert("Update Successfully");
       document.getElementById("modifyForm").reset();
     }
   };
+
+  const [viewDocument, setViewDocument] = useState(null);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpen = () => {
+    setIsOpen(!isOpen);
+  }
+
+  const downloadDocument = (e) => {
+    e.preventDefault();
+    document.getElementById("downloadDocumentForm").submit();
+  }
 
   return (
     <div>
@@ -208,6 +231,8 @@ const Modify = () => {
                     data={item.documentMetaDataObject}
                     setSelectedData={setSelectedData}
                     setSelectedError={setSelectedError}
+                    setViewDocument={setViewDocument}
+                    handleOpen={handleOpen}
                   />
                 ))}
               </table>
@@ -289,7 +314,7 @@ const Modify = () => {
                   <tr>
                     <td>Remarks *</td>
                     <td>
-                      <textarea onChange={handleAuthorRemarks}></textarea>
+                      <textarea placeholder={selectedData[4]} onChange={handleAuthorRemarks}></textarea>
                       <br />
                       <span style={authorRemarksError}>
                         Please enter your remarks
@@ -323,11 +348,62 @@ const Modify = () => {
             </form>
           </div>
           <span>
-            There are required fields in this form marked *. Else fields read
-            only.
+            There are required fields in this form marked *. Else fields read only.
           </span>
         </div>
       ) : null}
+
+      <div>
+        {isOpen && <ViewDocumentPopUp
+          content={<>
+            <table className="downloadManuscriptTable">
+              <tbody>
+                <tr>
+                  <td>No. : </td>
+                  <td>{viewDocument[0]}</td>
+                  <td>Submit Date :</td>
+                  <td>{viewDocument[1]}</td>
+                </tr>
+                <tr>
+                  <td>Title :</td>
+                  <td>{viewDocument[2]}</td>
+                  <td>Topic :</td>
+                  <td>{viewDocument[3]}</td>
+                </tr>
+                <tr>
+                  <td>Author Name :</td>
+                  <td>{viewDocument[4]}</td>
+                  <td>Author Remarks :</td>
+                  <td><textarea value={viewDocument[5]} readOnly></textarea></td>
+                </tr>
+                <tr>
+                  <td>Editor Name :</td>
+                  <td>{viewDocument[6]}</td>
+                  <td>Editor Remarks :</td>
+                  <td><textarea value={viewDocument[7]} readOnly></textarea></td>
+                </tr>
+                <tr>
+                  <td>Status :</td>
+                  <td>{viewDocument[8]}</td>
+                  <td>Print Date :</td>
+                  <td>{viewDocument[9]}</td>
+                </tr>
+                <tr>
+                  <td>Journal Issue :</td>
+                  <td colSpan="3">{viewDocument[10]}</td>
+                </tr>
+                <tr>
+                  <td colSpan="4"><button onClick={downloadDocument}>Download</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <form target="_blank" method="post" id="downloadDocumentForm" action="http://localhost/jess-backend/processes/downloadDocument.php">
+              <input type="hidden" name="documentID" id="documentID" value={viewDocument[0]}/>
+            </form>
+          </>}
+          handleClose={handleOpen}
+        />}
+      </div>
     </div>
   );
 };
