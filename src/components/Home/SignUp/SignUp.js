@@ -20,8 +20,8 @@ const SignUp = () => {
   const [pwd, setPwd] = useState(null);
   const [pwdConfirm, setPwdConfirm] = useState(null);
   const [dob, setDob] = useState(null);
-  const [role, setRole] = useState(null);
-  const [area, setArea] = useState(null);
+  const [role, setRole] = useState("1");
+  const [area, setArea] = useState("Science");
 
   // creating data to send to BE
   let formData = new FormData();
@@ -30,6 +30,9 @@ const SignUp = () => {
   formData.append("password", pwd);
   formData.append("dob", dob);
   formData.append("type", role);
+  if (area != null && role === 2) {
+    formData.set("type", role + "-" + area);
+  }
 
   // STANDARD POST REQUEST - POST - (WORKING FINE)
   const processSignUp = () => {
@@ -51,8 +54,13 @@ const SignUp = () => {
         return response.json();
       })
       .then((data) => {
-        alert(data.success);
-        console.log("Server Response: ", data);
+        if(data.success){
+          alert(data.success);
+          console.log("Server Response: ", data);
+        }
+        else if(data.error){
+          alert(data.error);
+        }
       })
       .catch((error) => {
         console.log("Error: ", error);
@@ -189,13 +197,15 @@ const SignUp = () => {
       // console.log("user area: ", area);
       if (role === "2") {
         console.log(area);
-        setRole(role + "-" + area);
+        setRole(role+"-"+area);
       }
       processSignUp();
+      console.log(role);
       // alert("You have signed in successfully!");
       history.push("/");
     }
   };
+  console.log(role);
 
   return (
     <div className="SignupMainDiv" id="bgsetting">
@@ -264,7 +274,7 @@ const SignUp = () => {
           <option value="DEFAULT" disabled>
             Select your role
           </option>
-          <option value="1">Author</option>
+          <option value="1" >Author</option>
           <option value="0">Editor</option>
           <option value="2">Reviewer</option>
         </select>
@@ -274,7 +284,7 @@ const SignUp = () => {
           <option value="DEFAULT" disabled>
             Area of expertise
           </option>
-          <option value="Science">Science</option>
+          <option value="Science" >Science</option>
           <option value="Education">Education</option>
           <option value="Social Study">Social Study</option>
           <option value="Medicine">Medicine</option>
