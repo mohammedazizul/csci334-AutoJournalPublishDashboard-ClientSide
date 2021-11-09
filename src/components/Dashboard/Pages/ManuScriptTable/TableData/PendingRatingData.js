@@ -18,6 +18,7 @@ const PendingRatingData = (props) => {
   // GET - (WORKING FINE)
   useEffect(() => {
     if (updateDocInfoData) {
+      let isMounted = true;
       fetch(docInfoDataUrl, {
         method: "GET",
       })
@@ -29,14 +30,19 @@ const PendingRatingData = (props) => {
       })
       .then((data) => {
         console.log(data);
-        setDocInfoData(data);
-        if (data) {
-          setUpdateDocInfoData(false);
+        if (isMounted) {
+          setDocInfoData(data);
+          if (data) {
+            setUpdateDocInfoData(false);
+          }
         }
       })
       .catch((error) => {
         console.error("JSON user data fetching error : ", error);
       });
+      return () => {
+        isMounted = false;
+      };
     }
   },[docInfoDataUrl, updateDocInfoData]);
 
