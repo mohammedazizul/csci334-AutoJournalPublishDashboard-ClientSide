@@ -20,8 +20,9 @@ const SignUp = () => {
   const [pwd, setPwd] = useState(null);
   const [pwdConfirm, setPwdConfirm] = useState(null);
   const [dob, setDob] = useState(null);
-  const [role, setRole] = useState(null);
-  const [area, setArea] = useState(null);
+  const [role, setRole] = useState("DEFAULT");
+  const [roleCopy, setRoleCopy] = useState(null);
+  const [area, setArea] = useState("DEFAULT");
 
   // creating data to send to BE
   let formData = new FormData();
@@ -51,8 +52,13 @@ const SignUp = () => {
         return response.json();
       })
       .then((data) => {
-        alert(data.success);
-        console.log("Server Response: ", data);
+        if(data.success){
+          alert(data.success);
+          console.log("Server Response: ", data);
+        }
+        else if(data.error){
+          alert(data.error);
+        }
       })
       .catch((error) => {
         console.log("Error: ", error);
@@ -123,6 +129,7 @@ const SignUp = () => {
   const handleRole = (e) => {
     let role = e.target.value;
     setRole(role);
+    setRoleCopy(role);
 
     if (role === "2") {
       setAOE({
@@ -139,11 +146,18 @@ const SignUp = () => {
         display: "none",
       });
     }
+    if (role === "DEFAULT") {
+      setAOE({
+        display: "none",
+      });
+    }
   };
 
   const handleAOE = (e) => {
+    setRole(null);
     let area = e.target.value;
     setArea(area);
+    setRole(roleCopy+"-"+area);
   };
 
   const handleSubmit = (e) => {
@@ -163,6 +177,8 @@ const SignUp = () => {
     } else if (!re.test(userEmail)) {
       e.preventDefault();
       alert("Email Format: ...@...com !");
+    }else if(dob===null){
+      alert("Please choose your date of birth!");
     } else if (pwd === null) {
       e.preventDefault();
       setPwdError({
@@ -175,11 +191,13 @@ const SignUp = () => {
         display: "",
         color: "red",
       });
-    } else if (role === null) {
+    } else if (role === null || role==="DEFAULT") {
       alert("Please specify your role!");
-    } else if ((area === null) & (role === "2")) {
+    } else if ((area === null || area==="DEFAULT" ) & (role === "2")) {
       alert("Please specify your area of expertise!");
-    } else {
+    }else if(role==="2-DEFAULT"){
+      alert("Please specify your area of expertise!");
+    }else {
       // console.log("user name: ", userName);
       // console.log("user email: ", userEmail);
       // console.log("user role: ", role);
@@ -187,11 +205,8 @@ const SignUp = () => {
       // console.log("user pass: ", pwd);
       // console.log("user role: ", role);
       // console.log("user area: ", area);
-      if (role === "2") {
-        console.log(area);
-        setRole(role + "-" + area);
-      }
       processSignUp();
+      console.log(role);
       // alert("You have signed in successfully!");
       history.push("/");
     }
@@ -261,20 +276,20 @@ const SignUp = () => {
         <br />
         <br />
         <select onChange={handleRole}>
-          <option value="DEFAULT" disabled>
+          <option value="DEFAULT">
             Select your role
           </option>
-          <option value="1">Author</option>
+          <option value="1" >Author</option>
           <option value="0">Editor</option>
           <option value="2">Reviewer</option>
         </select>
         <br />
         <br />
         <select style={AOE} onChange={handleAOE}>
-          <option value="DEFAULT" disabled>
+          <option value="DEFAULT">
             Area of expertise
           </option>
-          <option value="Science">Science</option>
+          <option value="Science" >Science</option>
           <option value="Education">Education</option>
           <option value="Social Study">Social Study</option>
           <option value="Medicine">Medicine</option>
