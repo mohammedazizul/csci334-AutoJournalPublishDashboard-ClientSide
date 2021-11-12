@@ -87,7 +87,7 @@ const Modify = () => {
   const [authorRemarks, setAuthorRemarks] = useState(null);
   const [attachments, setAttachments] = useState(null);
 
-  // STANDARD POST REQUEST - POST - (NOT WORKING FINE)
+  // STANDARD POST REQUEST - POST - (WORKING FINE)
   // creating data to send to BE
   let formData = new FormData();
   formData.append("documentID", documentID);
@@ -327,7 +327,7 @@ const Modify = () => {
                       <input type="file" onChange={handleAttachments}></input>
                       <br />
                       <span style={attachmentsError}>
-                        Please enter your remarks
+                        Please update your attachments
                       </span>
                     </td>
                   </tr>

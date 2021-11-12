@@ -6,31 +6,31 @@ const PendingModify = (props) => {
   const handleSelectDocID = (e) => {
     let radio = e.target.checked;
 
-    if ( radio === true) {
+    if (radio === true) {
       if (editorRemarks === null || editorRemarks === "") {
         const array = [documentID, title, topic, "No Comments", authorRemarks];
         props.setSelectedData(array);
         props.setSelectedError({
           display: "none",
-        })
+        });
       } else if (authorRemarks === null || authorRemarks === "") {
         const array = [documentID, title, topic, editorRemarks, "No Comments"];
         props.setSelectedData(array);
         props.setSelectedError({
           display: "none",
-        })
+        });
       } else if ((editorRemarks === null || editorRemarks === "") && (authorRemarks === null || authorRemarks === "")) {
         const array = [documentID, title, topic, "No Comments", "No Comments"];
         props.setSelectedData(array);
         props.setSelectedError({
           display: "none",
-        })
+        });
       } else {
         const array = [documentID, title, topic, editorRemarks, authorRemarks];
         props.setSelectedData(array);
         props.setSelectedError({
           display: "none",
-        })
+        });
       }
     }
     else {

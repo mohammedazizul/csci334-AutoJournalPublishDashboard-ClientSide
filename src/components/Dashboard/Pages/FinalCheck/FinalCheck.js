@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../../../App";
 import {
   faAlignJustify,
 } from "@fortawesome/free-solid-svg-icons";
@@ -7,6 +8,13 @@ import PendingFinalCheck from "./TableData/PendingFinalCheck";
 import ViewDocumentPopUp from "../ViewDocumentPopUp/ViewDocumentPopUp";
 
 const FinalCheck = () => {
+  const [loggedInUser] = useContext(UserContext);
+  console.log("userData: ", loggedInUser);
+
+  const [selectedError, setSelectedError] = useState({
+    display: "none",
+  });
+
   // STANDARD GET REQUEST
   const pendingFinalCheckDataUrl = `http://localhost/jess-backend/api/read/getdocument.php?api_key=RXru1LUOOeKFX03LGSo7&docStatus=Pending Final Check`;
   const [pendingFinalCheck, setPendingFinalCheck] = useState([]);
@@ -37,6 +45,59 @@ const FinalCheck = () => {
     }
   },[pendingFinalCheckDataUrl, updatePendingFinalCheckTable]);
 
+  const [func] = useState("finalcheck");
+  const [documentID, setDocumentID] = useState(null);
+  console.log(documentID);
+  const [checkStatus, setCheckStatus] = useState(null);
+
+  // STANDARD POST REQUEST - POST - (WORKING FINE)
+  // creating data to send to BE
+  let formData = new FormData();
+  formData.append("function", func);
+  formData.append("documentID", documentID);
+  formData.append("editorID", loggedInUser.personID);
+  formData.append("satisfied", "unsatisfied");
+
+  const processUpdateFinalCheck = () => {
+    // to Display the key/value pairs
+    for (var pair of formData.entries()) {
+      console.log("Form Data: ", pair[0] + ", " + pair[1]);
+    }
+
+    const urlToPost = `http://localhost/jess-backend/processes/editorSection.php`;
+
+    fetch(urlToPost, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: formData,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("upload :", data);
+        setUpdatePendingFinalCheckTable(true);
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+  };
+
+  const handleUpdateFinalCheck = (e) => {
+    if (documentID === null || documentID === "") {
+      e.preventDefault();
+      setSelectedError({
+        display: "",
+        color: "red",
+      });
+    } else {
+      e.preventDefault();
+      processUpdateFinalCheck();
+    }
+  }
+ 
   const [viewDocument, setViewDocument] = useState(null);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -90,16 +151,21 @@ const FinalCheck = () => {
               <PendingFinalCheck
                 key={item.documentMetaDataObject.documentID}
                 data={item.documentMetaDataObject}
+                setDocumentID={setDocumentID}
+                setSelectedError={setSelectedError}
                 setViewDocument={setViewDocument}
                 handleOpen={handleOpen}
               />
             ))}
           </table>
           <div className="inputBtn">
-            <input type="button" value="Satisfy"></input>
+            <input type="button" value="Satisfy" onClick={handleUpdateFinalCheck}></input>
             <input type="button" value="Reject"></input>
           </div>
         </form>
+        <span style={selectedError}>
+          Please select a manuscript to modify
+        </span>
       </div>
 
       <div>

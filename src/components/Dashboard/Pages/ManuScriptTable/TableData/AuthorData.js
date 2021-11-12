@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react/cjs/react.development";
 
 const AuthorData = (props) => {
   const { documentID, dateOfSubmission, title, topic, authorUsername, authorRemarks, editorUsername, editorRemarks, documentStatus, printDate, journalIssue } = props.data;

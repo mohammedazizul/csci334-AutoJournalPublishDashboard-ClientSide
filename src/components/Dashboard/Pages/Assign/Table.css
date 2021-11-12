@@ -252,19 +252,7 @@ input[type=text], select, textarea {
 }
 
 .reviewersSelectedDiv td {
-    width: 33%;
-}
-
-.reviewersSelectedDiv td:first-child {
-    text-align: left;
-}
-
-.reviewersSelectedDiv td:nth-child(2) {
-    text-align: center;
-}
-
-.reviewersSelectedDiv td:nth-child(3) {
-    text-align: right;
+    width: 50%;
 }
 
 .reviewersSelectedDiv select {
@@ -275,6 +263,31 @@ input[type=text], select, textarea {
 }
 
 .reviewersSelectedDiv option {
+    font-size: 15px;
+}
+
+.additionalReviewersSelectedDiv {
+    padding-top: 10px;
+    margin: 20px;
+    text-align: center;
+}
+
+.additionalReviewersSelectedDiv table, .additionalReviewersSelectedDiv td {
+    border: 0px;
+}
+
+.additionalReviewersSelectedDiv td {
+    width: 33%;
+}
+
+.additionalReviewersSelectedDiv select {
+    border-radius: 5px;
+    padding: 5px 30px;
+    font-size: 15px;
+    margin-left: 20px;
+}
+
+.additionalReviewersSelectedDiv option {
     font-size: 15px;
 }
 

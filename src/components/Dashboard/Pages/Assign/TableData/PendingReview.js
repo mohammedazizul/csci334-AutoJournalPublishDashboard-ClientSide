@@ -3,6 +3,21 @@ import React from "react";
 const PendingReview = (props) => {
   const { documentID, dateOfSubmission, title, topic, authorUsername, authorRemarks, editorUsername, editorRemarks, documentStatus, printDate, journalIssue } = props.data;
   
+  const handleSelectDocID = (e) => {
+    let radio = e.target.checked;
+
+    if (radio === true) {
+      const array = [documentID, title, topic, dateOfSubmission, authorUsername, documentStatus];
+      props.setSelectedData(array);
+      props.setSelectedError({
+        display: "none",
+      });
+      props.setDocumentID(documentID);
+      props.setTopic(topic);
+      props.setDocumentStatus(documentStatus);
+    }
+  }
+
   const handleDownloadDoc = (e) => {
     e.preventDefault();
 
@@ -28,7 +43,7 @@ const PendingReview = (props) => {
   return (
     <tbody>
       <tr>
-        <td><input type="checkbox"></input></td>
+        <td><input type="radio" name="radioSelected" onChange={handleSelectDocID}></input></td>
         <td>{documentID}</td>
         <td>{title}</td>
         <td>{topic}</td>
