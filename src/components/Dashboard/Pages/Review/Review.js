@@ -13,16 +13,40 @@ const Review = () => {
 
   const [isRecordInformation, setRecordInformation] = useState(false);
 
-  const isRecordInformationDashboard = () => {
-    setMainReview(false);
+  const [selectedData, setSelectedData] = useState(null);
 
-    setRecordInformation(true);
+  const [selectedError, setSelectedError] = useState({
+    display: "none",
+  });
+
+  const isRecordInformationDashboard = (e) => {
+    if (selectedData !== null) {
+      setMainReview(false);
+
+      setRecordInformation(true);
+
+      setScope("Within Scope");
+
+      setDocumentID(selectedData);
+    } else {
+      e.preventDefault();
+      setSelectedError({
+        display: "",
+        color: "red",
+      });
+    }
   };
 
   const isMainReviewDashboard = () => {
     setMainReview(true);
 
     setRecordInformation(false);
+
+    setSelectedData(null);
+
+    setDocumentID(null);
+
+    setScope("Out of scope");
   };
 
   // STANDARD GET REQUEST
@@ -54,6 +78,142 @@ const Review = () => {
         });
     }
   }, [newDocumentDataUrl, updateNewDocumentTable]);
+
+  const [func] = useState("determinescope");
+  const [documentID, setDocumentID] = useState(null);
+  const [scope, setScope] = useState("Out of scope");
+  const [editorRemarks, setEditorRemarks] = useState(null);
+
+  // STANDARD POST REQUEST - POST - (WORKING FINE)
+  // creating data to send to BE
+  let formDataApprove = new FormData();
+  formDataApprove.append("function", func)
+  formDataApprove.append("scope", scope);
+  formDataApprove.append("editorID", loggedInUser.personID);
+  formDataApprove.append("documentID", documentID);
+  formDataApprove.append("editorRemarks", editorRemarks);
+
+  const processUpdateEditorRemarks = () => {
+    // to Display the key/value pairs
+    for (var pair of formDataApprove.entries()) {
+      console.log("Form Data: ", pair[0] + ", " + pair[1]);
+    }
+
+    const urlToPost = `http://localhost/jess-backend/processes/editorSection.php`;
+
+    fetch(urlToPost, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: formDataApprove,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("upload :", data);
+        setUpdateNewDocumentTable(true);
+        isMainReviewDashboard();
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+  };
+
+  const [editorRemarksError, setEditorRemarksError] = useState({
+    display: "none",
+  });
+
+  const handleEditorRemarks = (e) => {
+    let remarks = e.target.value;
+    setEditorRemarks(remarks);
+
+    if (remarks !== "") {
+      setEditorRemarksError({
+        display: "none",
+      });
+    }
+  }
+
+  const handleUpdateEditorRemarks = (e) => {
+    if (scope === "Out of scope") {
+      if (selectedData === null || selectedData === "") {
+        e.preventDefault();
+        setSelectedError({
+          display: "",
+          color: "red",
+        });
+      } else {
+        e.preventDefault();
+        processUpdateEditorRemarks();
+        alert("Update Successfully");
+      }
+    } else {
+      if (editorRemarks === null || editorRemarks === "") {
+        e.preventDefault();
+        setEditorRemarksError({
+          display: "",
+          color: "red",
+        });
+      } else {
+        e.preventDefault();
+        processUpdateEditorRemarks();
+        alert("Update Successfully");
+        document.getElementById("updateEditorRemarksForm").reset();
+      }
+    }
+  }
+
+  // STANDARD POST REQUEST - POST - (WORKING FINE)
+  // creating data to send to BE
+  let formDataReject = new FormData();
+  formDataReject.append("function", func)
+  formDataReject.append("scope", scope);
+  formDataReject.append("editorID", loggedInUser.personID);
+  formDataReject.append("documentID", selectedData);
+
+  const processUpdateReject = () => {
+    // to Display the key/value pairs
+    for (var pair of formDataReject.entries()) {
+      console.log("Form Data: ", pair[0] + ", " + pair[1]);
+    }
+
+    const urlToPost = `http://localhost/jess-backend/processes/editorSection.php`;
+
+    fetch(urlToPost, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: formDataReject,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("upload :", data);
+        setUpdateNewDocumentTable(true);
+        isMainReviewDashboard();
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+  };
+
+  const handleUpdateReject = (e) => {
+    if (selectedData === null || selectedData === "") {
+      e.preventDefault();
+      setSelectedError({
+        display: "",
+        color: "red",
+      });
+    } else {
+      e.preventDefault();
+      processUpdateReject();
+      alert("Update Successfully");
+    }
+  }
 
   const [viewDocument, setViewDocument] = useState(null);
 
@@ -113,6 +273,8 @@ const Review = () => {
                   <NewDocumentData
                     key={item.documentMetaDataObject.documentID}
                     data={item.documentMetaDataObject}
+                    setSelectedData={setSelectedData}
+                    setSelectedError={setSelectedError}
                     setViewDocument={setViewDocument}
                     handleOpen={handleOpen}
                   />
@@ -125,10 +287,13 @@ const Review = () => {
               >
                 Within Scope
               </button>
-              <button className="btn" id="falseBtn">
+              <button className="btn" id="falseBtn" onClick={handleUpdateReject}>
                 Out of Scope
               </button>
             </form>
+            <span style={selectedError}>
+              Please select a manuscript to determine whether to be accepted
+            </span>
           </div>
         </div>
       ) : null}
@@ -151,19 +316,23 @@ const Review = () => {
           </div>
 
           <div className="recordInfoFormDiv">
-            <form method="POST">
+            <form method="POST" id="updateEditorRemarksForm">
               <table>
                 <tbody>
                   <tr>
                     <td>Comments *</td>
                     <td>
-                      <textarea></textarea>
+                      <textarea onChange={handleEditorRemarks}></textarea>
+                      <br />
+                      <span style={editorRemarksError}>
+                        Please enter your remarks
+                      </span>
                     </td>
                   </tr>
                 </tbody>
               </table>
               <div className="inputBtn">
-                <input type="button" value="Upload"></input>
+                <input type="button" value="Upload" onClick={handleUpdateEditorRemarks}></input>
                 <input
                   type="button"
                   value="Cancel"
