@@ -60,6 +60,7 @@ const SignIn = () => {
             email: data.email,
             type: data.type,
             dob: data.dob,
+            status:data.status,
             isLoggedIn: true,
           });
           history.push({
