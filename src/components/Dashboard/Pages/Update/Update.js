@@ -22,7 +22,6 @@ const Update = () => {
   const [isUpdateInfoThree, setUpdateInfoThree] = useState(false);
 
   const [selectedData, setSelectedData] = useState(null);
-  console.log(selectedData);
 
   const [selectedError, setSelectedError] = useState({
     display: "none",
@@ -122,11 +121,8 @@ const Update = () => {
 
   const [func] = useState("compile");
   const [documentID, setDocumentID] = useState(null);
-  console.log(documentID);
   const [altDocID, setAltDocID] = useState(null);
-  console.log(altDocID);
   const [editorRemarks, setEditorRemarks] = useState(null);
-  console.log(editorRemarks);
 
   // STANDARD POST REQUEST - POST - (WORKING FINE)
   // creating data to send to BE
@@ -196,8 +192,6 @@ const Update = () => {
   },[reviewDataUrl, reviewTable]);
 
   var reviewArray = reviewTableData.filter(item => item.documentID === (altDocID));
-  console.log(reviewArray);
-  console.log(reviewArray.length);
 
   function empty() {
     reviewArray = [];

@@ -4,6 +4,8 @@ import { UserContext } from "../../../../../App";
 import {
   faAlignJustify,
   faQuestionCircle,
+  faUser,
+  faUsersCog,
 } from "@fortawesome/free-solid-svg-icons";
 import ReviewHistoryData from "../TableData/ReviewHistoryData";
 import PendingRatingData from "../TableData/PendingRatingData";
@@ -199,6 +201,39 @@ const ReviewerTable = () => {
       {isMainReviewerDiv ? (
         <div className="reviewerDashboard">
           <label>Dashboard</label>
+
+          <div
+            style={{
+              marginLeft: "45%",
+              display:"flex",
+              textAlign:"center",
+            }}
+          >
+            <h4>
+              <FontAwesomeIcon icon={faUser} />
+              &nbsp;My Status:
+            </h4>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <p style={{marginTop:"22px"}} id="status">{loggedInUser.status}</p>&nbsp;&nbsp;&nbsp;&nbsp;
+            <h4>
+              <FontAwesomeIcon icon={faUsersCog} />
+              &nbsp;Change Status
+            </h4>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <select 
+            //onChange={handleStatus} 
+            style={{
+              width:"120px",
+              height:"20px",
+              marginTop:"22px",
+            }}>
+                        <option value="">Change Status</option>
+                        <option value="available">Available</option>
+                        <option value="on Leave">On Leave</option>
+                        <option value="occupied">Occupied</option>
+            </select>
+          </div>
+
           <div
             style={{
               margin: "20px",

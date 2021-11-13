@@ -109,26 +109,32 @@ const Report = () => {
   // STANDARD GET REQUEST
   const authorDataUrl = `http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&type=1`;
   const [authorData, setAuthorData] = useState([]);
+  const [updateExistingAuthorTable, setUpdateExistingAuthorTable] = useState(true);
 
   // GET - (WORKING FINE)
   useEffect(() => {
-    fetch(authorDataUrl, {
-      method: "GET",
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
+    if (updateExistingAuthorTable) {
+      fetch(authorDataUrl, {
+        method: "GET",
       })
-      .then((data) => {
-        console.log(data);
-        setAuthorData(data);
-      })
-      .catch((error) => {
-        console.error("JSON user data fetching error : ", error);
-      });
-  }, []);
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw response;
+        })
+        .then((data) => {
+          console.log(data);
+          setAuthorData(data);
+          if (data) {
+            setUpdateExistingAuthorTable(false);
+          }
+        })
+        .catch((error) => {
+          console.error("JSON user data fetching error : ", error);
+        });
+    }
+  }, [authorDataUrl, updateExistingAuthorTable]);
 
   const [func, setFunc] = useState(null);
   const [reviewerID, setReviewerID] = useState(null);
