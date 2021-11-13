@@ -16,7 +16,6 @@ const Upload = () => {
 
   const [docTitle, setDocTitle] = useState(null);
   const [docTopic, setDocTopic] = useState(null);
-  const [docTopicSpecify, setDocTopicSpecify] = useState(null);
   const [authorRemarks, setAuthorRemarks] = useState(null);
   const [attachments, setAttachments] = useState(null);
 
@@ -25,11 +24,7 @@ const Upload = () => {
   let formData = new FormData();
   formData.append("personID", loggedInUser.personID);
   formData.append("title", docTitle);
-  if (docTopic === "Other") {
-    formData.append("topic", docTopicSpecify);
-  } else {
-    formData.append("topic", docTopic);
-  }
+  formData.append("topic", docTopic);
   formData.append("authorRemarks", authorRemarks);
   formData.append("document", attachments);
 
@@ -60,9 +55,6 @@ const Upload = () => {
   const [docTopicError, setDocTopicError] = useState({
     display: "none",
   });
-  const [docTopicSpecifyError, setDocTopicSpecifyError] = useState({
-    display: "none",
-  });
   const [authorRemarksError, setAuthorRemarksError] = useState({
     display: "none",
   });
@@ -90,22 +82,6 @@ const Upload = () => {
 
     if (topic !== "") {
       setDocTopicError({
-        display: "none",
-      });
-      setDocTopicSpecifyError({
-        display: "none",
-      });
-    } else if (topic === "Other") {
-      handleDocTopicSpecify();
-    }
-  };
-
-  const handleDocTopicSpecify = (e) => {
-    let topic = e.target.value;
-    setDocTopicSpecify(topic);
-
-    if (topic !== "") {
-      setDocTopicSpecifyError({
         display: "none",
       });
     }
@@ -143,15 +119,6 @@ const Upload = () => {
     } else if (docTopic === null || docTopic === "") {
       e.preventDefault();
       setDocTopicError({
-        display: "",
-        color: "red",
-      });
-    } else if (
-      docTopic === "Other" &&
-      (docTopicSpecify === null || docTopicSpecify === "")
-    ) {
-      e.preventDefault();
-      setDocTopicSpecifyError({
         display: "",
         color: "red",
       });
@@ -219,26 +186,18 @@ const Upload = () => {
                     <option value="Science">Science</option>
                     <option value="Medicine">Medicine</option>
                     <option value="Education">Education</option>
-                    <option value="Social study">Social Study</option>
-                    <option value="Other">Other</option>
+                    <option value="Social Study">Social Study</option>
+                    <option value="Others">Others</option>
                   </select>
                   <br />
                   <span style={docTopicError}>
                     Please select the manuscript topic
                   </span>
                 </td>
-                <td>
-                  If others, please specify &nbsp;{" "}
-                  <input type="text" onChange={handleDocTopicSpecify}></input>
-                  <br />
-                  <span style={docTopicSpecifyError}>
-                    Please enter the topic specify
-                  </span>
-                </td>
               </tr>
               <tr>
                 <td>Remarks</td>
-                <td colSpan="2">
+                <td>
                   <textarea onChange={handleAuthorRemarks}></textarea>
                   <br />
                   <span style={authorRemarksError}>
@@ -248,7 +207,7 @@ const Upload = () => {
               </tr>
               <tr>
                 <td>Attachments *</td>
-                <td colSpan="2">
+                <td>
                   <input type="file" onChange={handleAttachments}></input>
                   <br />
                   <span style={attachmentsError}>

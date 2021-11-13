@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import { UserContext } from "../../../../App";
 import {
   faAlignJustify,
   faPenNib,
@@ -11,20 +12,47 @@ import ViewDocumentPopUp from "../ViewDocumentPopUp/ViewDocumentPopUp";
 const Publish = () => {
   let history = useHistory();
 
+  const [loggedInUser] = useContext(UserContext);
+  console.log("userData: ", loggedInUser);
+
   const [isMainPublish, setMainPublish] = useState(true);
 
   const [isRecordJournalInfo, setRecordJournalInfo] = useState(false);
 
-  const isRecordJournalInfoDashboard = () => {
-    setMainPublish(false);
+  const [selectedError, setSelectedError] = useState({
+    display: "none",
+  });
 
-    setRecordJournalInfo(true);
+  const isRecordJournalInfoDashboard = (e) => {
+    if (documentID === null || documentID === "") {
+      e.preventDefault();
+      setSelectedError({
+        display: "",
+        color: "red",
+      });
+    } else {
+      setMainPublish(false);
+
+      setRecordJournalInfo(true);
+
+      setSelectedError({
+        display: "none",
+      });
+    }
   }
 
   const isMainPublishDashboard = () => {
     setMainPublish(true);
 
     setRecordJournalInfo(false);
+
+    setDocumentID(null);
+
+    setJournalIssue(null);
+
+    setJournalIssueError({
+      display: "none",
+    });
   }
 
   const goToManuscriptTable = () => {
@@ -60,6 +88,75 @@ const Publish = () => {
         });
     }
   },[paidDataUrl, updatePaidTable]);
+
+  const [func] = useState("publish");
+  const [documentID, setDocumentID] = useState(null);
+  const [journalIssue, setJournalIssue] = useState(null);
+
+  // STANDARD POST REQUEST - POST - (WORKING FINE)
+  // creating data to send to BE
+  let formData = new FormData();
+  formData.append("function", func);
+  formData.append("documentID", documentID);
+  formData.append("editorID", loggedInUser.personID);
+  formData.append("journalIssue", journalIssue);
+
+  const processPublish = () => {
+    // to Display the key/value pairs
+    for (var pair of formData.entries()) {
+      console.log("Form Data: ", pair[0] + ", " + pair[1]);
+    }
+
+    const urlToPost = `http://localhost/jess-backend/processes/editorSection.php`;
+
+    fetch(urlToPost, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: formData,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("upload :", data);
+        setUpdatePaidTable(true);
+        isMainPublishDashboard();
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+  };
+
+  const [journalIssueError, setJournalIssueError] = useState({
+    display: "none",
+  });
+
+  const handleJournalIssue = (e) => {
+    let journal = e.target.value;
+    setJournalIssue(journal);
+
+    if (journalIssue !== "") {
+      setJournalIssueError({
+        display: "none",
+      });
+    }
+  }
+
+  const handlePublish = (e) => {
+    if (journalIssue === null || journalIssue === "") {
+      e.preventDefault();
+      setJournalIssueError({
+        display: "",
+        color: "red",
+      });
+    } else {
+      e.preventDefault();
+      processPublish();
+      alert("Publish Successfully");
+    }
+  }
 
   const [viewDocument, setViewDocument] = useState(null);
 
@@ -116,6 +213,8 @@ const Publish = () => {
                   <Paid
                     key={item.documentMetaDataObject.documentID}
                     data={item.documentMetaDataObject}
+                    setDocumentID={setDocumentID}
+                    setSelectedError={setSelectedError}
                     setViewDocument={setViewDocument}
                     handleOpen={handleOpen}
                   />
@@ -124,6 +223,9 @@ const Publish = () => {
               <button className="btn" id="trueBtn" onClick={isRecordJournalInfoDashboard}>Publish</button>
               <button className="btn" id="falseBtn" onClick={goToManuscriptTable}>Cancel</button>
             </form>
+            <span style={selectedError}>
+              Please select a manuscript to publish
+            </span>
           </div>
         </div>:null
       }
@@ -148,16 +250,22 @@ const Publish = () => {
                 <tbody>
                   <tr>
                     <td>Print date</td>
-                    <td><input type="date"></input></td>
+                    <td><input type="text" placeholder={new Date().toLocaleString().substr(0, 10)} readOnly></input></td>
                   </tr>
                   <tr>
                     <td>Journal Issue</td>
-                    <td><textarea></textarea></td>
+                    <td>
+                      <textarea onChange={handleJournalIssue}></textarea>
+                      <br />
+                      <span style={journalIssueError}>
+                        Please enter the journal issue
+                      </span>
+                    </td>
                   </tr>
                 </tbody>
               </table>
               <div className="inputBtn">
-                <input type="button" value="Confirm"></input>
+                <input type="button" value="Confirm" onClick={handlePublish}></input>
                 <input type="button" value="Cancel" onClick={isMainPublishDashboard}></input>
               </div>
             </form>

@@ -21,7 +21,7 @@ const Modify = () => {
 
   const [selectedData, setSelectedData] = useState(null);
 
-  const [selectedError, setSelectedError] = useState({
+  const [selectedError, setSelectedDataError] = useState({
     display: "none",
   });
 
@@ -32,9 +32,16 @@ const Modify = () => {
       setModifySelected(true);
 
       setDocumentID(selectedData[0]);
+
+      setAuthorRemarks(selectedData[4]);
+
+      setSelectedDataError({
+        display: "none",
+      });
+
     } else {
       e.preventDefault();
-      setSelectedError({
+      setSelectedDataError({
         display: "",
         color: "red",
       });
@@ -47,6 +54,18 @@ const Modify = () => {
     setModifySelected(false);
 
     setSelectedData(null);
+
+    setDocumentID(null);
+
+    setAuthorRemarks(null);
+
+    setAuthorRemarksError({
+      display: "none",
+    });
+
+    setAttachmentsError({
+      display: "none",
+    });
   };
 
   const goToManuscriptTable = () => {
@@ -230,7 +249,7 @@ const Modify = () => {
                     key={item.documentMetaDataObject.documentID}
                     data={item.documentMetaDataObject}
                     setSelectedData={setSelectedData}
-                    setSelectedError={setSelectedError}
+                    setSelectedDataError={setSelectedDataError}
                     setViewDocument={setViewDocument}
                     handleOpen={handleOpen}
                   />
@@ -314,7 +333,7 @@ const Modify = () => {
                   <tr>
                     <td>Remarks *</td>
                     <td>
-                      <textarea placeholder={selectedData[4]} onChange={handleAuthorRemarks}></textarea>
+                      <textarea defaultValue={selectedData[4]} onChange={handleAuthorRemarks}></textarea>
                       <br />
                       <span style={authorRemarksError}>
                         Please enter your remarks

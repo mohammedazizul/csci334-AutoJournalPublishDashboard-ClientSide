@@ -20,20 +20,18 @@ const Review = () => {
   });
 
   const isRecordInformationDashboard = (e) => {
-    if (selectedData !== null) {
-      setMainReview(false);
-
-      setRecordInformation(true);
-
-      setScope("Within Scope");
-
-      setDocumentID(selectedData);
-    } else {
+    if (documentID === null || documentID === "") {
       e.preventDefault();
       setSelectedError({
         display: "",
         color: "red",
       });
+    } else {
+      setMainReview(false);
+
+      setRecordInformation(true);
+
+      setScope("Within Scope");
     }
   };
 
@@ -46,7 +44,19 @@ const Review = () => {
 
     setDocumentID(null);
 
+    setAltDocID(null);
+
+    setEditorRemarks(null);
+
     setScope("Out of scope");
+
+    setDocumentIDError({
+      display: "none",
+    });
+
+    setEditorRemarksError({
+      display: "none",
+    });
   };
 
   // STANDARD GET REQUEST
@@ -81,8 +91,12 @@ const Review = () => {
 
   const [func] = useState("determinescope");
   const [documentID, setDocumentID] = useState(null);
+  console.log(documentID);
+  const [altDocID, setAltDocID] = useState(null);
+  console.log(altDocID);
   const [scope, setScope] = useState("Out of scope");
   const [editorRemarks, setEditorRemarks] = useState(null);
+  console.log(editorRemarks);
 
   // STANDARD POST REQUEST - POST - (WORKING FINE)
   // creating data to send to BE
@@ -90,7 +104,8 @@ const Review = () => {
   formDataApprove.append("function", func)
   formDataApprove.append("scope", scope);
   formDataApprove.append("editorID", loggedInUser.personID);
-  formDataApprove.append("documentID", documentID);
+  formDataApprove.append("documentID", altDocID);
+  formDataApprove.append("newDocumentID", documentID);
   formDataApprove.append("editorRemarks", editorRemarks);
 
   const processUpdateEditorRemarks = () => {
@@ -121,9 +136,23 @@ const Review = () => {
       });
   };
 
+  const[documentIDError, setDocumentIDError] = useState({
+    display: "none",
+  })
   const [editorRemarksError, setEditorRemarksError] = useState({
     display: "none",
   });
+
+  const handleDocumentID = (e) => {
+    let docID = e.target.value;
+    setDocumentID(docID);
+
+    if (docID !== "") {
+      setDocumentIDError({
+        display: "none",
+      })
+    }
+  }
 
   const handleEditorRemarks = (e) => {
     let remarks = e.target.value;
@@ -138,7 +167,7 @@ const Review = () => {
 
   const handleUpdateEditorRemarks = (e) => {
     if (scope === "Out of scope") {
-      if (selectedData === null || selectedData === "") {
+      if (documentID === null || documentID === "") {
         e.preventDefault();
         setSelectedError({
           display: "",
@@ -150,7 +179,13 @@ const Review = () => {
         alert("Update Successfully");
       }
     } else {
-      if (editorRemarks === null || editorRemarks === "") {
+      if (documentID === null || documentID === "") {
+        e.preventDefault();
+        setDocumentIDError({
+          display: "",
+          color: "red",
+        });
+      } else if (editorRemarks === null || editorRemarks === "") {
         e.preventDefault();
         setEditorRemarksError({
           display: "",
@@ -273,6 +308,8 @@ const Review = () => {
                   <NewDocumentData
                     key={item.documentMetaDataObject.documentID}
                     data={item.documentMetaDataObject}
+                    setDocumentID={setDocumentID}
+                    setAltDocID={setAltDocID}
                     setSelectedData={setSelectedData}
                     setSelectedError={setSelectedError}
                     setViewDocument={setViewDocument}
@@ -319,6 +356,14 @@ const Review = () => {
             <form method="POST" id="updateEditorRemarksForm">
               <table>
                 <tbody>
+                  <tr>
+                    <td>No .</td>
+                    <td>
+                      <input type="text" defaultValue={documentID} onChange={handleDocumentID}></input>
+                      &nbsp;
+                      <span style={documentIDError}>Please enter the documentID</span>
+                    </td>
+                  </tr>
                   <tr>
                     <td>Comments *</td>
                     <td>
