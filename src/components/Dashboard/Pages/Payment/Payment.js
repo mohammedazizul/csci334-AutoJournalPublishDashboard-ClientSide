@@ -61,13 +61,6 @@ const Payment = () => {
 
     setSelectedData(null);
     setChoice("cancel");
-    
-    setPaymentSuccessful({
-      display: "none",
-    });
-    setPaymentError({
-      display: "none",
-    });
   };
 
   const goToManuscriptTable = () => {
@@ -279,14 +272,6 @@ const Payment = () => {
     }
   };
 
-  const [paymentSuccessful, setPaymentSuccessful] = useState({
-    display: "none",
-  });
-
-  const [paymentError, setPaymentError] = useState({
-    display: "none",
-  });
-
   const handlePlacePayment = (e) => {
     if (
       isCardBtnClick === true ||
@@ -297,24 +282,9 @@ const Payment = () => {
       e.preventDefault();
       processPayment();
       alert("Payment Successfully");
-      setPaymentSuccessful({
-        display: "",
-        color: "green",
-        fontSize: "32px",
-      });
-      setPaymentError({
-        display: "none",
-      });
     } else {
       e.preventDefault();
-      setPaymentSuccessful({
-        display: "none",
-      });
-      setPaymentError({
-        display: "",
-        color: "red",
-        fontSize: "32px",
-      });
+      alert("Please Select one of the Method");
     }
   };
 
@@ -467,14 +437,6 @@ const Payment = () => {
               value="Cancel"
               onClick={isMainPaymentDashboard}
             ></input>
-          </div>
-          <div style={{ textAlign: "center" }}>
-            <span style={paymentSuccessful}>
-              <b>Payment Successful</b>
-            </span>
-            <span style={paymentError}>
-              <b>Please Select one of the Method</b>
-            </span>
           </div>
         </div>
       ) : null}

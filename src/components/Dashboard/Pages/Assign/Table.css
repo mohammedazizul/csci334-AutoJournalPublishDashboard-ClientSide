@@ -471,6 +471,10 @@ h1 {
     border: 0px;
 }
 
+.setPriceFormDiv td {
+    vertical-align: top;
+}
+
 .setPriceFormDiv input[type=text] {
     height: 3vh;
     width: 10vw;

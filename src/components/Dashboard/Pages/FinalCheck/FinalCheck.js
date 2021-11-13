@@ -6,6 +6,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import PendingFinalCheck from "./TableData/PendingFinalCheck";
 import ViewDocumentPopUp from "../ViewDocumentPopUp/ViewDocumentPopUp";
+import SatisfyPopUp from "./PopUpWindows/SatisfyPopUp";
+import RejectPopUp from "./PopUpWindows/RejectPopUp";
 
 const FinalCheck = () => {
   const [loggedInUser] = useContext(UserContext);
@@ -47,7 +49,6 @@ const FinalCheck = () => {
 
   const [func] = useState("finalcheck");
   const [documentID, setDocumentID] = useState(null);
-  console.log(documentID);
   const [checkStatus, setCheckStatus] = useState(null);
 
   // STANDARD POST REQUEST - POST - (WORKING FINE)
@@ -56,7 +57,7 @@ const FinalCheck = () => {
   formData.append("function", func);
   formData.append("documentID", documentID);
   formData.append("editorID", loggedInUser.personID);
-  formData.append("satisfied", "unsatisfied");
+  formData.append("satisfied", checkStatus);
 
   const processUpdateFinalCheck = () => {
     // to Display the key/value pairs
@@ -79,13 +80,19 @@ const FinalCheck = () => {
       .then((data) => {
         console.log("upload :", data);
         setUpdatePendingFinalCheckTable(true);
+        setSatisfyPopUpOpen(false);
+        setRejectPopUpOpen(false);
+        setDocumentID(null);
+        setCheckStatus(null);
       })
       .catch((error) => {
         console.log("Error: ", error);
       });
   };
 
-  const handleUpdateFinalCheck = (e) => {
+  const [isSatisfyPopUpOpen, setSatisfyPopUpOpen] = useState(false);
+
+  const handleSatisfyPopUpOpen = (e) => {
     if (documentID === null || documentID === "") {
       e.preventDefault();
       setSelectedError({
@@ -93,9 +100,30 @@ const FinalCheck = () => {
         color: "red",
       });
     } else {
-      e.preventDefault();
-      processUpdateFinalCheck();
+      setSatisfyPopUpOpen(!isSatisfyPopUpOpen);
+      setCheckStatus("satisfied");
     }
+  }
+
+  const [isRejectPopUpOpen, setRejectPopUpOpen] = useState(false);
+
+  const handleRejectPopUpOpen = (e) => {
+    if (documentID === null || documentID === "") {
+      e.preventDefault();
+      setSelectedError({
+        display: "",
+        color: "red",
+      });
+    } else {
+      setRejectPopUpOpen(!isRejectPopUpOpen);
+      setCheckStatus("unsatisfied");
+    }
+  }
+
+  const handleUpdateFinalCheck = (e) => {
+    e.preventDefault();
+    processUpdateFinalCheck();
+    alert("Update Successfully");
   }
  
   const [viewDocument, setViewDocument] = useState(null);
@@ -159,13 +187,47 @@ const FinalCheck = () => {
             ))}
           </table>
           <div className="inputBtn">
-            <input type="button" value="Satisfy" onClick={handleUpdateFinalCheck}></input>
-            <input type="button" value="Reject"></input>
+            <input type="button" value="Satisfy" onClick={handleSatisfyPopUpOpen}></input>
+            <input type="button" value="Reject" onClick={handleRejectPopUpOpen}></input>
           </div>
         </form>
         <span style={selectedError}>
           Please select a manuscript to modify
         </span>
+      </div>
+
+      <div>
+        {isSatisfyPopUpOpen && <SatisfyPopUp
+          content={<>
+            <div style={ {textAlign: "center"} }>
+              <form method="POST">
+                <h3>Are you sure to satisfy this manuscript?</h3>
+                <div className="inputBtn">
+                  <input type="button" value="Yes" onClick={handleUpdateFinalCheck}></input>
+                  <input type="button" value="No" onClick={handleSatisfyPopUpOpen}></input>
+                </div>
+              </form>
+            </div>
+          </>}
+          handleSatisfyPopUpClose={handleSatisfyPopUpOpen}
+        />}
+      </div>
+
+      <div>
+        {isRejectPopUpOpen && <RejectPopUp
+          content={<>
+            <div style={ {textAlign: "center"} }>
+              <form method="POST">
+                <h3>Are you sure to reject this manuscript?</h3>
+                <div className="inputBtn">
+                  <input type="button" value="Yes" onClick={handleUpdateFinalCheck}></input>
+                  <input type="button" value="No" onClick={handleRejectPopUpOpen}></input>
+                </div>
+              </form>
+            </div>
+          </>}
+          handleRejectPopUpClose={handleRejectPopUpOpen}
+        />}
       </div>
 
       <div>
