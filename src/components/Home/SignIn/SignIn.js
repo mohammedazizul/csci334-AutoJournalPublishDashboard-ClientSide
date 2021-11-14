@@ -48,12 +48,10 @@ const SignIn = () => {
         if (data.error) {
           history.push({ pathname: "/", state: data });
           alert(data.error);
-        } else if(data.status==="pending approval" && data.type===2)
-        {
+        } else if (data.status === "pending approval" && data.type === 2) {
           alert("Not approved by editor");
-          history.push( {pathname: "/"} );
-        }
-        else {
+          history.push({ pathname: "/" });
+        } else {
           setLoggedInUser({
             username: data.username,
             personID: data.personID,

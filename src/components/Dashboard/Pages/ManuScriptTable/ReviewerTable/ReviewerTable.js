@@ -6,7 +6,6 @@ import {
   faAlignJustify,
   faQuestionCircle,
   faUser,
-  faUsersCog
 } from "@fortawesome/free-solid-svg-icons";
 import ReviewHistoryData from "../TableData/ReviewHistoryData";
 import PendingRatingData from "../TableData/PendingRatingData";
@@ -220,8 +219,6 @@ const ReviewerTable = () => {
       {isMainReviewerDiv ? (
         <div className="reviewerDashboard">
           <label>Dashboard</label>
-
-
           <div
             style={{
               marginLeft: "45%",

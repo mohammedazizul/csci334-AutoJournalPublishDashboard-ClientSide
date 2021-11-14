@@ -7,6 +7,8 @@ const NewDocumentData = (props) => {
     let radio = e.target.checked;
 
     if (radio === true) {
+      props.setDocumentID(documentID);
+      props.setAltDocID(documentID);
       props.setSelectedData(documentID);
       props.setSelectedError({
         display: "none",

@@ -146,6 +146,36 @@ const Assign = () => {
     }
   },[reviewerNameDataUrl, updateReviewerName]);
 
+  // STANDARD GET REQUEST
+  const reviewDataUrl = `http://localhost/jess-backend/api/read/getreview.php?api_key=RXru1LUOOeKFX03LGSo7`;
+  const [reviewData, setReviewData] = useState([]);
+  const [updateReviewData, setUpdateReviewData] = useState(true);
+
+  // GET - (WORKING FINE)
+  useEffect(() => {
+    if (updateReviewData) {
+      fetch(reviewDataUrl, {
+        method: "GET",
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw response;
+        })
+        .then((data) => {
+          console.log(data);
+          setReviewData(data);
+          if (data) {
+            setUpdateReviewData(false);
+          }
+        })
+        .catch((error) => {
+          console.error("JSON user data fetching error : ", error);
+        });
+    }
+  },[reviewDataUrl, updateReviewData]);
+
   const [func] = useState("assignreviewers");
   const [documentID, setDocumentID] = useState(null);
   const [reviewer1ID, setReviewer1ID] = useState(null);
@@ -156,6 +186,9 @@ const Assign = () => {
   const [documentStatus, setDocumentStatus] = useState(null);
 
   const reviewerSelect = reviewerNameData.filter(item => item.areaOfExpertise.includes(topic));
+  const existingReview = reviewData.filter(item => item.documentID.includes(documentID));
+  const existingReviewerID = existingReview.map(item => item.reviewerID);
+  const additionalReviewers = reviewerSelect.filter(item => (item.personID !== (existingReviewerID[0])) && (item.personID !== (existingReviewerID[1])));
 
   // STANDARD POST REQUEST - POST - (WORKING FINE)
   // creating data to send to BE
@@ -279,9 +312,12 @@ const Assign = () => {
   });
 
   const handleSelectReviewer = (e) => {
-    if ((reviewerSelect.length < 2 && documentStatus === "pending review") || (reviewerSelect.length < 1 && documentStatus === "pending additional reviewer")) {
+    if (reviewerSelect.length < 2 && documentStatus === "pending review") {
       e.preventDefault();
-      alert("There is no enough available reviewer(s).")
+      alert("There is no enough available reviewers.");
+    } else if (additionalReviewers.length < 1 && documentStatus === "pending additional reviewer") {
+      e.preventDefault();
+      alert("There is no enough available reviewer.");
     } else {
       e.preventDefault();
       isAssignReviewersDashboard();
@@ -573,7 +609,7 @@ const Assign = () => {
                         <label>Reviewer 3 *</label>
                         <select onChange={handleReviewer3}>
                           <option value="">Select Reviewer</option>
-                          {reviewerSelect.map((item) => (
+                          {additionalReviewers.map((item) => (
                             <option key={item.personID} value={item.personID}>{item.username}</option>
                           ))}
                         </select>

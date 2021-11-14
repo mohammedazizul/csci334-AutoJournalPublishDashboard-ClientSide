@@ -1,11 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../../../App";
 import { faAlignJustify, faUndo } from "@fortawesome/free-solid-svg-icons";
 import ReviewerData from "./TableData/ReviewerData";
 import NewReviewerData from "./TableData/NewReviewerData";
 import AuthorData from "./TableData/AuthorData";
+import ApprovePopUp from "./PopUpWindows/ApprovePopUp";
+import RejectPopUp from "./PopUpWindows/RejectPopUp";
 
 const Report = () => {
+  const [loggedInUser] = useContext(UserContext);
+  console.log("userData: ", loggedInUser);
+
   const [isMainReport, setMainReport] = useState(true);
 
   const [isReviewerMgnt, setReviewerMgnt] = useState(false);
@@ -34,80 +40,163 @@ const Report = () => {
     setReviewerMgnt(false);
 
     setAuthorMgnt(false);
+
+    setFunc(null);
+
+    setReviewerID(null);
   };
 
   // STANDARD GET REQUEST
-  const reviewerDataUrl = "http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&type=2&status=Available,On Leave,Occupied";
+  const reviewerDataUrl = `http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&type=2&status=Available,On Leave,Occupied`;
   const [reviewerData, setReviewerData] = useState([]);
+  const [updateExistingReviewerTable, setUpdateExistingReviewerTable] = useState(true);
 
   // GET - (WORKING FINE)
   useEffect(() => {
-    fetch(reviewerDataUrl, {
-      method: "GET",
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
+    if (updateExistingReviewerTable) {
+      fetch(reviewerDataUrl, {
+        method: "GET",
       })
-      .then((data) => {
-        console.log(data);
-        setReviewerData(data);
-      })
-      .catch((error) => {
-        console.error("JSON user data fetching error : ", error);
-      });
-  }, []);
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw response;
+        })
+        .then((data) => {
+          console.log(data);
+          setReviewerData(data);
+          if (data) {
+            setUpdateExistingReviewerTable(false);
+          }
+        })
+        .catch((error) => {
+          console.error("JSON user data fetching error : ", error);
+        });
+    }
+  }, [reviewerDataUrl, updateExistingReviewerTable]);
 
   // STANDARD GET REQUEST
-  const newReviewerDataUrl = "http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&type=2&status=Pending Approval";
+  const newReviewerDataUrl = `http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&type=2&status=Pending Approval`;
   const [newReviewerData, setNewReviewerData] = useState([]);
+  const [updateNewReviewerTable, setUpdateNewReviewerTable] = useState(true);
 
   // GET - (WORKING FINE)
   useEffect(() => {
-    fetch(newReviewerDataUrl, {
-      method: "GET",
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
+    if (updateNewReviewerTable) {
+      fetch(newReviewerDataUrl, {
+        method: "GET",
       })
-      .then((data) => {
-        console.log(data);
-        setNewReviewerData(data);
-      })
-      .catch((error) => {
-        console.error("JSON user data fetching error : ", error);
-      });
-  }, []);
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw response;
+        })
+        .then((data) => {
+          console.log(data);
+          setNewReviewerData(data);
+          if (data) {
+            setUpdateNewReviewerTable(false);
+          }
+        })
+        .catch((error) => {
+          console.error("JSON user data fetching error : ", error);
+        });
+    }
+  }, [newReviewerDataUrl, updateNewReviewerTable]);
 
   // STANDARD GET REQUEST
-  const authorDataUrl =
-    "http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&type=1";
+  const authorDataUrl = `http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&type=1`;
   const [authorData, setAuthorData] = useState([]);
+  const [updateExistingAuthorTable, setUpdateExistingAuthorTable] = useState(true);
 
   // GET - (WORKING FINE)
   useEffect(() => {
-    fetch(authorDataUrl, {
-      method: "GET",
+    if (updateExistingAuthorTable) {
+      fetch(authorDataUrl, {
+        method: "GET",
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw response;
+        })
+        .then((data) => {
+          console.log(data);
+          setAuthorData(data);
+          if (data) {
+            setUpdateExistingAuthorTable(false);
+          }
+        })
+        .catch((error) => {
+          console.error("JSON user data fetching error : ", error);
+        });
+    }
+  }, [authorDataUrl, updateExistingAuthorTable]);
+
+  const [func, setFunc] = useState(null);
+  const [reviewerID, setReviewerID] = useState(null);
+
+  // STANDARD POST REQUEST - POST - (WORKING FINE)
+  // creating data to send to BE
+  let formData = new FormData();
+  formData.append("function", func);
+  formData.append("editorID", loggedInUser.personID);
+  formData.append("reviewerID", reviewerID);
+
+  const processApprovalRejectReviewer = () => {
+    // to Display the key/value pairs
+    for (var pair of formData.entries()) {
+      console.log("Form Data: ", pair[0] + ", " + pair[1]);
+    }
+
+    const urlToPost = `http://localhost/jess-backend/processes/editorSection.php`;
+
+    fetch(urlToPost, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: formData,
     })
       .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
+        return response.json();
       })
       .then((data) => {
-        console.log(data);
-        setAuthorData(data);
+        console.log("upload :", data);
+        setUpdateExistingReviewerTable(true);
+        setUpdateNewReviewerTable(true)
+        setApprovePopUpOpen(false);
+        setRejectPopUpOpen(false);
+        setFunc(null);
+        setReviewerID(null);
       })
       .catch((error) => {
-        console.error("JSON user data fetching error : ", error);
+        console.log("Error: ", error);
       });
-  }, []);
+  };
+
+  const [isApprovePopUpOpen, setApprovePopUpOpen] = useState(false);
+
+  const handleApprovePopUpOpen = (e) => {
+    setApprovePopUpOpen(!isApprovePopUpOpen);
+    setFunc("approvereviewer");
+  }
+
+  const [isRejectPopUpOpen, setRejectPopUpOpen] = useState(false);
+
+  const handleRejectPopUpOpen = (e) => {
+    setRejectPopUpOpen(!isRejectPopUpOpen);
+    setFunc("rejectreviewer");
+  }
+
+  const handleApproveReject = (e) => {
+    e.preventDefault();
+    processApprovalRejectReviewer();
+    alert("Update Reviewer Status Successfully");
+  }
 
   return (
     <div>
@@ -200,7 +289,13 @@ const Report = () => {
                 </tr>
               </thead>
               {newReviewerData.map((item) => (
-                <NewReviewerData key={item.personID} data={item} />
+                <NewReviewerData
+                  key={item.personID}
+                  data={item}
+                  handleApprovePopUpOpen={handleApprovePopUpOpen}
+                  handleRejectPopUpOpen={handleRejectPopUpOpen}
+                  setReviewerID={setReviewerID}
+                />
               ))}
             </table>
           </form>
@@ -243,6 +338,40 @@ const Report = () => {
           </button>
         </div>
       ) : null}
+
+      <div>
+        {isApprovePopUpOpen && <ApprovePopUp
+          content={<>
+            <div style={ {textAlign: "center"} }>
+              <form method="POST">
+                <h3>Are you sure to approve this reviewer?</h3>
+                <div className="inputBtn">
+                  <input type="button" value="Yes" onClick={handleApproveReject}></input>
+                  <input type="button" value="No" onClick={handleApprovePopUpOpen}></input>
+                </div>
+              </form>
+            </div>
+          </>}
+          handleApprovePopUpClose={handleApprovePopUpOpen}
+        />}
+      </div>
+
+      <div>
+        {isRejectPopUpOpen && <RejectPopUp
+          content={<>
+            <div style={ {textAlign: "center"} }>
+              <form method="POST">
+                <h3>Are you sure to reject this reviewer?</h3>
+                <div className="inputBtn">
+                  <input type="button" value="Yes" onClick={handleApproveReject}></input>
+                  <input type="button" value="No" onClick={handleRejectPopUpOpen}></input>
+                </div>
+              </form>
+            </div>
+          </>}
+          handleRejectPopUpClose={handleRejectPopUpOpen}
+        />}
+      </div>
     </div>
   );
 };
