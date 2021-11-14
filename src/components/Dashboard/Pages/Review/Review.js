@@ -91,12 +91,9 @@ const Review = () => {
 
   const [func] = useState("determinescope");
   const [documentID, setDocumentID] = useState(null);
-  console.log(documentID);
   const [altDocID, setAltDocID] = useState(null);
-  console.log(altDocID);
   const [scope, setScope] = useState("Out of scope");
   const [editorRemarks, setEditorRemarks] = useState(null);
-  console.log(editorRemarks);
 
   // STANDARD POST REQUEST - POST - (WORKING FINE)
   // creating data to send to BE
