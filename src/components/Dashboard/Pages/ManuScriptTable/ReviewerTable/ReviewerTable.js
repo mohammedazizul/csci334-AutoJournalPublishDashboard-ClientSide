@@ -1,18 +1,19 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../../../App";
+import { useHistory } from "react-router";
 import {
   faAlignJustify,
   faQuestionCircle,
   faUser,
-  faUsersCog,
 } from "@fortawesome/free-solid-svg-icons";
 import ReviewHistoryData from "../TableData/ReviewHistoryData";
 import PendingRatingData from "../TableData/PendingRatingData";
 import ViewDocumentPopUp from "../../ViewDocumentPopUp/ViewDocumentPopUp";
 
 const ReviewerTable = () => {
-  const [loggedInUser] = useContext(UserContext);
+  let history = useHistory();
+  const [loggedInUser,setLoggedInUser] = useContext(UserContext);
   console.log("userData: ", loggedInUser);
 
   const [selectedData, setSelectedData] = useState(null);
@@ -196,12 +197,28 @@ const ReviewerTable = () => {
     document.getElementById("downloadDocumentForm").submit();
   }
 
+  //fro reviewers change their status
+ // const handleStatus = (e) =>{
+    //e.preventDefault();
+    //let newStatus = e.target.value;
+
+    //if(newStatus===loggedInUser.status){
+    //  alert("Please choose the different status to change !");
+      
+   // }
+   // setLoggedInUser({
+   //   status:newStatus,
+   // });
+   // history.push({
+   //   pathname: "/dashboard/manuscript-table",
+   // });
+  //}
+
   return (
     <div>
       {isMainReviewerDiv ? (
         <div className="reviewerDashboard">
           <label>Dashboard</label>
-
           <div
             style={{
               marginLeft: "45%",

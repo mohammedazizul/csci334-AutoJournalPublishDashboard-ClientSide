@@ -21,6 +21,7 @@ function App() {
     password: "",
     type: -1,
     dob: "",
+    status:"",
     isLoggedIn: false,
   });
 
