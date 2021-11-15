@@ -6,6 +6,7 @@ import {
   faAlignJustify,
   faQuestionCircle,
   faUser,
+  faUsersCog,
 } from "@fortawesome/free-solid-svg-icons";
 import ReviewHistoryData from "../TableData/ReviewHistoryData";
 import PendingRatingData from "../TableData/PendingRatingData";

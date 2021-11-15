@@ -41,6 +41,37 @@ const AuthorData = (props) => {
   var othersArray = authorData.filter(item => item.documentMetaDataObject.topic === ("Others"));
   var publishedArray = authorData.filter(item => item.documentMetaDataObject.documentStatus === ("published"));
   var publicationRate = (publishedArray.length / authorData.length) * 100;
+
+  // STANDARD GET REQUEST
+  const lateEditsDataUrl = `http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&id=${personID}`;
+  const [lateEditsData, setLateEditsData] = useState([]);
+  const [updateLateEdits, setUpdateLateEdits] = useState(true);
+
+  // GET - (WORKING FINE)
+  useEffect(() => {
+    if (updateLateEdits) {
+      fetch(lateEditsDataUrl, {
+        method: "GET",
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw response;
+        })
+        .then((data) => {
+          console.log(data);
+          setLateEditsData(data);
+          if (data) {
+            setUpdateLateEdits(false);
+          }
+        })
+        .catch((error) => {
+          console.error("JSON user data fetching error : ", error);
+        });
+    }
+  }, [lateEditsDataUrl, updateLateEdits]);
+
   // real age calculate
   const cal_age = (dob) => {
     var today = new Date();
@@ -68,6 +99,7 @@ const AuthorData = (props) => {
         <td>{othersArray.length}</td>
         <td>{publishedArray.length}</td>
         <td>{String(publicationRate)}%</td>
+        <td>{lateEditsData.map(item => item.lateEdits)}</td>
       </tr>
     </tbody>
   );

@@ -43,6 +43,36 @@ const ReviewerData = (props) => {
   var averagePoint = sum / completeArray.length;
   var pendingArray = reviewData.filter(item => item.reviewStatus === ("pending"));
 
+  // STANDARD GET REQUEST
+  const lateReviewsDataUrl = `http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&id=${personID}`;
+  const [lateReviewsData, setLateReviewsData] = useState([]);
+  const [updateLateReviews, setUpdateLateReviews] = useState(true);
+
+  // GET - (WORKING FINE)
+  useEffect(() => {
+    if (updateLateReviews) {
+      fetch(lateReviewsDataUrl, {
+        method: "GET",
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw response;
+        })
+        .then((data) => {
+          console.log(data);
+          setLateReviewsData(data);
+          if (data) {
+            setUpdateLateReviews(false);
+          }
+        })
+        .catch((error) => {
+          console.error("JSON user data fetching error : ", error);
+        });
+    }
+  }, [lateReviewsDataUrl, updateLateReviews]);
+
   // real age calculate
   const cal_age = (dob) => {
     var today = new Date();
@@ -65,6 +95,7 @@ const ReviewerData = (props) => {
         <td>{pendingArray.length}</td>
         <td>{areaOfExpertise}</td>
         <td>{String(averagePoint)}</td>
+        <td>{lateReviewsData.map(item => item.lateReviews)}</td>
       </tr>
     </tbody>
   );
