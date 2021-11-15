@@ -259,6 +259,7 @@ const Report = () => {
                   <th>Pending Reviewing</th>
                   <th>Expertise</th>
                   <th>Average Point</th>
+                  <th>Late Reviews</th>
                 </tr>
               </thead>
               {reviewerData.map((item) => (
@@ -326,6 +327,7 @@ const Report = () => {
                   <th>O</th>
                   <th>Total Publication</th>
                   <th>Publication Rate</th>
+                  <th>Late Edits</th>
                 </tr>
               </thead>
               {authorData.map((item) => (

@@ -1,19 +1,18 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../../../App";
-import { useHistory } from "react-router";
 import {
   faAlignJustify,
   faQuestionCircle,
   faUser,
+  faUsersCog,
 } from "@fortawesome/free-solid-svg-icons";
 import ReviewHistoryData from "../TableData/ReviewHistoryData";
 import PendingRatingData from "../TableData/PendingRatingData";
 import ViewDocumentPopUp from "../../ViewDocumentPopUp/ViewDocumentPopUp";
 
 const ReviewerTable = () => {
-  let history = useHistory();
-  const [loggedInUser,setLoggedInUser] = useContext(UserContext);
+  const [loggedInUser] = useContext(UserContext);
   console.log("userData: ", loggedInUser);
 
   const [selectedData, setSelectedData] = useState(null);
@@ -197,60 +196,148 @@ const ReviewerTable = () => {
     document.getElementById("downloadDocumentForm").submit();
   }
 
-  //fro reviewers change their status
- // const handleStatus = (e) =>{
-    //e.preventDefault();
-    //let newStatus = e.target.value;
+  // STANDARD GET REQUEST
+  const updateStatusDataUrl = `http://localhost/jess-backend/api/read/getperson.php?api_key=RXru1LUOOeKFX03LGSo7&id=${loggedInUser.personID}`;
+  const [statusData, setStatusData] = useState([]);
+  const [updateStatusData, setUpdateStatusData] = useState(true);
+ 
+  // GET - (WORKING FINE)
+  useEffect(() => {
+    if (updateStatusData) {
+      fetch(updateStatusDataUrl, {
+        method: "GET",
+      })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        console.log(data);
+        setStatusData(data);
+        if (data) {
+        setUpdateStatusData(false);
+        }
+      })
+      .catch((error) => {
+        console.error("JSON user data fetching error : ", error);
+      });
+    }
+  },[updateStatusDataUrl, updateStatusData]);
 
-    //if(newStatus===loggedInUser.status){
-    //  alert("Please choose the different status to change !");
-      
-   // }
-   // setLoggedInUser({
-   //   status:newStatus,
-   // });
-   // history.push({
-   //   pathname: "/dashboard/manuscript-table",
-   // });
-  //}
+  const statusArray = statusData.map(item => item.status);
+
+  const [status, setStatus] = useState(null);
+  const [previousStatus, setPreviousStatus] = useState(loggedInUser.status);
+  const [statusError, setStatusError] = useState({
+    display: "none",
+  });
+  const [sameStatusError, setSameStatusError] = useState({
+    display: "none",
+  });
+
+  // STANDARD POST REQUEST - POST - (NOT WORKING FINE)
+  // creating data to send to BE
+  let formdata = new FormData();
+  formdata.append("reviewerID", loggedInUser.personID);
+  formdata.append("status",status);
+
+  const processChangeStatus = () => {
+    // to Display the key/value pairs
+    for (var pair of formdata.entries()) {
+      console.log("Form Data: ", pair[0] + ", " + pair[1]);
+    }
+
+    const urlToPost = `http://localhost/jess-backend/processes/changereviewerstatus.php`;
+
+    fetch(urlToPost, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+      body: formdata,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log("upload :", data);
+        setUpdateStatusData(true);
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+  };
+
+ //for reviewers change their status
+ const handleStatus = (e) => {
+  let newStatus = e.target.value;
+  setStatus(newStatus);
+
+  if (newStatus!=="") {
+    e.preventDefault();
+    setStatusError({
+      display: "none",
+     });
+    }
+    setSameStatusError({
+      display: "none",
+    });
+  }
+
+  const handleUpdateStatus = (e) => {
+    if (status === null || status === "") {
+      e.preventDefault();
+      setStatusError({
+        display: "",
+        color: "red",
+      });
+      setSameStatusError({
+        display: "none",
+      });
+    } else if (status === previousStatus) {
+      setStatusError({
+        display: "none",
+      });
+      setSameStatusError({
+        display: "",
+        color: "red",
+      });
+    } else {
+      e.preventDefault();
+      processChangeStatus();
+      setPreviousStatus(status);
+      alert("Reviewer status changed successfully");
+    }
+  }
 
   return (
     <div>
       {isMainReviewerDiv ? (
         <div className="reviewerDashboard">
           <label>Dashboard</label>
-          <div
-            style={{
-              marginLeft: "45%",
-              display:"flex",
-              textAlign:"center",
-            }}
-          >
+          <div>
             <h4>
               <FontAwesomeIcon icon={faUser} />
-              &nbsp;My Status:
+              &nbsp;My Status: {statusArray}
             </h4>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <p style={{marginTop:"22px"}} id="status">{loggedInUser.status}</p>&nbsp;&nbsp;&nbsp;&nbsp;
             <h4>
               <FontAwesomeIcon icon={faUsersCog} />
               &nbsp;Change Status
+              &nbsp;
+              <select onChange={handleStatus} style={{ width:"120px", height:"20px", marginTop:"22px" }}>
+                <option value="">Change Status</option>
+                <option value="available">Available</option>
+                <option value="on leave">On Leave</option>
+                <option value="occupied">Occupied</option>
+              </select>
+              &nbsp;
+              <button style={{height:"20px",marginTop:"22px"}} onClick={handleUpdateStatus}>Change my status</button>
             </h4>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <select 
-            //onChange={handleStatus} 
-            style={{
-              width:"120px",
-              height:"20px",
-              marginTop:"22px",
-            }}>
-                        <option value="">Change Status</option>
-                        <option value="available">Available</option>
-                        <option value="on Leave">On Leave</option>
-                        <option value="occupied">Occupied</option>
-            </select>
+            <span style={statusError} >Please choose a new status to change</span>
+            <span style={sameStatusError}>New status can not be the same as your current status</span>
           </div>
-
           <div
             style={{
               margin: "20px",

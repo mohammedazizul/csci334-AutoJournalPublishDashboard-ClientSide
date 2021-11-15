@@ -192,7 +192,7 @@ const FinalCheck = () => {
           </div>
         </form>
         <span style={selectedError}>
-          Please select a manuscript to modify
+          Please select a manuscript to final check
         </span>
       </div>
 
