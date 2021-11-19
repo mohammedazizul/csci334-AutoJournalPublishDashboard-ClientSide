@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./components/Home/Home";
-import About from "./components/About/About";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Footer from "./components/Footer/Footer";
 import SignIn from "./components/Home/SignIn/SignIn";
@@ -34,9 +33,6 @@ function App() {
           </Route>
           <Route path="/home">
             <Home />
-          </Route>
-          <Route path="/about">
-            <About />
           </Route>
           <Route path="/sign-in">
             <SignIn />
